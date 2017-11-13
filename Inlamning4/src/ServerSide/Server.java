@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 public class Server extends JFrame implements ActionListener, Runnable{
 
 	private static final long serialVersionUID = -3601049710007946605L;
-	public static final int port = 2424;
+	private static final int port = 2424;
 	private ServerSocket server;
 	private boolean ServerRunning = false;
 	private Thread Listener;
