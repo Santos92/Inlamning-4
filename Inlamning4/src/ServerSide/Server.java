@@ -26,9 +26,10 @@ public class Server extends JFrame implements ActionListener, Runnable{
 	public void run() {
 		while(true)
 		{
-			printStatus("Väntart på koppling från client...");
 			try {
+				printStatus("Väntart på koppling från Klient...");
 				new ClientThread(this, server.accept());
+				printStatus("Klient kopplad!");
 			} catch (IOException e) {
 				printStatus("Server stänger ner...");
 				break;
