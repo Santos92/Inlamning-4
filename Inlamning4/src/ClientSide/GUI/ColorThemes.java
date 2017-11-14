@@ -1,7 +1,6 @@
 package ClientSide.GUI;
 
 import java.awt.Color;
-import java.awt.Font;
 
 
 public class ColorThemes {
@@ -11,7 +10,6 @@ public class ColorThemes {
 	private Color txFdBG;
 	private Color buttonBG;
 	private Color text;
-	private Font headingFont, btnFont;
 	
 	public ColorThemes(Color topBG, Color BG, Color txFdBG, Color buttonBG, Color text){
 		this.topBG = topBG;
@@ -40,10 +38,6 @@ public class ColorThemes {
 	public Color getText() {
 		return text;
 	}
-	
-	
-	
-
 	 
 	
 }

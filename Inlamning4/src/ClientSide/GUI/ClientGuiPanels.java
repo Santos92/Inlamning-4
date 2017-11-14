@@ -19,6 +19,12 @@ public class ClientGuiPanels {
 	private ColorThemes Tema;
 	private Font headingFont, labelFont, btnFont;
 	
+	//start btns
+	JButton regBtn = new JButton("Nytt konto");
+	JButton loginBtn = new JButton("Logga in");
+	
+	//game btns
+	
 	public ClientGuiPanels()
 	{
 		setupThemes();
@@ -43,9 +49,6 @@ public class ClientGuiPanels {
 		JLabel gameNameLabel = new JLabel("QuizKampen");
 		gameNameLabel.setFont(headingFont);
 		gameNameLabel.setForeground(Tema.getText());
-		
-		JButton regBtn = new JButton("Nytt konto");
-		JButton loginBtn = new JButton("Logga in");
 		
 		regBtn.setBackground(Tema.getButtonBG());
 		regBtn.setFont(btnFont);
@@ -94,7 +97,6 @@ public class ClientGuiPanels {
 		JTextField passwordTxFd = new JTextField();
 		passwordTxFd.setBackground(Tema.getTxFdBG());
 		
-		JButton loginBtn = new JButton("Logga in");
 		loginBtn.setBackground(Tema.getButtonBG());
 		loginBtn.setForeground(Tema.getText());
 		loginBtn.setBorderPainted(false);
@@ -152,13 +154,23 @@ public class ClientGuiPanels {
 	
 		return create;
 		
-
 		}
 	
+	public JPanel userMenuSide(){
+		
+		return null;
+	}
+	
 
-	private void setupThemes()
-	{
-		Teman.add(new ColorThemes(new Color(30,144,255), new Color(38,106,208),  new Color(176,202,222), new Color(38, 134, 208), new Color(255,255,255)));
+	private void setupThemes(){
+		
+		Color topBG = new Color(30,144,255); //Ljusblå
+		Color BG = new Color(38,106,208); // Mörkblå
+		Color txFdBG = new Color(176,202,222); // ljusblå/grå
+		Color buttonBG = new Color(38, 134, 208); // klarblå
+		Color text = new Color(255,255,255); // Vitt
+		
+		Teman.add(new ColorThemes(topBG, BG, txFdBG, buttonBG, text));
 	}
 	
 }
