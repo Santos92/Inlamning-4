@@ -13,14 +13,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import ClientSide.Client;
+
 public class ClientGuiPanels {
 
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
 	private ColorThemes Tema;
 	private Font headingFont, labelFont, btnFont;
+	private ClientGUI GUI;
 	
-	public ClientGuiPanels()
+	private JButton regBtn = new JButton("Nytt konto");
+	private JButton loginBtn = new JButton("Logga in");
+	
+	public ClientGuiPanels(ClientGUI GUI)
 	{
+		this.GUI = GUI;
 		setupThemes();
 		setTema(0);
 	}
@@ -44,21 +51,18 @@ public class ClientGuiPanels {
 		gameNameLabel.setFont(headingFont);
 		gameNameLabel.setForeground(Tema.getText());
 		
-		JButton regBtn = new JButton("Nytt konto");
-		JButton loginBtn = new JButton("Logga in");
-		
 		regBtn.setBackground(Tema.getButtonBG());
 		regBtn.setFont(btnFont);
 		regBtn.setForeground(Tema.getText());
 		regBtn.setBorderPainted(false);
-		regBtn.setMargin(new Insets(30, 30, 30, 30));
-		
+		regBtn.setMargin(new Insets(30, 30, 30, 30));		
 		
 		loginBtn.setBackground(Tema.getButtonBG());
 		loginBtn.setFont(btnFont);
 		loginBtn.setForeground(Tema.getText());
 		loginBtn.setBorderPainted(false);
 		loginBtn.setMargin(new Insets(30, 30, 30, 30));
+		loginBtn.addActionListener(GUI);
 
 		start.add(gameNameLabel);
 		start.add(regBtn);
@@ -155,6 +159,14 @@ public class ClientGuiPanels {
 
 		}
 	
+
+	public JButton getRegBtn() {
+		return regBtn;
+	}
+
+	public JButton getLoginBtn() {
+		return loginBtn;
+	}
 
 	private void setupThemes()
 	{

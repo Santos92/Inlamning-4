@@ -25,9 +25,9 @@ public class Client implements Runnable {
 	
 	public Client()
 	{
-		connect();
-		setupStream();
-		Start();
+		//connect();
+		//setupStream();
+		//Start();
 		GUI = new ClientGUI(this);
 	}
 	public void run()
