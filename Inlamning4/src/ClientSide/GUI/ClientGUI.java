@@ -18,12 +18,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public ClientGUI(Client client){
 		this.client = client;
 		GuiPanels = new ClientGuiPanels(this);
-		
 		mainPanel = GuiPanels.startSide();
-		
 		add(mainPanel);
-//		add(GuiPanels.loginSide());
-//		add(GuiPanels.createUserSide());
 		
 		new ClientWindow(this);
 	}
@@ -33,7 +29,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		remove(mainPanel);
 		mainPanel = panel;
 		add(mainPanel);
-		revalidate();
+		validate();
 		repaint();
 	}
 
@@ -41,6 +37,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(GuiPanels.getLoginBtn()))
 			swapWindow(GuiPanels.loginSide());
+		else if(e.getSource().equals(GuiPanels.getBack()))
+			swapWindow(GuiPanels.startSide());
+		else if(e.getSource().equals(GuiPanels.getRegBtn()))
+			swapWindow(GuiPanels.createUserSide());
 	}
 
 }

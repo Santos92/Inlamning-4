@@ -22,8 +22,21 @@ public class ClientGuiPanels {
 	private Font headingFont, labelFont, btnFont;
 	private ClientGUI GUI;
 	
+	// Startsidan
 	private JButton regBtn = new JButton("Nytt konto");
 	private JButton loginBtn = new JButton("Logga in");
+	
+	//Loginsidan
+	private JTextField passwordTxFdLog = new JTextField();
+	private JTextField usernameTxFdLog = new JTextField();
+	private JButton loginUser = new JButton("Logga in");
+	
+	private JButton Back = new JButton("Tillbaka");
+	
+	//RegSidan
+	private JTextField usernameTxFdReg = new JTextField();
+	private JTextField passwordTxFdReg = new JTextField();
+	private JButton saveBtn = new JButton("Spara användare");
 	
 	public ClientGuiPanels(ClientGUI GUI)
 	{
@@ -40,6 +53,9 @@ public class ClientGuiPanels {
 	
 	public JPanel startSide(){
 
+		loginBtn.removeActionListener(GUI);
+		regBtn.removeActionListener(GUI);
+		
 		JPanel start = new JPanel();
 		start.setLayout(new GridLayout(4,0,40,40));
 		start.setBorder(new EmptyBorder(150,30,20,30));
@@ -62,19 +78,27 @@ public class ClientGuiPanels {
 		loginBtn.setForeground(Tema.getText());
 		loginBtn.setBorderPainted(false);
 		loginBtn.setMargin(new Insets(30, 30, 30, 30));
-		loginBtn.addActionListener(GUI);
 
 		start.add(gameNameLabel);
 		start.add(regBtn);
 		start.add(loginBtn);
+		
+		loginBtn.addActionListener(GUI);
+		regBtn.addActionListener(GUI);
 		
 		return start;
 	}
 	
 	
 	public JPanel loginSide() {
+		
+		loginUser.removeActionListener(GUI);
+		Back.removeActionListener(GUI);
+		usernameTxFdLog.removeActionListener(GUI);
+		passwordTxFdLog.removeActionListener(GUI);
+		
 		JPanel login = new JPanel();
-		login.setLayout(new GridLayout(6,0, 5, 5));
+		login.setLayout(new GridLayout(7,0, 5, 5));
 		login.setBorder(new EmptyBorder(200,30,20,30));
 		login.setBackground(Tema.getBG());
 		login.setPreferredSize(new Dimension(500, 500));
@@ -89,35 +113,50 @@ public class ClientGuiPanels {
 		JLabel usernameLabel = new JLabel("Användarnamn");
 		usernameLabel.setFont(labelFont);
 		usernameLabel.setForeground(Tema.getText());
-		JTextField usernameTxFd = new JTextField();
-		usernameTxFd.setBackground(Tema.getTxFdBG());
+		
+		usernameTxFdLog.setBackground(Tema.getTxFdBG());
 		
 		JLabel passwordLabel = new JLabel("Lösenord");
 		passwordLabel.setFont(labelFont);
 		passwordLabel.setForeground(Tema.getText());
-		JTextField passwordTxFd = new JTextField();
-		passwordTxFd.setBackground(Tema.getTxFdBG());
 		
-		JButton loginBtn = new JButton("Logga in");
-		loginBtn.setBackground(Tema.getButtonBG());
-		loginBtn.setForeground(Tema.getText());
-		loginBtn.setBorderPainted(false);
-		loginBtn.setFont(btnFont);
+		passwordTxFdLog.setBackground(Tema.getTxFdBG());
+
+		loginUser.setBackground(Tema.getButtonBG());
+		loginUser.setForeground(Tema.getText());
+		loginUser.setBorderPainted(false);
+		loginUser.setFont(btnFont);
+		
+		Back.setBackground(Tema.getButtonBG());
+		Back.setForeground(Tema.getText());
+		Back.setBorderPainted(false);
+		Back.setFont(btnFont);
 	
 		login.add(loginLabel);
 		login.add(usernameLabel);
-		login.add(usernameTxFd);
+		login.add(usernameTxFdLog);
 		login.add(passwordLabel);
-		login.add(passwordTxFd);
-		login.add(loginBtn);
+		login.add(passwordTxFdLog);
+		login.add(loginUser);
+		login.add(Back);
 	
+		loginUser.addActionListener(GUI);
+		Back.addActionListener(GUI);
+		usernameTxFdLog.addActionListener(GUI);
+		passwordTxFdLog.addActionListener(GUI);
+		
 		return login;
 	}
 	
 	public JPanel createUserSide() {
 			
+		saveBtn.removeActionListener(GUI);
+		Back.removeActionListener(GUI);
+		usernameTxFdReg.removeActionListener(GUI);
+		passwordTxFdReg.removeActionListener(GUI);
+		
 		JPanel create = new JPanel();
-		create.setLayout(new GridLayout(8,0, 5, 5));
+		create.setLayout(new GridLayout(9,0, 5, 5));
 		create.setBorder(new EmptyBorder(200,30,20,30));
 		create.setBackground(Tema.getBG());
 		create.setPreferredSize(new Dimension(500, 500));
@@ -132,31 +171,40 @@ public class ClientGuiPanels {
 		JLabel usernameLabel = new JLabel("Användarnamn");
 		usernameLabel.setFont(labelFont);
 		usernameLabel.setForeground(Tema.getText());
-		JTextField usernameTxFd = new JTextField();
-		usernameTxFd.setBackground(Tema.getTxFdBG());
+		
+		usernameTxFdReg.setBackground(Tema.getTxFdBG());
 		
 		JLabel passwordLabel = new JLabel("Lösenord");
 		passwordLabel.setFont(labelFont);
 		passwordLabel.setForeground(Tema.getText());
-		JTextField passwordTxFd = new JTextField();
-		passwordTxFd.setBackground(Tema.getTxFdBG());
 		
-		JButton saveBtn = new JButton("Spara användare");
+		passwordTxFdReg.setBackground(Tema.getTxFdBG());
+		
+		
 		saveBtn.setBackground(Tema.getButtonBG());
 		saveBtn.setForeground(Tema.getText());
 		saveBtn.setBorderPainted(false);
 		saveBtn.setFont(btnFont);
+		
+		Back.setBackground(Tema.getButtonBG());
+		Back.setForeground(Tema.getText());
+		Back.setBorderPainted(false);
+		Back.setFont(btnFont);
 	
 		create.add(loginLabel);
 		create.add(usernameLabel);
-		create.add(usernameTxFd);
+		create.add(usernameTxFdReg);
 		create.add(passwordLabel);
-		create.add(passwordTxFd);
+		create.add(passwordTxFdReg);
 		create.add(saveBtn);
+		create.add(Back);
 	
-		return create;
+		saveBtn.addActionListener(GUI);
+		Back.addActionListener(GUI);
+		usernameTxFdReg.addActionListener(GUI);
+		passwordTxFdReg.addActionListener(GUI);
 		
-
+		return create;
 		}
 	
 
@@ -166,6 +214,34 @@ public class ClientGuiPanels {
 
 	public JButton getLoginBtn() {
 		return loginBtn;
+	}
+
+	public JTextField getPasswordTxFdLog() {
+		return passwordTxFdLog;
+	}
+
+	public JTextField getUsernameTxFdLog() {
+		return usernameTxFdLog;
+	}
+
+	public JButton getLoginUser() {
+		return loginUser;
+	}
+
+	public JButton getBack() {
+		return Back;
+	}
+
+	public JTextField getUsernameTxFdReg() {
+		return usernameTxFdReg;
+	}
+
+	public JTextField getPasswordTxFdReg() {
+		return passwordTxFdReg;
+	}
+
+	public JButton getSaveBtn() {
+		return saveBtn;
 	}
 
 	private void setupThemes()
