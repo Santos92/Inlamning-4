@@ -244,9 +244,15 @@ public class ClientGuiPanels {
 		return saveBtn;
 	}
 
-	private void setupThemes()
-	{
-		Teman.add(new ColorThemes(new Color(30,144,255), new Color(38,106,208),  new Color(176,202,222), new Color(38, 134, 208), new Color(255,255,255)));
+	private void setupThemes(){
+		
+		Color topBG = new Color(30,144,255); //Ljusblå
+		Color BG = new Color(38,106,208); // Mörkblå
+		Color txFdBG = new Color(176,202,222); // ljusblå/grå
+		Color buttonBG = new Color(38, 134, 208); // klarblå
+		Color text = new Color(255,255,255); // Vitt
+		
+		Teman.add(new ColorThemes(topBG, BG, txFdBG, buttonBG, text));
 	}
 	
 }
