@@ -12,8 +12,9 @@ public class ClientGUI extends JPanel{
 	public ClientGUI(Client client){
 		this.client = client;
 		GuiPanels = new ClientGuiPanels();
-		add(GuiPanels.Login());
-		
+		add(GuiPanels.startSide());
+//		add(GuiPanels.loginSide());
+//		add(GuiPanels.createUserSide());
 		
 		new ClientWindow(this);
 	}
