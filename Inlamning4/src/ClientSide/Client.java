@@ -23,6 +23,7 @@ public class Client implements Runnable {
 	private Thread Listener;
 	private boolean Connected = false;
 	
+<<<<<<< HEAD
 	public Client()
 	{
 		connect();
@@ -80,5 +81,11 @@ public class Client implements Runnable {
 	{
 		
 		new Client();
+=======
+	public Client(){}
+	
+	public static void main(String[] args){
+		new ClientGUI(new Client());
+>>>>>>> refs/heads/AmandaBranch
 	}
 }

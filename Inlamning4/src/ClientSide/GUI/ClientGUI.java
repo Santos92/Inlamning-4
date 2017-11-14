@@ -6,13 +6,15 @@ import ClientSide.Client;
 
 public class ClientGUI extends JPanel{
 	
-	private ClientGuiPanels GuiPanels = new ClientGuiPanels();
+	private ClientGuiPanels GuiPanels;
 	private Client client;
 	
 	public ClientGUI(Client client){
 		this.client = client;
-		add(GuiPanels.Login());
-		
+		GuiPanels = new ClientGuiPanels();
+		add(GuiPanels.startSide());
+//		add(GuiPanels.loginSide());
+//		add(GuiPanels.createUserSide());
 		
 		new ClientWindow(this);
 	}
