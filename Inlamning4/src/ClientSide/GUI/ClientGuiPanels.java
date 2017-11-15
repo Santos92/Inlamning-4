@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import ClientSide.Client;
-
 public class ClientGuiPanels {
 
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
@@ -206,6 +204,86 @@ public class ClientGuiPanels {
 		
 		return create;
 		}
+	
+	public JPanel TopwithoutButtons() {
+		JPanel top = new JPanel();
+		top.setLayout(new GridLayout(1,1));
+		top.setBackground(Tema.getBG());
+		headingFont = new Font("Arial", Font.BOLD, 22);
+		JLabel titel = new JLabel("Quizkampen");
+		titel.setForeground(Tema.getText());
+		titel.setFont(headingFont);
+		top.add(titel);
+		return top;
+	}
+	
+	public JPanel Top() {
+		JPanel top = new JPanel();
+		top.setLayout(new GridLayout(1,1));
+		top.setBackground(Tema.getBG());
+		headingFont = new Font("Arial", Font.BOLD, 22);
+		btnFont = new Font("Arial", Font.BOLD, 17);
+		
+		JLabel titel = new JLabel("Quizkampen");
+		titel.setForeground(Tema.getText());
+		titel.setFont(headingFont);
+		
+		JButton refresh = new JButton("Refresh");
+		JButton statistik = new JButton("Statistik");
+		JButton inställningar = new JButton("Inställningar");
+		refresh.setBorderPainted(true);
+		refresh.setBackground(Tema.getBG());
+		statistik.setBorderPainted(true);
+		statistik.setBackground(Tema.getBG());
+		inställningar.setBorderPainted(true);
+		inställningar.setBackground(Tema.getBG());
+		
+		top.add(titel);
+		top.add(refresh);
+		top.add(statistik);
+		top.add(inställningar);
+	
+		return top;
+	}
+	
+	public JPanel sidaLogedin() {
+		JPanel body = new JPanel();
+		body.setLayout(new GridLayout(10,1));
+		body.setBackground(Tema.getBG());
+		headingFont = new Font("Arial", Font.BOLD, 22);
+		btnFont = new Font("Arial", Font.BOLD, 17);
+		JButton sökSpelare = new JButton("Sök spelare");
+		sökSpelare.setBackground(Tema.getBG());
+		sökSpelare.setForeground(Tema.getText());
+		
+		JButton facebookVänner = new JButton("Facebook-vänner");
+		facebookVänner.setBackground(Tema.getBG());
+		facebookVänner.setForeground(Tema.getText());
+		
+		JButton slumpadSpelare = new JButton("Slumpad spelare");
+		slumpadSpelare.setBackground(Tema.getBG());
+		slumpadSpelare.setForeground(Tema.getText());
+		
+		JLabel vänner = new JLabel("Vänner");
+		vänner.setFont(labelFont);
+		vänner.setForeground(Tema.getText());
+		
+		JButton bjudInVänner = new JButton("Bjud in vänner");
+		bjudInVänner.setBackground(Tema.getBG());
+		bjudInVänner.setForeground(Tema.getText());
+		
+		JButton user1 = new JButton("User1");
+		user1.setBackground(Tema.getBG());
+		user1.setForeground(Tema.getText());
+		body.add(sökSpelare);
+		body.add(facebookVänner);
+		body.add(slumpadSpelare);
+		body.add(vänner);
+		body.add(bjudInVänner);
+		body.add(user1);
+
+		return body;
+	}
 	
 
 	public JButton getRegBtn() {
