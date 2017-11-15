@@ -245,14 +245,14 @@ public class ClientGuiPanels {
 	}
 
 	private void setupThemes(){
-		
+		Color startGameBG = new Color(51,226,16);
 		Color topBG = new Color(30,144,255); //Ljusblå
 		Color BG = new Color(38,106,208); // Mörkblå
 		Color txFdBG = new Color(176,202,222); // ljusblå/grå
 		Color buttonBG = new Color(38, 134, 208); // klarblå
 		Color text = new Color(255,255,255); // Vitt
 		
-		Teman.add(new ColorThemes(topBG, BG, txFdBG, buttonBG, text));
+		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, text));
 	}
 	
 }

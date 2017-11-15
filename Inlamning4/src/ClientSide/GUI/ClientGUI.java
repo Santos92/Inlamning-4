@@ -19,7 +19,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		this.client = client;
 		GuiPanels = new ClientGuiPanels(this);
 		mainPanel = GuiPanels.startSide();
-		add(mainPanel);
+		add(mainPanel);		
 		new ClientWindow(this);
 	}
 	
