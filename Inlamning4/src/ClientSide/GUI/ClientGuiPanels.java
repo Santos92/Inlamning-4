@@ -51,7 +51,7 @@ public class ClientGuiPanels {
 	}
 	
 	
-	public JPanel startSide(){
+	public JPanel sidaStart(){
 
 		loginBtn.removeActionListener(GUI);
 		regBtn.removeActionListener(GUI);
@@ -90,7 +90,7 @@ public class ClientGuiPanels {
 	}
 	
 	
-	public JPanel loginSide() {
+	public JPanel sidaLogin() {
 		
 		loginUser.removeActionListener(GUI);
 		Back.removeActionListener(GUI);
@@ -148,7 +148,7 @@ public class ClientGuiPanels {
 		return login;
 	}
 	
-	public JPanel createUserSide() {
+	public JPanel sidaSkapa() {
 			
 		saveBtn.removeActionListener(GUI);
 		Back.removeActionListener(GUI);
