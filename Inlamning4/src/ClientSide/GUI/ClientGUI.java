@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import ClientSide.Client;
+import Communication.Session;
+import Communication.Session.gameStates;
 
 public class ClientGUI extends JPanel implements ActionListener{
 	
@@ -41,7 +43,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource().equals(GuiPanels.getRegBtn()))
 			swapWindow(GuiPanels.sidaSkapa());
 		else if(e.getSource().equals(GuiPanels.getLoginUser()))
-			swapWindow(GuiPanels.sidaLogedin());
+			{
+				Session sess = new Session();
+				sess.setState(gameStates.TryLogin);
+				client.send(sess);
+			}
 		else if(e.getSource().equals(GuiPanels.getSaveBtn()))
 			swapWindow(GuiPanels.sidaLogedin());
 	}
