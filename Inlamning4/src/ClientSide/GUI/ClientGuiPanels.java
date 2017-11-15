@@ -37,6 +37,14 @@ public class ClientGuiPanels {
 	private JTextField passwordTxFdReg = new JTextField();
 	private JButton saveBtn = new JButton("Spara användare");
 	
+	//Settingssidan
+	private JButton userInfo = new JButton("Användaruppgifter");
+	private JButton avatar = new JButton("Välj din avatar");
+	private JButton colors = new JButton("Byt Färgtema");
+	private JButton premium = new JButton("Köp premium");
+	private JButton help = new JButton("Hjälp");
+	private JButton back = new JButton("Tillbaka");
+	
 	public ClientGuiPanels(ClientGUI GUI)
 	{
 		this.GUI = GUI;
@@ -279,59 +287,67 @@ public class ClientGuiPanels {
 		return start;
 	}
 	
-	public JPanel userSettigs() {
+	public JPanel sidaSettings() {
+		
+		userInfo.removeActionListener(GUI);
+		avatar.removeActionListener(GUI);
+		colors.removeActionListener(GUI);
+		premium.removeActionListener(GUI);
+		help.removeActionListener(GUI);
+		back.removeActionListener(GUI);
+		
 		JPanel settings = new JPanel();
 		settings.setLayout(new GridLayout(8,0,0,5));
 		settings.setBorder(new EmptyBorder(5,10,5,10));
 		settings.setBackground(Tema.getBG());
 		settings.setPreferredSize(new Dimension(500, 800));
 		btnFont = new Font("Arial", Font.BOLD, 30);
-		
-		JButton userInfo = new JButton("Användaruppgifter");
+				
 		userInfo.setBackground(Tema.getButtonBG());
 		userInfo.setFont(btnFont);
 		userInfo.setForeground(Tema.getText());
 		userInfo.setBorderPainted(false);
 		userInfo.setMargin(new Insets(30, 30, 30, 30));
 		userInfo.setFont(btnFont);		
-		
-		JButton avatar = new JButton("Välj din avatar");
+				
 		avatar.setBackground(Tema.getButtonBG());
 		avatar.setFont(btnFont);
 		avatar.setForeground(Tema.getText());
 		avatar.setBorderPainted(false);
-		
-		JButton colors = new JButton("Byt Färgtema");
+				
 		colors.setBackground(Tema.getButtonBG());
 		colors.setFont(btnFont);
 		colors.setForeground(Tema.getText());
 		colors.setBorderPainted(false);
-
-		JButton premium = new JButton("Köp premium");
+		
 		premium.setBackground(Tema.getButtonBG());
 		premium.setFont(btnFont);
 		premium.setForeground(Tema.getText());
 		premium.setBorderPainted(false);
-
-		JButton help = new JButton("Hjälp");
+		
 		help.setBackground(Tema.getButtonBG());
 		help.setFont(btnFont);
 		help.setForeground(Tema.getText());
 		help.setBorderPainted(false);
-		
-		JButton back = new JButton("Tillbaka");
+				
 		back.setBackground(Tema.getButtonBG());
 		back.setFont(btnFont);
 		back.setForeground(Tema.getText());
 		back.setBorderPainted(false);
-		
-		
+				
 		settings.add(userInfo);
 		settings.add(avatar);
 		settings.add(colors);
 		settings.add(premium);
 		settings.add(help);
 		settings.add(back);
+		
+		userInfo.addActionListener(GUI);
+		avatar.addActionListener(GUI);
+		colors.addActionListener(GUI);
+		premium.addActionListener(GUI);
+		help.addActionListener(GUI);
+		back.addActionListener(GUI);
 		
 		return settings;
 	}
@@ -370,6 +386,30 @@ public class ClientGuiPanels {
 
 	public JButton getSaveBtn() {
 		return saveBtn;
+	}
+	
+	public JButton getSettingsUserInfo() {
+		return userInfo;
+	}
+	
+	public JButton getSettingsAvatar() {
+		return avatar;
+	}
+	
+	public JButton getSettingsColors() {
+		return colors;
+	}
+	
+	public JButton getSettingsPremium() {
+		return premium;
+	}
+	
+	public JButton getSettingsHelp() {
+		return help;
+	}
+	
+	public JButton getSettingsBack() {
+		return back;
 	}
 
 	private void setupThemes(){
