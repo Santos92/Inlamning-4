@@ -28,9 +28,9 @@ public class ClientThread extends Thread implements Runnable {
 	public void run() {
 		while(true)
 		{
-			try {				
-				new ServerSessionHandler(in.readObject());
-				
+			try {
+				new ServerSessionHandler(this, in.readObject());
+				server.printStatus("Paket mottaget");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -48,6 +48,15 @@ public class ClientThread extends Thread implements Runnable {
 		catch(Exception e) 
 		{
 			e.printStackTrace();
+		}
+	}
+	public void send(Object obj)
+	{
+		try {
+			out.writeUnshared(obj);
+			out.flush();
+		} catch (IOException e) {
+			
 		}
 	}
 }

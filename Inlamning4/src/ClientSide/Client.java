@@ -36,6 +36,7 @@ public class Client implements Runnable {
 		while(true)
 		{
 			try {
+				System.out.println("väntar på paket");
 				new ClientSessionHandling(this, GUI, in.readObject());
 			} catch (ClassNotFoundException e) {
 				JOptionPane.showMessageDialog(null, "Klass hittades ej");
@@ -44,6 +45,15 @@ public class Client implements Runnable {
 				System.exit(0);
 				break;
 			}
+		}
+	}
+	public void send(Object obj)
+	{
+		try {
+			out.writeUnshared(obj);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	public synchronized void Start()
@@ -78,7 +88,6 @@ public class Client implements Runnable {
 	}
 	public static void main(String[] args)
 	{
-		
 		new Client();
 	}
 }
