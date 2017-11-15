@@ -19,6 +19,7 @@ public class ClientGuiPanels {
 	private ColorThemes Tema;
 	private Font headingFont, labelFont, btnFont;
 	private ClientGUI GUI;
+	private ClientGuiTopPanels topPanels;
 	
 	// Startsidan
 	private JButton regBtn = new JButton("Nytt konto");
@@ -41,14 +42,8 @@ public class ClientGuiPanels {
 		this.GUI = GUI;
 		setupThemes();
 		setTema(0);
+		topPanels = new ClientGuiTopPanels(Tema);
 	}
-	
-	public void setTema(int id)
-	{
-		Tema = Teman.get(id);
-	}
-	
-	
 	public JPanel sidaStart(){
 
 		loginBtn.removeActionListener(GUI);
@@ -86,7 +81,6 @@ public class ClientGuiPanels {
 		
 		return start;
 	}
-	
 	
 	public JPanel sidaLogin() {
 		
@@ -205,48 +199,7 @@ public class ClientGuiPanels {
 		return create;
 		}
 	
-	public JPanel TopwithoutButtons() {
-		JPanel top = new JPanel();
-		top.setLayout(new GridLayout(1,1));
-		top.setBackground(Tema.getBG());
-		headingFont = new Font("Arial", Font.BOLD, 22);
-		JLabel titel = new JLabel("Quizkampen");
-		titel.setForeground(Tema.getText());
-		titel.setFont(headingFont);
-		top.add(titel);
-		return top;
-	}
-	
-	public JPanel Top() {
-		JPanel top = new JPanel();
-		top.setLayout(new GridLayout(1,1));
-		top.setBackground(Tema.getBG());
-		headingFont = new Font("Arial", Font.BOLD, 22);
-		btnFont = new Font("Arial", Font.BOLD, 17);
-		
-		JLabel titel = new JLabel("Quizkampen");
-		titel.setForeground(Tema.getText());
-		titel.setFont(headingFont);
-		
-		JButton refresh = new JButton("Refresh");
-		JButton statistik = new JButton("Statistik");
-		JButton inställningar = new JButton("Inställningar");
-		refresh.setBorderPainted(true);
-		refresh.setBackground(Tema.getBG());
-		statistik.setBorderPainted(true);
-		statistik.setBackground(Tema.getBG());
-		inställningar.setBorderPainted(true);
-		inställningar.setBackground(Tema.getBG());
-		
-		top.add(titel);
-		top.add(refresh);
-		top.add(statistik);
-		top.add(inställningar);
-	
-		return top;
-	}
-	
-	public JPanel sidaLogedin() {
+	public JPanel sidaNyttSpel() {
 		JPanel body = new JPanel();
 		body.setLayout(new GridLayout(10,1));
 		body.setBackground(Tema.getBG());
@@ -285,7 +238,6 @@ public class ClientGuiPanels {
 		return body;
 	}
 	
-
 	public JButton getRegBtn() {
 		return regBtn;
 	}
@@ -332,5 +284,8 @@ public class ClientGuiPanels {
 		
 		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, text));
 	}
-	
+	public void setTema(int id)
+	{
+		Tema = Teman.get(id);
+	}
 }
