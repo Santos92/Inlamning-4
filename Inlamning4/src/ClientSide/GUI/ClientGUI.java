@@ -41,8 +41,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource().equals(GuiPanels.getRegBtn()))
 			swapWindow(GuiPanels.sidaSkapa());
 		else if(e.getSource().equals(GuiPanels.getLoginUser()))
-			swapWindow(GuiPanels.sidaNyttSpel());
+			swapWindow(GuiPanels.sidaLogedin());
 		else if(e.getSource().equals(GuiPanels.getSaveBtn()))
-			swapWindow(GuiPanels.sidaNyttSpel());
+			swapWindow(GuiPanels.sidaLogedin());
 	}
 }

@@ -238,6 +238,47 @@ public class ClientGuiPanels {
 		return body;
 	}
 	
+	public JPanel sidaLogedin() {
+		JPanel start = new JPanel();
+		start.setLayout(new GridLayout(7,1));
+		start.setBackground(Tema.getBG());
+		headingFont = new Font("Arial", Font.BOLD, 22);
+		btnFont = new Font("Arial", Font.BOLD, 17);
+		
+		JLabel användare = new JLabel("Användarnamn: ");
+		användare.setForeground(Tema.getText());
+		JLabel användarnamn = new JLabel(" ");
+		användare.setForeground(Tema.getText());
+		
+		JButton startaSpel = new JButton("Starta nytt spel");
+		startaSpel.setBackground(Tema.getStartGameBG());
+		startaSpel.setForeground(Tema.getText());
+		startaSpel.setBorderPainted(false);
+		startaSpel.setFont(headingFont);
+		
+		JButton dinTur = new JButton("Din tur mot ");
+		dinTur.setBackground(Tema.getBG());
+		dinTur.setForeground(Tema.getText());
+		
+		JLabel aktivaSpelLabel = new JLabel("Aktiva spel");
+		aktivaSpelLabel.setForeground(Tema.getText());
+		JButton aktivaSpel = new JButton("Användare väntar på att spelare ska acceptera");
+		aktivaSpel.setBackground(Tema.getBG());
+		aktivaSpel.setForeground(Tema.getText());
+		
+		JButton reklam = new JButton("Reklam");
+		
+		start.add(användare);
+		start.add(användarnamn);
+		start.add(startaSpel);
+		start.add(dinTur);
+		start.add(aktivaSpelLabel);
+		start.add(aktivaSpel);
+		start.add(reklam);
+		
+		return start;
+	}
+	
 	public JButton getRegBtn() {
 		return regBtn;
 	}
