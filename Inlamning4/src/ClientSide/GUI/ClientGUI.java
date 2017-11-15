@@ -20,7 +20,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 		GuiPanels = new ClientGuiPanels(this);
 		mainPanel = GuiPanels.startSide();
 		add(mainPanel);
-		
 		new ClientWindow(this);
 	}
 	
@@ -42,5 +41,4 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource().equals(GuiPanels.getRegBtn()))
 			swapWindow(GuiPanels.createUserSide());
 	}
-
 }
