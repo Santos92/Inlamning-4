@@ -2,10 +2,16 @@ package ClientSide.GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
 import ClientSide.Client;
+import Communication.Session;
+import Communication.Session.gameStates;
+import ServerSide.Users.User;
+import ServerSide.Users.UserDatabase;
 
 public class ClientGUI extends JPanel implements ActionListener{
 	
@@ -41,8 +47,25 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource().equals(GuiPanels.getRegBtn()))
 			swapWindow(GuiPanels.sidaSkapa());
 		else if(e.getSource().equals(GuiPanels.getLoginUser()))
-			swapWindow(GuiPanels.sidaLogedin());
-		else if(e.getSource().equals(GuiPanels.getSaveBtn()))
-			swapWindow(GuiPanels.sidaLogedin());
+			{
+				Session sess = new Session();
+				sess.setState(gameStates.TryLogin);
+				sess.setUserName(GuiPanels.getUsernameTxFdLog().getText());
+				sess.setUserPass(GuiPanels.getPasswordTxFdLog().getText());
+				client.send(sess);
+			}
+		else if(e.getSource().equals(GuiPanels.getSaveBtn())) {
+			Session sess = new Session();
+			sess.setState(gameStates.TryRegister);
+			sess.setUserName(GuiPanels.getUsernameTxFdReg().getText());
+			sess.setUserPass(GuiPanels.getPasswordTxFdReg().getText());
+			client.send(sess);
+		}
+			
+	}
+	public ClientGuiPanels getPanels()
+	{
+		return GuiPanels;
+		
 	}
 }
