@@ -3,13 +3,18 @@ package ServerSide;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.ServerSocket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import ServerSide.Users.UserDatabase;
 
 public class Server extends JFrame implements ActionListener, Runnable{
 
@@ -22,7 +27,8 @@ public class Server extends JFrame implements ActionListener, Runnable{
 	private JTextArea statusWindow = new JTextArea();
 	private JScrollPane sp = new JScrollPane(statusWindow);
 	private JButton StartClose = new JButton("Starta server");
-
+	private UserDatabase UserDB;
+	
 	public void run() {
 		while(true)
 		{
@@ -38,12 +44,21 @@ public class Server extends JFrame implements ActionListener, Runnable{
 	}
 	public Server()
 	{
+		UserDB = new UserDatabase();
 		statusWindow.setEditable(false);
 		setLayout(new BorderLayout());
 		
 		add(StartClose, BorderLayout.NORTH);
 		add(sp, BorderLayout.CENTER);
 		
+		addWindowListener(new WindowAdapter() { public void windowClosing(WindowEvent WE)
+		{
+			if(ServerRunning)
+			{
+			Disconnect();
+			System.exit(0);			
+			}
+		}});
 		setSize(500,600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,6 +71,7 @@ public class Server extends JFrame implements ActionListener, Runnable{
 		try {
 			printStatus("Försöker binda server till port: " + port);
 			server = new ServerSocket(port);
+			UserDB.laddaLista();
 			printStatus("Servern är nu igång och lyssnar på port: " + port);
 			StartClose.setText("Stäng server");
 			Start();
@@ -67,6 +83,7 @@ public class Server extends JFrame implements ActionListener, Runnable{
 	{
 		try {
 			server.close();
+			UserDB.sparaLista();
 			Stop();
 			StartClose.setText("Starta server");
 		} catch (IOException e) {
@@ -100,6 +117,10 @@ public class Server extends JFrame implements ActionListener, Runnable{
 			Listener = null;
 			ServerRunning = false;
 		}
+	}
+	public UserDatabase getUserDB()
+	{
+		return UserDB;
 	}
 	public static void main(String[] args)
 	{

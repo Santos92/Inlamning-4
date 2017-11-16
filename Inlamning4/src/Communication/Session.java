@@ -13,6 +13,8 @@ public class Session implements Serializable {
 		TryLogin,
 		TryRegister,
 		FailAuth,
+		FailReg,
+		OkReg,
 		AuthAccept;
 	}
 	public gameStates state;

@@ -1,5 +1,7 @@
 package ClientSide.SessionHandling;
 
+import javax.swing.JOptionPane;
+
 import ClientSide.Client;
 import ClientSide.GUI.ClientGUI;
 import Communication.Session;
@@ -13,6 +15,7 @@ public class ClientSessionHandling {
 	private Session Packet;
 	private gameStates state;
 	private String Message;
+	private String UserName;
 	
 	public ClientSessionHandling(Client client, ClientGUI GUI, Object obj) {
 		this.client = client;
@@ -20,14 +23,34 @@ public class ClientSessionHandling {
 		Packet = (Session) obj;
 		state = Packet.getState();
 		Message = Packet.getMessage();
+		UserName = Packet.getUserName();
 		handle();
 	}
 
 	public void handle()
 	{
-		if(state == gameStates.FailAuth)
+		if(state == gameStates.FailReg)
 		{
-			System.out.println(Message);
+			JOptionPane.showMessageDialog(null, Message);
+		}
+		else if(state == gameStates.OkReg)
+		{
+			GUI.swapWindow(GUI.getPanels().sidaStart());
+			client.setUserName(UserName);
+			JOptionPane.showMessageDialog(null, Message);
+		}
+		else if(state == gameStates.FailAuth)
+		{
+			JOptionPane.showMessageDialog(null, Message);
+		}
+		else if(state == gameStates.AuthAccept) {
+			GUI.swapWindow(GUI.getPanels().sidaLogedin());
+			client.setUserName(UserName);
+			JOptionPane.showMessageDialog(null, Message);
 		}
 	}
+	
+	
+	
+	
 }

@@ -316,7 +316,7 @@ public class ClientGuiPanels {
 	}
 
 	private void setupThemes(){
-		Color startGameBG = new Color(51,226,16);
+		Color startGameBG = new Color(51,226,16);// grönt
 		Color topBG = new Color(30,144,255); //Ljusblå
 		Color BG = new Color(38,106,208); // Mörkblå
 		Color txFdBG = new Color(176,202,222); // ljusblå/grå
