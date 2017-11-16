@@ -35,7 +35,7 @@ public class ClientSessionHandling {
 		}
 		else if(state == gameStates.OkReg)
 		{
-			GUI.swapWindow(GUI.getPanels().sidaStart());
+			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 			client.setUserName(UserName);
 			JOptionPane.showMessageDialog(null, Message);
 		}
