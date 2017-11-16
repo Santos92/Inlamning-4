@@ -61,6 +61,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 			sess.setUserPass(GuiPanels.getPasswordTxFdReg().getText());
 			client.send(sess);
 		}
+		else if(e.getSource().equals(GuiPanels.getStartaSpel()))
+			swapWindow(GuiPanels.sidaNyttSpel());
 			
 	}
 	public ClientGuiPanels getPanels()

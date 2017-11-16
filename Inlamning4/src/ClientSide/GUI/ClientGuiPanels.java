@@ -45,6 +45,9 @@ public class ClientGuiPanels {
 	private JButton help = new JButton("Hjälp");
 	private JButton back = new JButton("Tillbaka");
 	
+	//LogedinSidan
+	private JButton startaSpel = new JButton("Starta nytt spel");
+	
 	public ClientGuiPanels(ClientGUI GUI)
 	{
 		this.GUI = GUI;
@@ -247,6 +250,9 @@ public class ClientGuiPanels {
 	}
 	
 	public JPanel sidaLogedin() {
+		
+		startaSpel.removeActionListener(GUI);
+		
 		JPanel start = new JPanel();
 		start.setLayout(new GridLayout(7,1));
 		start.setBackground(Tema.getBG());
@@ -258,7 +264,7 @@ public class ClientGuiPanels {
 		JLabel användarnamn = new JLabel(" ");
 		användare.setForeground(Tema.getText());
 		
-		JButton startaSpel = new JButton("Starta nytt spel");
+		
 		startaSpel.setBackground(Tema.getStartGameBG());
 		startaSpel.setForeground(Tema.getText());
 		startaSpel.setBorderPainted(false);
@@ -283,6 +289,8 @@ public class ClientGuiPanels {
 		start.add(aktivaSpelLabel);
 		start.add(aktivaSpel);
 		start.add(reklam);
+		
+		startaSpel.addActionListener(GUI);
 		
 		return start;
 	}
@@ -412,6 +420,9 @@ public class ClientGuiPanels {
 		return back;
 	}
 
+	public JButton getStartaSpel() {
+		return startaSpel;
+	}
 	private void setupThemes(){
 		Color startGameBG = new Color(51,226,16);// grönt
 		Color topBG = new Color(30,144,255); //Ljusblå
