@@ -35,20 +35,6 @@ public class QuestionsDatabase {
     	TeknikQ = new Questions(Kategori, "Vad förknippas med märket Airfix?", "Flygplansmodeller","Bilmodeller", "Båtar", "Lastbilar" );
     	Teknik.add(TeknikQ);
     }
-    public void fillGeografi()
-    {
-    	Questions GeoQ;
-    	String Kategori = "Geografi";
-    	GeoQ = new Questions(Kategori, "Vad förknippas med märket Airfix?", "Flygplansmodeller","Bilmodeller", "Båtar", "Lastbilar" );
-    	Teknik.add(GeoQ);
-    }
-    public void fillHistoria()
-    {
-    	Questions HistoriaQ;
-    	String Kategori = "Historia";
-    	HistoriaQ = new Questions(Kategori, "Vad förknippas med märket Airfix?", "Flygplansmodeller","Bilmodeller", "Båtar", "Lastbilar" );
-    	Teknik.add(HistoriaQ);
-    }
 	public ArrayList<Questions> getMat() {
 		return Mat;
 	}

@@ -16,7 +16,6 @@ public class ClientThread extends Thread implements Runnable {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private Thread T;
-	public String UserName;
 	
 	public ClientThread(Server server, Socket conn) {
 		this.conn = conn;
@@ -64,11 +63,5 @@ public class ClientThread extends Thread implements Runnable {
 		} catch (IOException e) {
 			
 		}
-	}
-	public String getUserName() {
-		return UserName;
-	}
-	public void setUserName(String userName) {
-		UserName = userName;
 	}
 }

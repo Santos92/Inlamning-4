@@ -46,6 +46,11 @@ public class ClientGuiPanels {
 	private JButton reklam = new JButton("Reklam");
 	private JButton aktivaSpel = new JButton("Aktiva Spel");
 	
+	//VäljKategoriSidan
+	private JButton kategori1 = new JButton("");
+	private JButton kategori2 = new JButton("");
+	private JButton kategori3 = new JButton("");
+	
 	//Settingssidan
 	private JButton userInfo = new JButton("Användaruppgifter");
 	private JButton avatar = new JButton("Välj din avatar");
@@ -385,6 +390,37 @@ public class ClientGuiPanels {
 		return settings;
 	}
 	
+	public JPanel sidaVäljKategori() {
+		JPanel väljKat = new JPanel();
+		väljKat.setBackground(Tema.getBG());
+		headingFont = new Font("Arial", Font.BOLD, 22);
+		btnFont = new Font("Arial", Font.BOLD, 17);
+		väljKat.setFont(headingFont);
+		JLabel väljkategori = new JLabel("Välj kategori mot: ");
+		JLabel användarnamn = new JLabel("");
+		väljKat.setForeground(Tema.getText());
+		JButton kategori1 = new JButton();
+		kategori1.setBackground(Tema.getChangeCate1());// change these colors
+		kategori1.setForeground(Tema.getText());
+		JButton kategori2 = new JButton();
+		kategori2.setBackground(Tema.getChangeCate2());
+		kategori2.setForeground(Tema.getText());
+		JButton kategori3 = new JButton();
+		kategori3.setBackground(Tema.getChangeCate3());
+		kategori3.setForeground(Tema.getText());
+		väljKat.add(väljkategori);
+		väljKat.add(användarnamn);
+		väljKat.add(kategori1);
+		väljKat.add(kategori2);
+		väljKat.add(kategori3);
+		
+		kategori1.addActionListener(GUI);
+		kategori2.addActionListener(GUI);
+		kategori3.addActionListener(GUI);
+		
+		return väljKat;
+	}
+	
 	public JButton getRegBtn() {
 		return regBtn;
 	}
@@ -470,6 +506,16 @@ public class ClientGuiPanels {
 		return topPanels;
 	}
 	
+		public JButton getKategori1() {
+		return kategori1;
+	}
+
+	public JButton getKategori2() {
+		return kategori2;
+	}
+	public JButton getKategori3() {
+		return kategori3;
+	}
 	private void setupThemes(){
 		Color startGameBG = new Color(51,226,16);// grönt
 		Color topBG = new Color(30,144,255); //Ljusblå
@@ -477,8 +523,10 @@ public class ClientGuiPanels {
 		Color txFdBG = new Color(176,202,222); // ljusblå/grå
 		Color buttonBG = new Color(38, 134, 208); // klarblå
 		Color text = new Color(255,255,255); // Vitt
-		
-		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, text));
+		Color buttonChangeCategory1 = new Color(255, 128,0);
+		Color buttonChangeCategory2 = new Color(255, 0, 255);
+		Color buttonChangeCategory3 = new Color(0, 153, 153);
+		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, buttonChangeCategory1, buttonChangeCategory2,buttonChangeCategory3, text));
 	}
 	public void setTema(int id)
 	{

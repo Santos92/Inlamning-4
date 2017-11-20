@@ -96,7 +96,7 @@ public class ClientGuiTopPanels {
 		Color buttonBG = new Color(38, 134, 208); // klarblå
 		Color text = new Color(255,255,255); // Vitt
 		
-		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, text));
+		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, text, text, text, text));
 	}
 	public void setTema(int id)
 	{
