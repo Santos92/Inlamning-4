@@ -1,5 +1,6 @@
 package ServerSide.Users;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,14 +13,18 @@ import Communication.Session;
 import Communication.Session.gameStates;
 import ServerSide.ClientThread;
 
-public class UserDatabase implements Serializable{
-
-	//User användare = new User("", "");
+public class UserDatabase { 
 	
+	private static ArrayList<User> allUsers = new ArrayList<>();
+	private File UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
 	
+	public UserDatabase()
+	{
+		UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
+		if(!UserDatabase.exists())
+			UserDatabase = new File("src\\ServerSide\\Users\\AllUsers.txt");
+	}
 	
-	
-	private static ArrayList<User> allUsers = new ArrayList<>();	
 	public void register(String name, String pass, ClientThread server) {
 		boolean userExist = false;
 		for(User x : allUsers)
@@ -39,14 +44,16 @@ public class UserDatabase implements Serializable{
 			allUsers.add(new User(name, pass));
 			Session sess = new Session();
 			sess.setState(gameStates.OkReg);
-			sess.setMessage("Successful registration");
+			sess.setUserName(name);
+			server.setUserName(name);
+			sess.setMessage("Successful registration! Welcome " + name);
 			server.send(sess);
 		}
 	}
 	public void sparaLista()
 	{
 		try {
-	 FileOutputStream fos = new FileOutputStream("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
+	 FileOutputStream fos = new FileOutputStream(UserDatabase);
 	 ObjectOutputStream oos = new ObjectOutputStream(fos);
 	 oos.writeObject(allUsers);
 	 oos.close();
@@ -57,7 +64,7 @@ public class UserDatabase implements Serializable{
 	public void laddaLista()
 	{
 	    try {
-			FileInputStream fis = new FileInputStream("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
+			FileInputStream fis = new FileInputStream(UserDatabase);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			allUsers = (ArrayList<User>) ois.readObject();
 			
@@ -74,18 +81,19 @@ public class UserDatabase implements Serializable{
 		for(User x : allUsers)
 			
 		{
-			if(x.getNamn().equalsIgnoreCase(name) && x.getPassword().equalsIgnoreCase(pass)) {
+			if(x.getNamn().equalsIgnoreCase(name) && x.getPassword().equalsIgnoreCase(pass)) 
+			{
 				Session sess = new Session();
 				sess.setState(gameStates.AuthAccept);
-				sess.setMessage("Welcome");
+				sess.setMessage("Welcome " + name);
 				sess.setUserName(name);
+				server.setUserName(name);
 				server.send(sess);
 				loggedIn = true;
 				break;
 				
 			}
-					
-	}
+		}
 		if(!loggedIn) {
 			Session sess = new Session();
 			sess.setState(gameStates.FailAuth);

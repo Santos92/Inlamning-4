@@ -13,12 +13,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import ClientSide.Client;
+
 public class ClientGuiPanels {
 
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
 	private ColorThemes Tema;
 	private Font headingFont, labelFont, btnFont;
 	private ClientGUI GUI;
+	private Client client;
 	private ClientGuiTopPanels topPanels;
 	
 	// Startsidan
@@ -37,14 +40,6 @@ public class ClientGuiPanels {
 	private JTextField passwordTxFdReg = new JTextField();
 	private JButton saveBtn = new JButton("Spara användare");
 	
-	//sidaNyttSpel
-	
-	//sidaLogedin
-	JButton startaSpel = new JButton("Starta nytt spel");
-	JButton dinTur = new JButton("Din tur mot ");
-	JButton aktivaSpel = new JButton("Användare väntar på att spelare ska acceptera");
-	JButton reklam = new JButton("Reklam");
-	
 	//Settingssidan
 	private JButton userInfo = new JButton("Användaruppgifter");
 	private JButton avatar = new JButton("Välj din avatar");
@@ -53,13 +48,17 @@ public class ClientGuiPanels {
 	private JButton help = new JButton("Hjälp");
 	private JButton back = new JButton("Tillbaka");
 	
-	public ClientGuiPanels(ClientGUI GUI)
+	//LogedinSidan
+	private JButton startaSpel = new JButton("Starta nytt spel");
+	
+	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
 
+		this.client = client;
 		this.GUI = GUI;
 		setupThemes();
 		setTema(0);
-		topPanels = new ClientGuiTopPanels(this.GUI);
+		topPanels = new ClientGuiTopPanels(Tema);
 	}
 	public JPanel sidaStart(){
 
@@ -217,8 +216,6 @@ public class ClientGuiPanels {
 		}
 	
 	public JPanel sidaNyttSpel() {
-//		facebookVänner.remove
-		
 		JPanel body = new JPanel();
 		body.setLayout(new GridLayout(10,1));
 		body.setBackground(Tema.getBG());
@@ -274,24 +271,20 @@ public class ClientGuiPanels {
 		JLabel användarnamn = new JLabel(" ");
 		användare.setForeground(Tema.getText());
 		
-//		JButton startaSpel = new JButton("Starta nytt spel");
 		startaSpel.setBackground(Tema.getStartGameBG());
 		startaSpel.setForeground(Tema.getText());
 		startaSpel.setBorderPainted(false);
 		startaSpel.setFont(headingFont);
 		
-//		JButton dinTur = new JButton("Din tur mot ");
 		dinTur.setBackground(Tema.getBG());
 		dinTur.setForeground(Tema.getText());
 		
 		JLabel aktivaSpelLabel = new JLabel("Aktiva spel");
 		aktivaSpelLabel.setForeground(Tema.getText());
 		
-//		JButton aktivaSpel = new JButton("Användare väntar på att spelare ska acceptera");
 		aktivaSpel.setBackground(Tema.getBG());
 		aktivaSpel.setForeground(Tema.getText());
 		
-//		JButton reklam = new JButton("Reklam");
 		
 		start.add(topPanels.Top());
 		start.add(användare);
@@ -454,6 +447,9 @@ public class ClientGuiPanels {
 	public ClientGuiTopPanels getTopPanels()
 	{
 		return topPanels;
+	}
+	public JButton getStartaSpel() {
+		return startaSpel;
 	}
 	private void setupThemes(){
 		Color startGameBG = new Color(51,226,16);// grönt

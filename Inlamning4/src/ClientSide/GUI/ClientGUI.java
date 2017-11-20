@@ -18,14 +18,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 6652272365889996841L;
 	private ClientGuiPanels GuiPanels;
 	private Client client;
-	private ClientGuiTopPanels topPanels;
 	
 	private JPanel mainPanel;
 	
 	public ClientGUI(Client client){
 		this.client = client;
-		GuiPanels = new ClientGuiPanels(this);
-		topPanels = GuiPanels.getTopPanels();
+		GuiPanels = new ClientGuiPanels(this, this.client);
 		mainPanel = GuiPanels.sidaStart();
 		add(mainPanel);		
 		new ClientWindow(this);
