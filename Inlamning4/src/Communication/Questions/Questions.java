@@ -8,7 +8,6 @@ public class Questions {
 	private String wroAns1;
 	private String wroAns2;
 	private String wroAns3;
-	private String Answer;
 	
 	public Questions(String category,String question,String corAnswer, String wroAns1,
 				String wroAns2,String wroAns3 ){
@@ -37,11 +36,5 @@ public class Questions {
 	}
 	public String getWroAns3() {
 		return wroAns3;
-	}
-	public String getAnswear() {
-		return Answer;
-	}
-	public void setAnswear(String answear) {
-		Answer = answear;
 	}
 }

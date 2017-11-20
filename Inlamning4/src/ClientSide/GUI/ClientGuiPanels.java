@@ -13,15 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import ClientSide.Client;
-
 public class ClientGuiPanels {
 
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
 	private ColorThemes Tema;
 	private Font headingFont, labelFont, btnFont;
 	private ClientGUI GUI;
-	private Client client;
 	private ClientGuiTopPanels topPanels;
 	
 	// Startsidan
@@ -56,9 +53,8 @@ public class ClientGuiPanels {
 	//LogedinSidan
 	private JButton startaSpel = new JButton("Starta nytt spel");
 	
-	public ClientGuiPanels(ClientGUI GUI, Client client)
+	public ClientGuiPanels(ClientGUI GUI)
 	{
-		this.client = client;
 		this.GUI = GUI;
 		setupThemes();
 		setTema(0);
@@ -273,7 +269,7 @@ public class ClientGuiPanels {
 		headingFont = new Font("Arial", Font.BOLD, 22);
 		btnFont = new Font("Arial", Font.BOLD, 17);
 		
-		JLabel användare = new JLabel("Användarnamn: " + client.getUserName());
+		JLabel användare = new JLabel("Användarnamn: ");
 		användare.setForeground(Tema.getText());
 		JLabel användarnamn = new JLabel(" ");
 		användare.setForeground(Tema.getText());

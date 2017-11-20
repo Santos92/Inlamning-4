@@ -22,7 +22,7 @@ public class Client implements Runnable {
 	private ObjectOutputStream out;
 	private Thread Listener;
 	private boolean Connected = false;
-	public String UserName;
+	private String UserName;
 	
 	public Client()
 	{
