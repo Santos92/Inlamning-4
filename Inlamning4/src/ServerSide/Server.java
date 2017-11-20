@@ -69,6 +69,7 @@ public class Server extends JFrame implements ActionListener, Runnable{
 	public void Connect()
 	{
 		try {
+			statusWindow.setText("");
 			printStatus("Försöker binda server till port: " + port);
 			server = new ServerSocket(port);
 			UserDB.laddaLista();

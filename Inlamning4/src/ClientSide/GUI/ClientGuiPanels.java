@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import ClientSide.Client;
+
 public class ClientGuiPanels {
 
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
@@ -20,6 +22,7 @@ public class ClientGuiPanels {
 	private Font headingFont, labelFont, btnFont;
 	private ClientGUI GUI;
 	private ClientGuiTopPanels topPanels;
+	private Client client;
 	
 	// Startsidan
 	private JButton regBtn = new JButton("Nytt konto");
@@ -53,12 +56,13 @@ public class ClientGuiPanels {
 	//LogedinSidan
 	private JButton startaSpel = new JButton("Starta nytt spel");
 	
-	public ClientGuiPanels(ClientGUI GUI)
+	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
 		this.GUI = GUI;
+		this.client = client;
 		setupThemes();
 		setTema(0);
-		topPanels = new ClientGuiTopPanels(Tema);
+		topPanels = new ClientGuiTopPanels(Tema, this.GUI);
 	}
 	public JPanel sidaStart(){
 
@@ -269,7 +273,7 @@ public class ClientGuiPanels {
 		headingFont = new Font("Arial", Font.BOLD, 22);
 		btnFont = new Font("Arial", Font.BOLD, 17);
 		
-		JLabel användare = new JLabel("Användarnamn: ");
+		JLabel användare = new JLabel("Användarnamn: " + client.getUserName());
 		användare.setForeground(Tema.getText());
 		JLabel användarnamn = new JLabel(" ");
 		användare.setForeground(Tema.getText());
@@ -472,6 +476,10 @@ public class ClientGuiPanels {
 	}
 	public JButton getKategori3() {
 		return kategori3;
+	}
+	public ClientGuiTopPanels getTopPanels()
+	{
+		return topPanels;
 	}
 	private void setupThemes(){
 		Color startGameBG = new Color(51,226,16);// grönt

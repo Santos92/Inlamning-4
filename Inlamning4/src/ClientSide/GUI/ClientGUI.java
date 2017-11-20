@@ -17,22 +17,43 @@ public class ClientGUI extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 6652272365889996841L;
 	private ClientGuiPanels GuiPanels;
+	private ClientGuiTopPanels GuiTopPanels;
 	private Client client;
 	
 	private JPanel mainPanel;
+	private JPanel topPanel;
 	
 	public ClientGUI(Client client){
 		this.client = client;
-		GuiPanels = new ClientGuiPanels(this);
+		GuiPanels = new ClientGuiPanels(this, this.client);
+		GuiTopPanels = GuiPanels.getTopPanels();
 		mainPanel = GuiPanels.sidaStart();
+		if(topPanel != null)
+		add(topPanel);
 		add(mainPanel);		
 		new ClientWindow(this);
 	}
 	
 	public void swapWindow(JPanel panel)
 	{
+		if(topPanel != null)
+			remove(topPanel);
+		
 		remove(mainPanel);
 		mainPanel = panel;
+		add(mainPanel);
+		validate();
+		repaint();
+	}
+	public void swapWindow(JPanel panel, JPanel panelTop)
+	{
+		if(topPanel != null)
+			remove(topPanel);
+		remove(mainPanel);
+		topPanel = panelTop;
+		mainPanel = panel;
+		if(topPanel != null)
+			add(topPanel);
 		add(mainPanel);
 		validate();
 		repaint();
@@ -68,6 +89,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public ClientGuiPanels getPanels()
 	{
 		return GuiPanels;
-		
+	}
+	public ClientGuiTopPanels getTopPanels()
+	{
+		return GuiTopPanels;
 	}
 }

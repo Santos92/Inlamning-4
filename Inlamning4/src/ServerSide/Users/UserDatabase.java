@@ -45,7 +45,9 @@ public class UserDatabase {
 			allUsers.add(new User(name, pass));
 			Session sess = new Session();
 			sess.setState(gameStates.OkReg);
-			sess.setMessage("Successful registration");
+			sess.setUserName(name);
+			server.setUserName(name);
+			sess.setMessage("Successful registration " + name);
 			server.send(sess);
 		}
 	}
@@ -91,8 +93,9 @@ public class UserDatabase {
 			{
 				Session sess = new Session();
 				sess.setState(gameStates.AuthAccept);
-				sess.setMessage("Welcome");
+				sess.setMessage("Welcome " + name);
 				sess.setUserName(name);
+				server.setUserName(name);
 				server.send(sess);
 				loggedIn = true;
 				break;
