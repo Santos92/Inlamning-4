@@ -37,6 +37,14 @@ public class ClientGuiPanels {
 	private JTextField passwordTxFdReg = new JTextField();
 	private JButton saveBtn = new JButton("Spara användare");
 	
+	//sidaNyttSpel
+	
+	//sidaLogedin
+	JButton startaSpel = new JButton("Starta nytt spel");
+	JButton dinTur = new JButton("Din tur mot ");
+	JButton aktivaSpel = new JButton("Användare väntar på att spelare ska acceptera");
+	JButton reklam = new JButton("Reklam");
+	
 	//Settingssidan
 	private JButton userInfo = new JButton("Användaruppgifter");
 	private JButton avatar = new JButton("Välj din avatar");
@@ -47,10 +55,11 @@ public class ClientGuiPanels {
 	
 	public ClientGuiPanels(ClientGUI GUI)
 	{
+
 		this.GUI = GUI;
 		setupThemes();
 		setTema(0);
-		topPanels = new ClientGuiTopPanels(Tema);
+		topPanels = new ClientGuiTopPanels(this.GUI);
 	}
 	public JPanel sidaStart(){
 
@@ -168,7 +177,7 @@ public class ClientGuiPanels {
 		loginLabel.setFont(headingFont);		
 		loginLabel.setForeground(Tema.getText());
 		
-		JLabel usernameLabel = new JLabel("Användarnamn");
+		JLabel usernameLabel = new JLabel("Användarnamn: " + "");
 		usernameLabel.setFont(labelFont);
 		usernameLabel.setForeground(Tema.getText());
 		
@@ -208,6 +217,8 @@ public class ClientGuiPanels {
 		}
 	
 	public JPanel sidaNyttSpel() {
+//		facebookVänner.remove
+		
 		JPanel body = new JPanel();
 		body.setLayout(new GridLayout(10,1));
 		body.setBackground(Tema.getBG());
@@ -246,9 +257,14 @@ public class ClientGuiPanels {
 		return body;
 	}
 	
-	public JPanel sidaLogedin() {
+	public JPanel sidaLogedin() {	
+		startaSpel.removeActionListener(GUI);
+		dinTur.removeActionListener(GUI);
+		startaSpel.removeActionListener(GUI);
+		reklam.removeActionListener(GUI);
+		
 		JPanel start = new JPanel();
-		start.setLayout(new GridLayout(7,1));
+		start.setLayout(new GridLayout(8,1));
 		start.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
 		btnFont = new Font("Arial", Font.BOLD, 17);
@@ -258,24 +274,26 @@ public class ClientGuiPanels {
 		JLabel användarnamn = new JLabel(" ");
 		användare.setForeground(Tema.getText());
 		
-		JButton startaSpel = new JButton("Starta nytt spel");
+//		JButton startaSpel = new JButton("Starta nytt spel");
 		startaSpel.setBackground(Tema.getStartGameBG());
 		startaSpel.setForeground(Tema.getText());
 		startaSpel.setBorderPainted(false);
 		startaSpel.setFont(headingFont);
 		
-		JButton dinTur = new JButton("Din tur mot ");
+//		JButton dinTur = new JButton("Din tur mot ");
 		dinTur.setBackground(Tema.getBG());
 		dinTur.setForeground(Tema.getText());
 		
 		JLabel aktivaSpelLabel = new JLabel("Aktiva spel");
 		aktivaSpelLabel.setForeground(Tema.getText());
-		JButton aktivaSpel = new JButton("Användare väntar på att spelare ska acceptera");
+		
+//		JButton aktivaSpel = new JButton("Användare väntar på att spelare ska acceptera");
 		aktivaSpel.setBackground(Tema.getBG());
 		aktivaSpel.setForeground(Tema.getText());
 		
-		JButton reklam = new JButton("Reklam");
+//		JButton reklam = new JButton("Reklam");
 		
+		start.add(topPanels.Top());
 		start.add(användare);
 		start.add(användarnamn);
 		start.add(startaSpel);
@@ -283,6 +301,11 @@ public class ClientGuiPanels {
 		start.add(aktivaSpelLabel);
 		start.add(aktivaSpel);
 		start.add(reklam);
+		
+		startaSpel.addActionListener(GUI);
+		dinTur.addActionListener(GUI);
+		aktivaSpel.addActionListener(GUI);
+		reklam.addActionListener(GUI);
 		
 		return start;
 	}
@@ -307,7 +330,6 @@ public class ClientGuiPanels {
 		userInfo.setFont(btnFont);
 		userInfo.setForeground(Tema.getText());
 		userInfo.setBorderPainted(false);
-		userInfo.setMargin(new Insets(30, 30, 30, 30));
 		userInfo.setFont(btnFont);		
 				
 		avatar.setBackground(Tema.getButtonBG());
@@ -335,6 +357,7 @@ public class ClientGuiPanels {
 		back.setForeground(Tema.getText());
 		back.setBorderPainted(false);
 				
+		settings.add(topPanels.TopwithoutButtons());
 		settings.add(userInfo);
 		settings.add(avatar);
 		settings.add(colors);
@@ -388,6 +411,23 @@ public class ClientGuiPanels {
 		return saveBtn;
 	}
 	
+	public JButton getStartaSpel() {
+		return startaSpel;
+	}
+	
+	public JButton getDinTur() {
+		return dinTur;
+	}
+	
+	public JButton getAktivaSpel() {
+		return aktivaSpel;
+	}
+	
+	public JButton getReklam() {
+		return reklam;
+	}
+	
+	
 	public JButton getSettingsUserInfo() {
 		return userInfo;
 	}
@@ -411,7 +451,10 @@ public class ClientGuiPanels {
 	public JButton getSettingsBack() {
 		return back;
 	}
-
+	public ClientGuiTopPanels getTopPanels()
+	{
+		return topPanels;
+	}
 	private void setupThemes(){
 		Color startGameBG = new Color(51,226,16);// grönt
 		Color topBG = new Color(30,144,255); //Ljusblå
