@@ -17,38 +17,24 @@ public class Questions {
 		this.wroAns1 = wroAns1;
 		this.wroAns2 = wroAns2;
 		this.wroAns3 = wroAns3;
-		
 	}
 
 	public String getCategory() {
 		return category;
 	}
-
 	public String getQuestion() {
 		return question;
 	}
-
-
 	public String getCorAnswer() {
 		return corAnswer;
 	}
-
-
 	public String getWroAns1() {
 		return wroAns1;
 	}
-
-
 	public String getWroAns2() {
 		return wroAns2;
 	}
-
 	public String getWroAns3() {
 		return wroAns3;
 	}
-
-	
-	
-	
-	
 }
