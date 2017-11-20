@@ -83,7 +83,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 			client.send(sess);
 		}
 		else if(e.getSource().equals(GuiPanels.getStartaSpel()))
-			swapWindow(GuiPanels.sidaNyttSpel());
+			swapWindow(GuiPanels.sidaNyttSpel(), GuiTopPanels.Top());
+		else if(e.getSource().equals(GuiTopPanels.getTopPanelinställningar()))
+			swapWindow(GuiPanels.sidaSettings());
+		else if(e.getSource().equals(GuiPanels.getSettingsBack()))
+			swapWindow(GuiPanels.sidaLogedin(),GuiTopPanels.Top());
 			
 	}
 	public ClientGuiPanels getPanels()
