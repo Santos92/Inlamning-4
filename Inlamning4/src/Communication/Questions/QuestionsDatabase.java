@@ -9,9 +9,6 @@ public class QuestionsDatabase {
 	private ArrayList<Questions> Geografi = new ArrayList<>();
 	private ArrayList<Questions> Historia = new ArrayList<>();
 	
-	
-	Questions Film1 = new Questions("Film", "Vem spelade huvudrollen i 'I am Legend' ?", "Will Smith", "Denzel Washington", "Jamie Fox", "Samuel Jackson");
-
 	public QuestionsDatabase(){
 		fillMat();
 		fillTeknik();
@@ -53,28 +50,4 @@ public class QuestionsDatabase {
 	public ArrayList<Questions> getHistoria() {
 		return Historia;
 	}
-	public Questions getFilm1() {
-		return Film1;
-	}
-	public void setMat(ArrayList<Questions> mat) {
-		Mat = mat;
-	}
-	public void setFilm(ArrayList<Questions> film) {
-		Film = film;
-	}
-	public void setTeknik(ArrayList<Questions> teknik) {
-		Teknik = teknik;
-	}
-	public void setGeografi(ArrayList<Questions> geografi) {
-		Geografi = geografi;
-	}
-	public void setHistoria(ArrayList<Questions> historia) {
-		Historia = historia;
-	}
-	public void setFilm1(Questions film1) {
-		Film1 = film1;
-	}
-
-    
-
 }

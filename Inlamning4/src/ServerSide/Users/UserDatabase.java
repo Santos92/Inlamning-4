@@ -12,13 +12,8 @@ import Communication.Session;
 import Communication.Session.gameStates;
 import ServerSide.ClientThread;
 
-public class UserDatabase implements Serializable{
+public class UserDatabase {
 
-	//User användare = new User("", "");
-	
-	
-	
-	
 	private static ArrayList<User> allUsers = new ArrayList<>();	
 	public void register(String name, String pass, ClientThread server) {
 		boolean userExist = false;
