@@ -35,8 +35,8 @@ public class ClientSessionHandling {
 		}
 		else if(state == gameStates.OkReg)
 		{
-			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 			client.setUserName(UserName);
+			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 			JOptionPane.showMessageDialog(null, Message);
 		}
 		else if(state == gameStates.FailAuth)
@@ -44,8 +44,8 @@ public class ClientSessionHandling {
 			JOptionPane.showMessageDialog(null, Message);
 		}
 		else if(state == gameStates.AuthAccept) {
-			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 			client.setUserName(UserName);
+			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 			JOptionPane.showMessageDialog(null, Message);
 		}
 	}

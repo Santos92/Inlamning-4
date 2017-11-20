@@ -33,8 +33,6 @@ public class ServerSessionHandler {
 	{
 		if(state == gameStates.TryRegister)
 		{
-			server.status(UserName);
-			server.status(UserPass);
 			userDB.register(UserName, UserPass, server);
 		}
 		else if(state == gameStates.TryLogin)
