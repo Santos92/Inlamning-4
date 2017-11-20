@@ -14,10 +14,8 @@ public class ClientGuiTopPanels {
 	
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
 	private ClientGUI GUI;
-//	private ClientGuiPanels GUI;
 	private ColorThemes Tema;
 	private Font headingFont;
-	
 	
 	//Top buttons
 	private JButton refresh = new JButton("Refresh");
@@ -28,7 +26,6 @@ public class ClientGuiTopPanels {
 		setupThemes();
 		setTema(0);
 		this.GUI = GUI;
-//		this.Tema = Tema;
 	}
 	
 	public JPanel TopwithoutButtons() {

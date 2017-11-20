@@ -40,6 +40,12 @@ public class ClientGuiPanels {
 	private JTextField passwordTxFdReg = new JTextField();
 	private JButton saveBtn = new JButton("Spara användare");
 	
+	//LogedinSidan
+	private JButton startaSpel = new JButton("Starta nytt spel");
+	private JButton dinTur = new JButton("Din tur");
+	private JButton reklam = new JButton("Reklam");
+	private JButton aktivaSpel = new JButton("Aktiva Spel");
+	
 	//Settingssidan
 	private JButton userInfo = new JButton("Användaruppgifter");
 	private JButton avatar = new JButton("Välj din avatar");
@@ -48,8 +54,15 @@ public class ClientGuiPanels {
 	private JButton help = new JButton("Hjälp");
 	private JButton back = new JButton("Tillbaka");
 	
-	//LogedinSidan
-	private JButton startaSpel = new JButton("Starta nytt spel");
+	//sidaNyttSpel
+//	body.add(sökSpelare);
+//	body.add(facebookVänner);
+//	body.add(slumpadSpelare);
+//	body.add(vänner);
+//	body.add(bjudInVänner);
+//	body.add(user1);
+	private JButton slumpaSpelare = new JButton("Slumpa ny spelare");
+	
 	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
@@ -58,7 +71,7 @@ public class ClientGuiPanels {
 		this.GUI = GUI;
 		setupThemes();
 		setTema(0);
-		topPanels = new ClientGuiTopPanels(Tema);
+		topPanels = new ClientGuiTopPanels(GUI);
 	}
 	public JPanel sidaStart(){
 
@@ -216,6 +229,7 @@ public class ClientGuiPanels {
 		}
 	
 	public JPanel sidaNyttSpel() {
+		slumpaSpelare.removeActionListener(GUI);
 		JPanel body = new JPanel();
 		body.setLayout(new GridLayout(10,1));
 		body.setBackground(Tema.getBG());
@@ -229,9 +243,8 @@ public class ClientGuiPanels {
 		facebookVänner.setBackground(Tema.getBG());
 		facebookVänner.setForeground(Tema.getText());
 		
-		JButton slumpadSpelare = new JButton("Slumpad spelare");
-		slumpadSpelare.setBackground(Tema.getBG());
-		slumpadSpelare.setForeground(Tema.getText());
+		slumpaSpelare.setBackground(Tema.getBG());
+		slumpaSpelare.setForeground(Tema.getText());
 		
 		JLabel vänner = new JLabel("Vänner");
 		vänner.setFont(labelFont);
@@ -246,10 +259,12 @@ public class ClientGuiPanels {
 		user1.setForeground(Tema.getText());
 		body.add(sökSpelare);
 		body.add(facebookVänner);
-		body.add(slumpadSpelare);
+		body.add(slumpaSpelare);
 		body.add(vänner);
 		body.add(bjudInVänner);
 		body.add(user1);
+		
+		slumpaSpelare.addActionListener(GUI);
 
 		return body;
 	}
@@ -276,15 +291,17 @@ public class ClientGuiPanels {
 		startaSpel.setBorderPainted(false);
 		startaSpel.setFont(headingFont);
 		
-		dinTur.setBackground(Tema.getBG());
+		dinTur.setBackground(Tema.getButtonBG());
 		dinTur.setForeground(Tema.getText());
 		
 		JLabel aktivaSpelLabel = new JLabel("Aktiva spel");
 		aktivaSpelLabel.setForeground(Tema.getText());
 		
-		aktivaSpel.setBackground(Tema.getBG());
+		aktivaSpel.setBackground(Tema.getButtonBG());
 		aktivaSpel.setForeground(Tema.getText());
 		
+		reklam.setBackground(Tema.getButtonBG());
+		reklam.setForeground(Tema.getText());
 		
 		start.add(topPanels.Top());
 		start.add(användare);
@@ -404,6 +421,10 @@ public class ClientGuiPanels {
 		return saveBtn;
 	}
 	
+	public JButton getSlumpaSpelare() {
+		return slumpaSpelare;
+	}
+	
 	public JButton getStartaSpel() {
 		return startaSpel;
 	}
@@ -448,9 +469,7 @@ public class ClientGuiPanels {
 	{
 		return topPanels;
 	}
-	public JButton getStartaSpel() {
-		return startaSpel;
-	}
+	
 	private void setupThemes(){
 		Color startGameBG = new Color(51,226,16);// grönt
 		Color topBG = new Color(30,144,255); //Ljusblå

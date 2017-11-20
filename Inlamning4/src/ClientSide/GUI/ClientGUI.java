@@ -18,12 +18,14 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 6652272365889996841L;
 	private ClientGuiPanels GuiPanels;
 	private Client client;
+	private ClientGuiTopPanels topPanels;
 	
 	private JPanel mainPanel;
 	
 	public ClientGUI(Client client){
 		this.client = client;
 		GuiPanels = new ClientGuiPanels(this, this.client);
+		topPanels = GuiPanels.getTopPanels();
 		mainPanel = GuiPanels.sidaStart();
 		add(mainPanel);		
 		new ClientWindow(this);
@@ -68,7 +70,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource().equals(topPanels.getTopPanelstatistik()))
 			swapWindow(GuiPanels.sidaSettings());
 		else if(e.getSource().equals(GuiPanels.getSettingsBack()))
-			swapWindow(GuiPanels.sidaLogedin());;
+			swapWindow(GuiPanels.sidaLogedin());
+		else if(e.getSource().equals(GuiPanels.getStartaSpel()))
+			swapWindow(GuiPanels.sidaNyttSpel());
 	}
 	public ClientGuiPanels getPanels()
 	{
