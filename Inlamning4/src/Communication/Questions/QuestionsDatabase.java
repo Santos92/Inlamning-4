@@ -1,8 +1,11 @@
 package Communication.Questions;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class QuestionsDatabase {
-	 private ArrayList<Questions> Mat = new ArrayList<>();
+public class QuestionsDatabase implements Serializable{
+
+	private static final long serialVersionUID = 6456998132662765750L;
+	private ArrayList<Questions> Mat = new ArrayList<>();
 		private ArrayList<Questions> Film = new ArrayList<>();
 		private ArrayList<Questions> Teknik = new ArrayList<>();
 		private ArrayList<Questions> Geografi = new ArrayList<>();
@@ -12,6 +15,8 @@ public class QuestionsDatabase {
 			fillMat();
 			fillTeknik();
 			fillFilm();
+			fillGeografi();
+			fillHistoria();
 		}
 	    public void fillMat()
 	    {

@@ -1,6 +1,9 @@
 package Communication;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+
+import Communication.Questions.Match;
 
 public class Session implements Serializable {
 
@@ -8,6 +11,7 @@ public class Session implements Serializable {
 	private String userName;
 	private String userPass;
 	private String Message;
+	private LinkedList<Match> matches;
 	public enum gameStates
 	{
 		TryLogin,
@@ -15,6 +19,8 @@ public class Session implements Serializable {
 		FailAuth,
 		FailReg,
 		OkReg,
+		RandomMatch,
+		getMatches,
 		AuthAccept;
 	}
 	public gameStates state;
@@ -47,5 +53,12 @@ public class Session implements Serializable {
 	{
 		Message = s;
 	}
+	public LinkedList<Match> getMatches() {
+		return matches;
+	}
+	public void setMatches(LinkedList<Match> matches) {
+		this.matches = matches;
+	}
+
 	
 }

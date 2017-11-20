@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import ClientSide.Client;
+import Communication.Session;
+import Communication.Session.gameStates;
 
 public class ClientGuiPanels {
 
@@ -34,7 +36,6 @@ public class ClientGuiPanels {
 	private JButton loginUser = new JButton("Logga in");
 	
 	private JButton Back = new JButton("Tillbaka");
-	
 	//RegSidan
 	private JTextField usernameTxFdReg = new JTextField();
 	private JTextField passwordTxFdReg = new JTextField();
@@ -55,6 +56,10 @@ public class ClientGuiPanels {
 	
 	//LogedinSidan
 	private JButton startaSpel = new JButton("Starta nytt spel");
+	
+	//NyttSpelSidan
+	private JButton slumpadSpelare = new JButton("Slumpad spelare");
+	private JButton sökSpelare = new JButton("Sök spelare");
 	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
@@ -101,7 +106,6 @@ public class ClientGuiPanels {
 		
 		return start;
 	}
-	
 	public JPanel sidaLogin() {
 		
 		loginUser.removeActionListener(GUI);
@@ -159,7 +163,6 @@ public class ClientGuiPanels {
 		
 		return login;
 	}
-	
 	public JPanel sidaSkapa() {
 			
 		saveBtn.removeActionListener(GUI);
@@ -191,8 +194,7 @@ public class ClientGuiPanels {
 		passwordLabel.setForeground(Tema.getText());
 		
 		passwordTxFdReg.setBackground(Tema.getTxFdBG());
-		
-		
+
 		saveBtn.setBackground(Tema.getButtonBG());
 		saveBtn.setForeground(Tema.getText());
 		saveBtn.setBorderPainted(false);
@@ -218,22 +220,20 @@ public class ClientGuiPanels {
 		
 		return create;
 		}
-	
 	public JPanel sidaNyttSpel() {
+		
+		sökSpelare.removeActionListener(GUI);
+		slumpadSpelare.removeActionListener(GUI);
+		
 		JPanel body = new JPanel();
 		body.setLayout(new GridLayout(10,1));
 		body.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
 		btnFont = new Font("Arial", Font.BOLD, 17);
-		JButton sökSpelare = new JButton("Sök spelare");
+		
 		sökSpelare.setBackground(Tema.getBG());
 		sökSpelare.setForeground(Tema.getText());
 		
-		JButton facebookVänner = new JButton("Facebook-vänner");
-		facebookVänner.setBackground(Tema.getBG());
-		facebookVänner.setForeground(Tema.getText());
-		
-		JButton slumpadSpelare = new JButton("Slumpad spelare");
 		slumpadSpelare.setBackground(Tema.getBG());
 		slumpadSpelare.setForeground(Tema.getText());
 		
@@ -241,34 +241,19 @@ public class ClientGuiPanels {
 		vänner.setFont(labelFont);
 		vänner.setForeground(Tema.getText());
 		
-		JButton bjudInVänner = new JButton("Bjud in vänner");
-		bjudInVänner.setBackground(Tema.getBG());
-		bjudInVänner.setForeground(Tema.getText());
-		
-		JButton user1 = new JButton("User1");
-		user1.setBackground(Tema.getBG());
-		user1.setForeground(Tema.getText());
 		body.add(sökSpelare);
-		body.add(facebookVänner);
 		body.add(slumpadSpelare);
 		body.add(vänner);
-		body.add(bjudInVänner);
-		body.add(user1);
 		
 		sökSpelare.addActionListener(GUI);
-		facebookVänner.addActionListener(GUI);
 		slumpadSpelare.addActionListener(GUI);
-		bjudInVänner.addActionListener(GUI);
-		user1.addActionListener(GUI);
 		return body;
 	}
-	
 	public JPanel sidaLogedin() {
 		
-		startaSpel.removeActionListener(GUI);
-		
+		startaSpel.removeActionListener(GUI);		
 		JPanel start = new JPanel();
-		start.setLayout(new GridLayout(7,1));
+		start.setLayout(new GridLayout(0,1));
 		start.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
 		btnFont = new Font("Arial", Font.BOLD, 17);
@@ -277,7 +262,6 @@ public class ClientGuiPanels {
 		användare.setForeground(Tema.getText());
 		JLabel användarnamn = new JLabel(" ");
 		användare.setForeground(Tema.getText());
-		
 		
 		startaSpel.setBackground(Tema.getStartGameBG());
 		startaSpel.setForeground(Tema.getText());
@@ -302,13 +286,23 @@ public class ClientGuiPanels {
 		start.add(dinTur);
 		start.add(aktivaSpelLabel);
 		start.add(aktivaSpel);
+		if(client.getMatches()!= null)
+		{
+			JButton matches[] = new JButton[client.getMatches().size()];
+			for(int i = client.getMatches().size()-1; i>= 0; i--)
+			{
+				matches[i] = new JButton(client.getMatches().get(i).getOpponent());
+				matches[i].setBackground(Tema.getBG());
+				matches[i].setForeground(Tema.getText());
+				start.add(matches[i]);
+			}
+		}
 		start.add(reklam);
 		
 		startaSpel.addActionListener(GUI);
 		
 		return start;
 	}
-	
 	public JPanel sidaSettings() {
 		
 		userInfo.removeActionListener(GUI);
@@ -373,7 +367,7 @@ public class ClientGuiPanels {
 		
 		return settings;
 	}
-		public JPanel sidaVäljKategori() {
+	public JPanel sidaVäljKategori() {
 		JPanel väljKat = new JPanel();
 		väljKat.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
@@ -403,79 +397,83 @@ public class ClientGuiPanels {
 		
 		return väljKat;
 	}
-	
 	public JButton getRegBtn() {
 		return regBtn;
 	}
-
 	public JButton getLoginBtn() {
 		return loginBtn;
 	}
-
 	public JTextField getPasswordTxFdLog() {
 		return passwordTxFdLog;
 	}
-
 	public JTextField getUsernameTxFdLog() {
 		return usernameTxFdLog;
 	}
-
 	public JButton getLoginUser() {
 		return loginUser;
 	}
-
 	public JButton getBack() {
 		return Back;
 	}
-
 	public JTextField getUsernameTxFdReg() {
 		return usernameTxFdReg;
 	}
-
 	public JTextField getPasswordTxFdReg() {
 		return passwordTxFdReg;
 	}
-
 	public JButton getSaveBtn() {
 		return saveBtn;
 	}
-	
 	public JButton getSettingsUserInfo() {
 		return userInfo;
 	}
-	
 	public JButton getSettingsAvatar() {
 		return avatar;
 	}
-	
 	public JButton getSettingsColors() {
 		return colors;
 	}
-	
 	public JButton getSettingsPremium() {
 		return premium;
 	}
-	
 	public JButton getSettingsHelp() {
 		return help;
 	}
-	
 	public JButton getSettingsBack() {
 		return back;
 	}
-
 	public JButton getStartaSpel() {
 		return startaSpel;
 	}
-		public JButton getKategori1() {
+	public JButton getKategori1() {
 		return kategori1;
 	}
-
 	public JButton getKategori2() {
 		return kategori2;
 	}
 	public JButton getKategori3() {
 		return kategori3;
+	}
+	public Font getLabelFont() {
+		return labelFont;
+	}
+	public JButton getUserInfo() {
+		return userInfo;
+	}
+	public JButton getAvatar() {
+		return avatar;
+	}
+	public JButton getPremium() {
+		return premium;
+	}
+	public JButton getHelp() {
+		return help;
+	}
+	public JButton getSlumpadSpelare() {
+		return slumpadSpelare;
+	}
+	public JButton getSökSpelare() {
+		return sökSpelare;
 	}
 	public ClientGuiTopPanels getTopPanels()
 	{

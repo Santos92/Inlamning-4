@@ -59,6 +59,7 @@ public class ClientThread extends Thread implements Runnable {
 	public void send(Object obj)
 	{
 		try {
+			out.reset();
 			out.writeUnshared(obj);
 			out.flush();
 		} catch (IOException e) {

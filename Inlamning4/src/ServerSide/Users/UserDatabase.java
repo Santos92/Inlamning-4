@@ -22,8 +22,20 @@ public class UserDatabase {
 	{
 		
 		UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
-		if(!UserDatabase.exists())
-			UserDatabase = new File("src\\ServerSide\\Users\\AllUsers.txt");
+//		if(!UserDatabase.exists())
+//		{
+//			UserDatabase = new File("src\\ServerSide\\Users\\AllUsers.txt");
+//		}
+	}
+	
+	public User getUser(String name)
+	{
+		for (User x : allUsers)
+			if(name.equalsIgnoreCase(x.getNamn()))
+			{
+				return x;
+			}
+		return null;
 	}
 	
 	public void register(String name, String pass, ClientThread server) {
@@ -95,6 +107,7 @@ public class UserDatabase {
 				sess.setState(gameStates.AuthAccept);
 				sess.setMessage("Welcome " + name);
 				sess.setUserName(name);
+				sess.setMatches(x.getMatcher());
 				server.setUserName(name);
 				server.send(sess);
 				loggedIn = true;

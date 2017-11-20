@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ClientSide.Client;
@@ -87,7 +88,19 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource().equals(GuiTopPanels.getTopPanelinställningar()))
 			swapWindow(GuiPanels.sidaSettings());
 		else if(e.getSource().equals(GuiPanels.getSettingsBack()))
-			swapWindow(GuiPanels.sidaLogedin(),GuiTopPanels.Top());
+		{
+			Session sess = new Session();
+			sess.setState(gameStates.getMatches);
+			sess.setUserName(client.getUserName());
+			client.send(sess);
+		}
+		else if(e.getSource().equals(GuiPanels.getSlumpadSpelare()))
+		{
+			Session sess = new Session();
+			sess.setState(gameStates.RandomMatch);
+			sess.setUserName(client.getUserName());
+			client.send(sess);
+		}
 			
 	}
 	public ClientGuiPanels getPanels()
