@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import ServerSide.SessionHandling.ServerSessionHandler;
+import ServerSide.Users.UserDatabase;
 
 
 public class ClientThread extends Thread implements Runnable {
@@ -28,9 +29,9 @@ public class ClientThread extends Thread implements Runnable {
 	public void run() {
 		while(true)
 		{
-			try {				
-				new ServerSessionHandler(in.readObject());
-				
+			try {
+				new ServerSessionHandler(server, this, in.readObject());
+				server.printStatus("Paket mottaget");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -38,6 +39,10 @@ public class ClientThread extends Thread implements Runnable {
 				break;
 			}
 		}
+	}
+	public void status(String s)
+	{
+		server.printStatus(s);
 	}
 	public void setupStream()
 	{
@@ -48,6 +53,15 @@ public class ClientThread extends Thread implements Runnable {
 		catch(Exception e) 
 		{
 			e.printStackTrace();
+		}
+	}
+	public void send(Object obj)
+	{
+		try {
+			out.writeUnshared(obj);
+			out.flush();
+		} catch (IOException e) {
+			
 		}
 	}
 }

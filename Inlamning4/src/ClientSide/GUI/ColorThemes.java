@@ -1,19 +1,20 @@
 package ClientSide.GUI;
 
 import java.awt.Color;
-import java.awt.Font;
+
 
 
 public class ColorThemes {
 
+	 private Color startGameBG; // green
 	private Color topBG;
 	private Color BG;
 	private Color txFdBG;
 	private Color buttonBG;
 	private Color text;
-	private Font headingFont, btnFont;
-	
-	public ColorThemes(Color topBG, Color BG, Color txFdBG, Color buttonBG, Color text){
+		
+	public ColorThemes(Color startGameBG, Color topBG, Color BG, Color txFdBG, Color buttonBG, Color text){
+		this.startGameBG = startGameBG;
 		this.topBG = topBG;
 		this.BG = BG;
 		this.txFdBG = txFdBG;
@@ -21,6 +22,10 @@ public class ColorThemes {
 		this.text = text;
 	}
 
+	public Color getStartGameBG() {
+		return startGameBG;
+	}
+	
 	public Color getTopBG() {
 		return topBG;
 	}
