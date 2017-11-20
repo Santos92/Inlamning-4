@@ -13,7 +13,7 @@ import Communication.Session;
 import Communication.Session.gameStates;
 import ServerSide.ClientThread;
 
-public class UserDatabase {
+public class UserDatabase { 
 	
 	private static ArrayList<User> allUsers = new ArrayList<>();
 	private File UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
