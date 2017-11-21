@@ -65,6 +65,9 @@ public class ClientGuiPanels {
 	//LogedinSidan
 	private JButton startaSpel = new JButton("Starta nytt spel");
 	
+	//Top panel
+	private JPanel topMenu;
+	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
 		this.GUI = GUI;
@@ -73,11 +76,9 @@ public class ClientGuiPanels {
 		setTema(0);
 		topPanels = new ClientGuiTopPanels(Tema, this.GUI);
 	}
-public JPanel sidaStart(){
-
+	public JPanel sidaStart(){
 		loginBtn.removeActionListener(GUI);
 		regBtn.removeActionListener(GUI);
-		
 		try {
 			URL urlLogo= new URL("http://www.icon2s.com/wp-content/uploads/2012/09/Letter-Q-150x150.png");
 			imageLogo = ImageIO.read(urlLogo);
@@ -85,8 +86,7 @@ public JPanel sidaStart(){
 		} catch (IOException e) {
 			e.getMessage();
 		}
-
-
+		
 		JPanel start = new JPanel();
 		start.setLayout(new GridLayout(5,0,40,40));
 		start.setBorder(new EmptyBorder(100,30,20,30));
@@ -100,7 +100,6 @@ public JPanel sidaStart(){
 		gameNameLabel.setIconTextGap(0);
 		gameNameLabel.setFont(headingFont);
 		gameNameLabel.setForeground(Tema.getText());
-		
 		
 		regBtn.setBackground(Tema.getButtonBG());
 		regBtn.setFont(btnFont);
@@ -123,7 +122,6 @@ public JPanel sidaStart(){
 		
 		return start;
 	}
-	
 	public JPanel sidaLogin() {
 
 		loginUser.removeActionListener(GUI);
@@ -152,15 +150,12 @@ public JPanel sidaStart(){
 		
 		JLabel passwordLabel = new JLabel("Lösenord");
 		passwordLabel.setFont(labelFont);
-		passwordLabel.setForeground(Tema.getText());
-		
-		
+		passwordLabel.setForeground(Tema.getText());		
 		passwordTxFdLog.setBackground(Tema.getTxFdBG());
 		
-		 JPanel btnHolder = new JPanel();
-         btnHolder.setLayout(new GridLayout(0,2));
-         btnHolder.setBackground(Tema.getBG());
-         
+		JPanel btnHolder = new JPanel();
+        btnHolder.setLayout(new GridLayout(0,2));
+        btnHolder.setBackground(Tema.getBG());
 
 		loginUser.setBackground(Tema.getButtonBG());
 		loginUser.setForeground(Tema.getText());
@@ -171,7 +166,7 @@ public JPanel sidaStart(){
 		Back.setForeground(Tema.getText());
 		Back.setBorderPainted(false);
 		Back.setFont(btnFont);
-		
+	
 		btnHolder.add(loginUser);
 		btnHolder.add(Back);
 		
@@ -189,10 +184,7 @@ public JPanel sidaStart(){
 		
 		return login;
 	}
-	
 	public JPanel sidaSkapa() {
-		
-		
 		saveBtn.removeActionListener(GUI);
 		Back.removeActionListener(GUI);
 		usernameTxFdReg.removeActionListener(GUI);
@@ -247,21 +239,16 @@ public JPanel sidaStart(){
 		create.add(passwordTxFdReg);
         create.add(btnHolder);
 
-	
 		saveBtn.addActionListener(GUI);
 		Back.addActionListener(GUI);
 		usernameTxFdReg.addActionListener(GUI);
 		passwordTxFdReg.addActionListener(GUI);
 		
 		return create;
-		}
-	
-
+	}
 	public JPanel sidaLogedin() {
 		
 		startaSpel.removeActionListener(GUI);	
-	
-		JPanel topMenu = new JPanel();
 		topMenu = topPanels.Top();
 
 		JPanel logedInPanel = new JPanel();
@@ -271,16 +258,14 @@ public JPanel sidaStart(){
 		headingFont = new Font("Arial", Font.BOLD, 30);
 		btnFont = new Font("Arial", Font.BOLD, 17);
 
-	
-		JLabel userLabel = new JLabel("Användarnamn: ");
+		JLabel userLabel = new JLabel("Användarnamn: " + client.getUserName());
 		Border border = userLabel.getBorder();
 		Border margin = new EmptyBorder(10,70,0,0);
 		userLabel.setBorder(new CompoundBorder(border, margin));
 		userLabel.setForeground(Tema.getTxFdBG());
 		userLabel.setFont(smalFont);
 
-		String name = getUsernameTxFdLog().getText();
-		JLabel username = new JLabel(name);
+		JLabel username = new JLabel(client.getUserName());
 		Border labelBorder = userLabel.getBorder();
 		Border labelMargin = new EmptyBorder(20,0,0,0);
 		username.setBorder(new CompoundBorder(labelBorder, labelMargin));
@@ -294,12 +279,12 @@ public JPanel sidaStart(){
 		startaSpel.setFont(headingFont);
 		startaSpel.setBackground(Tema.getStartGameBG());
 		
-		
 		JButton dinTur = new JButton("Din tur mot User1");
 		dinTur.setBackground(Tema.getButtonBG());
 		dinTur.setForeground(Tema.getText());
 		dinTur.setFont(btnFont);
 		dinTur.setBorderPainted(false);
+		
 		JButton dinTur2 = new JButton("Din tur mot User2");
 		dinTur2.setBackground(Tema.getButtonBG());
 		dinTur2.setForeground(Tema.getText());
@@ -312,7 +297,7 @@ public JPanel sidaStart(){
 		aktivaSpelLabel.setForeground(Tema.getTxFdBG());
 		aktivaSpelLabel.setFont(btnFont);
 		
-		JButton aktivaSpel = new JButton(name +" spelar rond 3");
+		JButton aktivaSpel = new JButton("x spelar rond 3");
 		aktivaSpel.setBackground(Tema.getButtonBG());
 		aktivaSpel.setForeground(Tema.getText());
 		aktivaSpel.setFont(btnFont);
@@ -323,7 +308,7 @@ public JPanel sidaStart(){
 		avslutadeSpelLabel.setForeground(Tema.getTxFdBG());
 		avslutadeSpelLabel.setFont(smalFont);
 		
-		JButton avslutadSpel = new JButton(name +" förlorade mot User1");
+		JButton avslutadSpel = new JButton("x förlorade mot User1");
 		avslutadSpel.setBackground(Tema.getButtonBG());
 		avslutadSpel.setForeground(Tema.getText());
 		avslutadSpel.setFont(btnFont);
@@ -341,12 +326,9 @@ public JPanel sidaStart(){
 		logedInPanel.add(aktivaSpel);
 		logedInPanel.add(avslutadeSpelLabel);
 		logedInPanel.add(avslutadSpel);
-//		start.add(reklam);
 		
 		return logedInPanel;
 	}
- 	
-	
 	public JPanel sidaNyttSpel() {
 		
 		back.removeActionListener(GUI);
@@ -389,7 +371,6 @@ public JPanel sidaStart(){
 		vänner.setFont(labelFont);
 		vänner.setForeground(Tema.getText());
 
-		
 		JButton bjudInVänner = new JButton("Bjud in vänner");
 		bjudInVänner.setBackground(Tema.getTopBG());
 		bjudInVänner.setForeground(Tema.getText());
@@ -409,9 +390,6 @@ public JPanel sidaStart(){
 		back.setFont(btnFont);
 		back.setBorderPainted(false);
 		
-		
-		
-		
 		newGamePanel.add(topMenu);
 		newGamePanel.add(empty);
 		newGamePanel.add(spelaMed);
@@ -425,12 +403,9 @@ public JPanel sidaStart(){
 		newGamePanel.add(back); 
 		
 		back.addActionListener(GUI);
-		
 
 		return newGamePanel;
-		
 	}
-	
 	public JPanel sidaSettings() {
 		
 		userInfo.removeActionListener(GUI);
@@ -495,24 +470,29 @@ public JPanel sidaStart(){
 		
 		return settings;
 	}
-		public JPanel sidaVäljKategori() {
+	public JPanel sidaVäljKategori() {
 		JPanel väljKat = new JPanel();
 		väljKat.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
 		btnFont = new Font("Arial", Font.BOLD, 17);
 		väljKat.setFont(headingFont);
+		
 		JLabel väljkategori = new JLabel("Välj kategori mot: ");
 		JLabel användarnamn = new JLabel("");
 		väljKat.setForeground(Tema.getText());
+		
 		JButton kategori1 = new JButton();
 		kategori1.setBackground(Tema.getChangeCate1());// change these colors
 		kategori1.setForeground(Tema.getText());
+		
 		JButton kategori2 = new JButton();
 		kategori2.setBackground(Tema.getChangeCate2());
 		kategori2.setForeground(Tema.getText());
+		
 		JButton kategori3 = new JButton();
 		kategori3.setBackground(Tema.getChangeCate3());
 		kategori3.setForeground(Tema.getText());
+		
 		väljKat.add(väljkategori);
 		väljKat.add(användarnamn);
 		väljKat.add(kategori1);
@@ -525,74 +505,57 @@ public JPanel sidaStart(){
 		
 		return väljKat;
 	}
-	
 	public JButton getRegBtn() {
 		return regBtn;
 	}
-
 	public JButton getLoginBtn() {
 		return loginBtn;
 	}
-
 	public JTextField getPasswordTxFdLog() {
 		return passwordTxFdLog;
 	}
-
 	public JTextField getUsernameTxFdLog() {
 		return usernameTxFdLog;
 	}
-
 	public JButton getLoginUser() {
 		return loginUser;
 	}
-
 	public JButton getBack() {
 		return Back;
 	}
-
 	public JTextField getUsernameTxFdReg() {
 		return usernameTxFdReg;
 	}
-
 	public JTextField getPasswordTxFdReg() {
 		return passwordTxFdReg;
 	}
-
 	public JButton getSaveBtn() {
 		return saveBtn;
 	}
-	
 	public JButton getSettingsUserInfo() {
 		return userInfo;
 	}
-	
 	public JButton getSettingsAvatar() {
 		return avatar;
 	}
-	
 	public JButton getSettingsColors() {
 		return colors;
 	}
-	
 	public JButton getSettingsPremium() {
 		return premium;
 	}
-	
 	public JButton getSettingsHelp() {
 		return help;
 	}
-	
 	public JButton getSettingsBack() {
 		return back;
 	}
-
 	public JButton getStartaSpel() {
 		return startaSpel;
 	}
-		public JButton getKategori1() {
+	public JButton getKategori1() {
 		return kategori1;
 	}
-
 	public JButton getKategori2() {
 		return kategori2;
 	}

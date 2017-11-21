@@ -6,8 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import Communication.Session;
 import Communication.Session.gameStates;
@@ -15,7 +14,7 @@ import ServerSide.ClientThread;
 
 public class UserDatabase { 
 	
-	private static ArrayList<User> allUsers = new ArrayList<>();
+	private static LinkedList<User> allUsers = new LinkedList<>();
 	private File UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
 	
 	public UserDatabase() 
@@ -73,12 +72,11 @@ public class UserDatabase {
 			{
 			FileInputStream fis = new FileInputStream(UserDatabase);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			allUsers = (ArrayList<User>) ois.readObject();
+			allUsers = (LinkedList<User>) ois.readObject();
 			
 			ois.close();
 			}
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

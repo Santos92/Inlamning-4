@@ -6,7 +6,6 @@ import ClientSide.Client;
 import ClientSide.GUI.ClientGUI;
 import Communication.Session;
 import Communication.Session.gameStates;
-import ServerSide.ClientThread;
 
 public class ClientSessionHandling {
 
@@ -36,7 +35,7 @@ public class ClientSessionHandling {
 		else if(state == gameStates.OkReg)
 		{
 			client.setUserName(UserName);
-			GUI.swapWindow(GUI.getPanels().sidaLogedin(), GUI.getTopPanels().Top());
+			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 			JOptionPane.showMessageDialog(null, Message);
 		}
 		else if(state == gameStates.FailAuth)
@@ -45,7 +44,7 @@ public class ClientSessionHandling {
 		}
 		else if(state == gameStates.AuthAccept) {
 			client.setUserName(UserName);
-			GUI.swapWindow(GUI.getPanels().sidaLogedin(), GUI.getTopPanels().Top());
+			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 			JOptionPane.showMessageDialog(null, Message);
 		}
 	} 

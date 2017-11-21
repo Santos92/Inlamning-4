@@ -24,8 +24,6 @@ public class ClientGuiTopPanels {
 		this.GUI = GUI;
 		this.Tema = Tema;
 	}
-	
-	
 	public JPanel TopwithoutButtons() {
 		JPanel top = new JPanel();
 		top.setLayout(new BoxLayout(top, BoxLayout.LINE_AXIS));
@@ -39,7 +37,6 @@ public class ClientGuiTopPanels {
 		top.add(titel);
 		return top;
 	}
-	
 	public JPanel Top() {
 		refresh.removeActionListener(GUI);
 		statistik.removeActionListener(GUI);
@@ -79,7 +76,6 @@ public class ClientGuiTopPanels {
 		btnHolder.add(refresh);
 		btnHolder.add(statistik);
 		btnHolder.add(inställningar);
-		
 
 		top.add(titel);
 		top.add(btnHolder);
@@ -95,5 +91,4 @@ public class ClientGuiTopPanels {
 	public JButton getTopPanelinställningar() {
 		return inställningar;
 	}
-	
 }

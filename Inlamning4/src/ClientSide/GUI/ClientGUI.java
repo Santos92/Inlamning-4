@@ -35,29 +35,14 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 	
 	public void swapWindow(JPanel panel)
-	{
-		if(topPanel != null)
-			remove(topPanel);
-		
+	{		
 		remove(mainPanel);
 		mainPanel = panel;
 		add(mainPanel);
 		validate();
 		repaint();
 	}
-	public void swapWindow(JPanel panel, JPanel panelTop)
-	{
-		if(topPanel != null)
-			remove(topPanel);
-		remove(mainPanel);
-		topPanel = panelTop;
-		mainPanel = panel;
-		if(topPanel != null)
-			add(topPanel);
-		add(mainPanel);
-		validate();
-		repaint();
-	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -83,11 +68,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 			client.send(sess);
 		}
 		else if(e.getSource().equals(GuiPanels.getStartaSpel()))
-			swapWindow(GuiPanels.sidaNyttSpel(), GuiTopPanels.Top());
+			swapWindow(GuiPanels.sidaNyttSpel());
 		else if(e.getSource().equals(GuiTopPanels.getTopPanelinställningar()))
 			swapWindow(GuiPanels.sidaSettings());
 		else if(e.getSource().equals(GuiPanels.getSettingsBack()))
-			swapWindow(GuiPanels.sidaLogedin(),GuiTopPanels.Top());
+			swapWindow(GuiPanels.sidaLogedin());
 			
 	}
 	public ClientGuiPanels getPanels()
