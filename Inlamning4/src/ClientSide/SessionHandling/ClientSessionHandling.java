@@ -44,8 +44,14 @@ public class ClientSessionHandling {
 		}
 		else if(state == gameStates.AuthAccept) {
 			client.setUserName(UserName);
+			client.setMatcher(Packet.getMatcher());
 			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 			JOptionPane.showMessageDialog(null, Message);
+		}
+		else if(state == gameStates.getMatches)
+		{
+			client.setMatcher(Packet.getMatcher());
+			GUI.swapWindow(GUI.getPanels().sidaLogedin());
 		}
 	} 
 	

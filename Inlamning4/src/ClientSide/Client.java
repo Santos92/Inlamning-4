@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
 import ClientSide.GUI.ClientGUI;
 import ClientSide.SessionHandling.ClientSessionHandling;
+import Communication.Questions.Match;
 
 public class Client implements Runnable {
 
@@ -22,6 +24,7 @@ public class Client implements Runnable {
 	private Thread Listener;
 	private boolean Connected = false;
 	private String UserName;
+	private LinkedList<Match> matcher;	
 	
 	public Client()
 	{
@@ -95,5 +98,11 @@ public class Client implements Runnable {
 	}
 	public void setUserName(String userName) {
 		UserName = userName;
+	}
+	public LinkedList<Match> getMatcher() {
+		return matcher;
+	}
+	public void setMatcher(LinkedList<Match> matcher) {
+		this.matcher = matcher;
 	}
 }

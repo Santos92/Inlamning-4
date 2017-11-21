@@ -1,13 +1,17 @@
 package Communication.Questions;
 
-public class Questions {
+import java.io.Serializable;
 
+public class Questions implements Serializable{
+
+	private static final long serialVersionUID = 7289894793091974963L;
 	private	String category;
 	private String question;
 	private	String corAnswer;
 	private String wroAns1;
 	private String wroAns2;
 	private String wroAns3;
+	private String ChosenAnswear;
 	
 	public Questions(String category,String question,String corAnswer, String wroAns1,
 				String wroAns2,String wroAns3 ){
@@ -36,5 +40,11 @@ public class Questions {
 	}
 	public String getWroAns3() {
 		return wroAns3;
+	}
+	public String getChosenAnswear() {
+		return ChosenAnswear;
+	}
+	public void setChosenAnswear(String chosenAnswear) {
+		ChosenAnswear = chosenAnswear;
 	}
 }

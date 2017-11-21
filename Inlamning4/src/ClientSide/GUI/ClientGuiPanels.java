@@ -65,6 +65,9 @@ public class ClientGuiPanels {
 	//LogedinSidan
 	private JButton startaSpel = new JButton("Starta nytt spel");
 	
+	//Nyttspel sidan
+	private JButton slumpadSpelare = new JButton("Slumpad spelare");
+	
 	//Top panel
 	private JPanel topMenu;
 	
@@ -252,7 +255,7 @@ public class ClientGuiPanels {
 		topMenu = topPanels.Top();
 
 		JPanel logedInPanel = new JPanel();
-		logedInPanel.setLayout(new GridLayout(10,0));
+		logedInPanel.setLayout(new GridLayout(0,1));
 		logedInPanel.setBackground(Tema.getBG());
 		Font smalFont = new Font("Arial", Font.BOLD, 15);
 		headingFont = new Font("Arial", Font.BOLD, 30);
@@ -297,12 +300,6 @@ public class ClientGuiPanels {
 		aktivaSpelLabel.setForeground(Tema.getTxFdBG());
 		aktivaSpelLabel.setFont(btnFont);
 		
-		JButton aktivaSpel = new JButton("x spelar rond 3");
-		aktivaSpel.setBackground(Tema.getButtonBG());
-		aktivaSpel.setForeground(Tema.getText());
-		aktivaSpel.setFont(btnFont);
-		aktivaSpel.setBorderPainted(false);
-		
 		JLabel avslutadeSpelLabel = new JLabel("Avslutade spel");
 		avslutadeSpelLabel.setBorder(new CompoundBorder(labelBorder, labelMargin));
 		avslutadeSpelLabel.setForeground(Tema.getTxFdBG());
@@ -323,7 +320,19 @@ public class ClientGuiPanels {
 		logedInPanel.add(dinTur);
 		logedInPanel.add(dinTur2);
 		logedInPanel.add(aktivaSpelLabel);
-		logedInPanel.add(aktivaSpel);
+		if(client.getMatcher() != null)
+		{
+			JButton[] ActiveMatches = new JButton[client.getMatcher().size()];
+			for(int i = client.getMatcher().size()-1;i>=0;i--)
+			{
+				ActiveMatches[i] = new JButton(client.getMatcher().get(i).getOpponent());
+				ActiveMatches[i].setBackground(Tema.getButtonBG());
+				ActiveMatches[i].setForeground(Tema.getText());
+				ActiveMatches[i].setFont(btnFont);
+				ActiveMatches[i].setBorderPainted(false);
+				logedInPanel.add(ActiveMatches[i]);
+			}
+		}
 		logedInPanel.add(avslutadeSpelLabel);
 		logedInPanel.add(avslutadSpel);
 		
@@ -332,6 +341,7 @@ public class ClientGuiPanels {
 	public JPanel sidaNyttSpel() {
 		
 		back.removeActionListener(GUI);
+		slumpadSpelare.removeActionListener(GUI);
 		
 		JPanel topMenu = new JPanel();
 		topMenu = topPanels.TopwithoutButtons();
@@ -357,7 +367,6 @@ public class ClientGuiPanels {
 		sökSpelare.setFont(btnFont);
 		sökSpelare.setBorderPainted(false);
 		
-		JButton slumpadSpelare = new JButton("Slumpad spelare");
 		slumpadSpelare.setBackground(Tema.getTopBG());
 		slumpadSpelare.setForeground(Tema.getText());
 		slumpadSpelare.setFont(btnFont);
@@ -403,7 +412,7 @@ public class ClientGuiPanels {
 		newGamePanel.add(back); 
 		
 		back.addActionListener(GUI);
-
+		slumpadSpelare.addActionListener(GUI);
 		return newGamePanel;
 	}
 	public JPanel sidaSettings() {
@@ -561,6 +570,9 @@ public class ClientGuiPanels {
 	}
 	public JButton getKategori3() {
 		return kategori3;
+	}
+	public JButton getSlumpadSpelare() {
+		return slumpadSpelare;
 	}
 	public ClientGuiTopPanels getTopPanels()
 	{

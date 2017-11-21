@@ -25,6 +25,14 @@ public class UserDatabase {
 			UserDatabase = new File("src\\ServerSide\\Users\\AllUsers.txt");
 	}
 	
+	public User getUser(String name)
+	{
+		for(User x : allUsers)
+			if(x.getNamn().equalsIgnoreCase(name))
+				return x;
+		return null;
+	}
+	
 	public void register(String name, String pass, ClientThread server) {
 		boolean userExist = false;
 		for(User x : allUsers)
@@ -93,6 +101,7 @@ public class UserDatabase {
 				sess.setState(gameStates.AuthAccept);
 				sess.setMessage("Welcome " + name);
 				sess.setUserName(name);
+				sess.setMatcher(x.getMatcher());
 				server.setUserName(name);
 				server.send(sess);
 				loggedIn = true;
