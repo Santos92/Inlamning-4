@@ -22,15 +22,17 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import ClientSide.Client;
+
 public class ClientGuiPanels {
 
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
 	private ColorThemes Tema;
-	private Font headingFont, labelFont, btnFont, smalFont;
+	private Font headingFont, labelFont, btnFont;
 	private ClientGUI GUI;
 	private ClientGuiTopPanels topPanels;
+	private Client client;
 
-	
 	Image imageLogo = null;
 	Image imageSeek = null;
 	
@@ -57,6 +59,12 @@ public class ClientGuiPanels {
 	private JButton help = new JButton("Hjälp");
 	private JButton back = new JButton("Tillbaka");
 	
+	//VäljKategoriSidan
+		private JButton kategori1 = new JButton("");
+		private JButton kategori2 = new JButton("");
+		private JButton kategori3 = new JButton("");
+	
+	
 	//LogedinSidan
 	private JButton startaSpel = new JButton("Starta nytt spel");
 	
@@ -65,13 +73,15 @@ public class ClientGuiPanels {
 //	private JButton statistik = topPanels.getStatistikBtn();
 //	private JButton inställningar = new JButton();
 	
-	public ClientGuiPanels(ClientGUI GUI)
+	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
 		this.GUI = GUI;
+		this.client = client;
 		setupThemes();
 		setTema(0);
-		topPanels = new ClientGuiTopPanels(Tema);
+		topPanels = new ClientGuiTopPanels(Tema, this.GUI);
 	}
+	
 	public JPanel sidaStart(){
 
 		loginBtn.removeActionListener(GUI);
@@ -266,7 +276,7 @@ public class ClientGuiPanels {
 		JPanel logedInPanel = new JPanel();
 		logedInPanel.setLayout(new GridLayout(10,0));
 		logedInPanel.setBackground(Tema.getBG());
-		smalFont = new Font("Arial", Font.BOLD, 15);
+		Font smalFont = new Font("Arial", Font.BOLD, 15);
 		headingFont = new Font("Arial", Font.BOLD, 30);
 		btnFont = new Font("Arial", Font.BOLD, 17);
 
@@ -348,11 +358,13 @@ public class ClientGuiPanels {
 	
 	public JPanel sidaNyttSpel() {
 		
+		back.removeActionListener(GUI);
+		
 		JPanel topMenu = new JPanel();
 		topMenu = topPanels.TopwithoutButtons();
 
 		JPanel newGamePanel = new JPanel();
-		newGamePanel.setLayout(new GridLayout(9,0));
+		newGamePanel.setLayout(new GridLayout(11,0));
 		newGamePanel.setBorder(new EmptyBorder(0,0,80,0));
 		newGamePanel.setBackground(Tema.getBG());
 		btnFont = new Font("Arial", Font.BOLD, 22);
@@ -398,6 +410,16 @@ public class ClientGuiPanels {
 		user1.setForeground(Tema.getText());
 		user1.setFont(btnFont);
 		user1.setBorderPainted(false);
+		JLabel empty2 = new JLabel("");
+		
+		back = new JButton("Tillbaka");
+		back.setBackground(Tema.getTopBG());
+		back.setForeground(Tema.getText());
+		back.setFont(btnFont);
+		back.setBorderPainted(false);
+		
+		
+		
 		
 		newGamePanel.add(topMenu);
 		newGamePanel.add(empty);
@@ -408,6 +430,11 @@ public class ClientGuiPanels {
 		newGamePanel.add(vänner);
 		newGamePanel.add(bjudInVänner);
 		newGamePanel.add(user1);
+		newGamePanel.add(empty2);
+		newGamePanel.add(back); 
+		
+		back.addActionListener(GUI);
+		
 
 		return newGamePanel;
 		
@@ -479,6 +506,38 @@ public class ClientGuiPanels {
 		return settings;
 	}
 	
+		public JPanel sidaVäljKategori() {
+		JPanel väljKat = new JPanel();
+		väljKat.setBackground(Tema.getBG());
+		headingFont = new Font("Arial", Font.BOLD, 22);
+		btnFont = new Font("Arial", Font.BOLD, 17);
+		väljKat.setFont(headingFont);
+		JLabel väljkategori = new JLabel("Välj kategori mot: ");
+		JLabel användarnamn = new JLabel("");
+		väljKat.setForeground(Tema.getText());
+		JButton kategori1 = new JButton();
+		kategori1.setBackground(Tema.getChangeCate1());// change these colors
+		kategori1.setForeground(Tema.getText());
+		JButton kategori2 = new JButton();
+		kategori2.setBackground(Tema.getChangeCate2());
+		kategori2.setForeground(Tema.getText());
+		JButton kategori3 = new JButton();
+		kategori3.setBackground(Tema.getChangeCate3());
+		kategori3.setForeground(Tema.getText());
+		väljKat.add(väljkategori);
+		väljKat.add(användarnamn);
+		väljKat.add(kategori1);
+		väljKat.add(kategori2);
+		väljKat.add(kategori3);
+
+		kategori1.addActionListener(GUI);
+		kategori2.addActionListener(GUI);
+		kategori3.addActionListener(GUI);
+
+		return väljKat;
+}
+
+	
 	
 	public JButton getRegBtn() {
 		return regBtn;
@@ -516,11 +575,6 @@ public class ClientGuiPanels {
 		return saveBtn;
 	}
 	
-	
-//	public JButton getSettingBtn() {
-//		return inställningar;
-//	}
-	
 	public JButton getSettingsUserInfo() {
 		return userInfo;
 	}
@@ -548,26 +602,34 @@ public class ClientGuiPanels {
 	public JButton getStartaSpel() {
 		return startaSpel;
 	}
-	
-	
+		public JButton getKategori1() {
+		return kategori1;
+	}
+
+	public JButton getKategori2() {
+		return kategori2;
+	}
+	public JButton getKategori3() {
+		return kategori3;
+	}
+	public ClientGuiTopPanels getTopPanels()
+	{
+		return topPanels;
+	}
 	private void setupThemes(){
-		Color startGameBG = new Color(51,226,16);
+		Color startGameBG = new Color(51,226,16);// grönt
 		Color topBG = new Color(30,144,255); //Ljusblå
 		Color BG = new Color(38,106,208); // Mörkblå
 		Color txFdBG = new Color(176,202,222); // ljusblå/grå
 		Color buttonBG = new Color(38, 134, 208); // klarblå
 		Color text = new Color(255,255,255); // Vitt
-		
-		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, text));
-		}
-	
+		Color buttonChangeCategory1 = new Color(255, 128,0);
+		Color buttonChangeCategory2 = new Color(255, 0, 255);
+		Color buttonChangeCategory3 = new Color(0, 153, 153);
+		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, buttonChangeCategory1, buttonChangeCategory2,buttonChangeCategory3, text));
+	}
 	public void setTema(int id)
 	{
 		Tema = Teman.get(id);
 	}
-	
 }
-
-
-
-

@@ -26,6 +26,7 @@ public class ClientSessionHandling {
 		UserName = Packet.getUserName();
 		handle();
 	}
+
 	public void handle()
 	{
 		if(state == gameStates.FailReg)
@@ -53,3 +54,5 @@ public class ClientSessionHandling {
 	
 	
 }
+
+

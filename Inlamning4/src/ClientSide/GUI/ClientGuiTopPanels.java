@@ -1,5 +1,6 @@
 package ClientSide.GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -17,12 +18,14 @@ public class ClientGuiTopPanels {
 	private ColorThemes Tema;
 	private Font headingFont;
 	
+	//Top buttons
 	private JButton refresh = new JButton("Refresh");
 	private JButton statistik = new JButton("Statistik");
 	private JButton inställningar = new JButton("Inställningar");
 	
-	public ClientGuiTopPanels(ColorThemes Tema)
+	public ClientGuiTopPanels(ColorThemes Tema, ClientGUI GUI)
 	{
+		this.GUI = GUI;
 		this.Tema = Tema;
 	}
 	
@@ -86,17 +89,15 @@ public class ClientGuiTopPanels {
 		
 		return top;
 	}
-	
-	public JButton getRefreshBtn() {
+	public JButton getTopPanelRefresh() {
 		return refresh;
 	}
-	public JButton getStatistikBtn() {
+	public JButton getTopPanelstatistik() {
 		return statistik;
 	}
-	public JButton getSettingBtn() {
+	public JButton getTopPanelinställningar() {
 		return inställningar;
 	}
-
-	
-	
 }
+
+

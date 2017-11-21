@@ -16,7 +16,6 @@ public class Client implements Runnable {
 	private static final String IP = "127.0.0.1";
 	
 	private ClientGUI GUI;
-	
 	private Socket conn;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
@@ -97,5 +96,4 @@ public class Client implements Runnable {
 	public void setUserName(String userName) {
 		UserName = userName;
 	}
-
 }
