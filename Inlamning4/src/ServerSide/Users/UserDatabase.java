@@ -18,7 +18,7 @@ public class UserDatabase {
 	private static ArrayList<User> allUsers = new ArrayList<>();
 	private File UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
 	
-	public UserDatabase()
+	public UserDatabase() 
 	{
 		
 		UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");

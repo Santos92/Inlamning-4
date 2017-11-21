@@ -48,7 +48,7 @@ public class ClientSessionHandling {
 			GUI.swapWindow(GUI.getPanels().sidaLogedin(), GUI.getTopPanels().Top());
 			JOptionPane.showMessageDialog(null, Message);
 		}
-	}
+	} 
 	
 	
 	

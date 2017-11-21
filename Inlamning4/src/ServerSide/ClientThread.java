@@ -70,5 +70,5 @@ public class ClientThread extends Thread implements Runnable {
 	}
 	public void setUserName(String userName) {
 		UserName = userName;
-	}
+	} 
 }

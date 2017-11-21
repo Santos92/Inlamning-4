@@ -40,5 +40,4 @@ public class ServerSessionHandler {
 			userDB.login(UserName, UserPass, server);
 		}
 	}
-	
 }

@@ -97,5 +97,5 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public ClientGuiTopPanels getTopPanels()
 	{
 		return GuiTopPanels;
-	}
+	} 
 }
