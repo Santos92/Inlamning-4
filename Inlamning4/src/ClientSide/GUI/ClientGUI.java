@@ -28,7 +28,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		GuiPanels = new ClientGuiPanels(this, this.client);
 		GuiTopPanels = GuiPanels.getTopPanels();
 		//mainPanel = GuiPanels.sidaStart();
-		mainPanel = GuiPanels.sidaVäljKategori();
+		mainPanel = GuiPanels.sidaKampMotståndare();
 		if(topPanel != null)
 		add(topPanel);
 		add(mainPanel);		

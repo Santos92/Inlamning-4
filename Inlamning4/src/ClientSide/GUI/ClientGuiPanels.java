@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -72,11 +73,15 @@ public class ClientGuiPanels {
 	//Top panel
 	private JPanel topMenu;
 	
-	//SpelSida
+	//FrågeSpelSida
 	private JButton answer1 = new JButton("");
 	private JButton answer2 = new JButton("");
 	private JButton answer3 = new JButton("");
 	private JButton answer4 = new JButton("");
+	
+	//PoängMotståndareSida
+	private JButton spela = new JButton("Spela");
+	private JButton geUpp = new JButton("Ge Upp");
 	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
@@ -566,24 +571,30 @@ public class ClientGuiPanels {
         answers.setBackground(Tema.getBG());
         btnFont = new Font("Arial", Font.PLAIN, 12);
         labelFont = new Font("Arial", Font.BOLD, 12);
+        
         answer1.setBackground(Tema.getButtonBlack()); 
         answer1.setFont(btnFont);
         answer1.setLayout(new GridLayout(20,20,5,5));
         answer1.setForeground(Tema.getText());
+        
         answer2.setBackground(Tema.getButtonBlack());
         answer2.setFont(btnFont);
         answer2.setLayout(new GridLayout(20,20,5,5));
         answer2.setForeground(Tema.getText());
+        
         answer3.setBackground(Tema.getButtonBlack());
         answer3.setFont(btnFont);
         answer3.setLayout(new GridLayout(20,20,5,5));
         answer3.setForeground(Tema.getText());
+        
         answer4.setBackground(Tema.getButtonBlack());
         answer4.setFont(btnFont);
         answer4.setLayout(new GridLayout(20,20,5,5));
         answer4.setForeground(Tema.getText());
+        
         answers.add(answer1); answers.add(answer2);
         answers.add(answer3); answers.add(answer4);
+        
         timeLimit.setLayout(new GridLayout(0,1,10,10));
         timeLimit.setBorder(new EmptyBorder(5,10,5,10));
         timeLimit.add(timeLimiter);
@@ -598,6 +609,88 @@ public class ClientGuiPanels {
         
          return svaraFrågan;
 	}
+	public JPanel sidaKampMotståndare() {
+		spela.removeActionListener(GUI); 
+        geUpp.removeActionListener(GUI);
+                
+        JPanel spelMotståndare = new JPanel();
+        spelMotståndare.setLayout(new BorderLayout());
+        spelMotståndare.setLayout(new GridLayout(3,0));
+        spelMotståndare.setBackground(Tema.getBG());
+        
+        JPanel namesAndPoints = new JPanel(); 
+        JPanel geUppStarta = new JPanel();
+        JPanel ronder = new JPanel();
+        JLabel användare1 = new JLabel("Användare1"); // Här ska riktiga användarnamnet stå
+        labelFont = new Font("Arial", Font.BOLD, 15);
+        headingFont = new Font("Arial", Font.BOLD, 22);
+        användare1.setForeground(Tema.getText());
+        användare1.setFont(labelFont);
+        
+        JLabel användare2 = new JLabel("Användare2");
+        användare2.setForeground(Tema.getText());
+        användare2.setFont(labelFont);
+        
+        JLabel poäng = new JLabel("Poäng");
+        poäng.setForeground(Tema.getText());
+        poäng.setFont(headingFont);
+        
+        JLabel totalaPoängAnvändare1 = new JLabel("0/2");// I stället för knappar kan vi ha en JLabel som ändrar värde e.g. 1/2
+        totalaPoängAnvändare1.setBackground(Tema.getVeryDarkBlue());
+        totalaPoängAnvändare1.setFont(labelFont);
+        totalaPoängAnvändare1.setForeground(Tema.getText());
+        
+        JLabel totalaPoängAnvändare2 = new JLabel("2/2");
+        totalaPoängAnvändare2.setBackground(Tema.getVeryDarkBlue());
+        totalaPoängAnvändare2.setFont(labelFont);
+        totalaPoängAnvändare2.setForeground(Tema.getText());
+        
+        JLabel rondNummer = new JLabel("Rond 1"); 
+        rondNummer.setLayout(new GridLayout(0,1, 10, 10));
+        rondNummer.setBorder(new EmptyBorder(5,10,10,5));
+        rondNummer.setFont(labelFont);
+        rondNummer.setBackground(Tema.getVeryDarkBlue());
+        rondNummer.setForeground(Tema.getText());
+        
+        
+        spelMotståndare.setPreferredSize(new Dimension(500, 500));
+        spelMotståndare.add(namesAndPoints, BorderLayout.NORTH);
+        spelMotståndare.add(ronder, BorderLayout.CENTER);
+        spelMotståndare.add(geUppStarta, BorderLayout.SOUTH);
+        namesAndPoints.setBackground(Tema.getBG());
+        geUppStarta.setBackground(Tema.getBG());
+        ronder.setBackground(Tema.getVeryDarkBlue());
+        
+        namesAndPoints.setLayout(new GridLayout(0,3));
+        namesAndPoints.add(användare1); namesAndPoints.add(poäng); namesAndPoints.add(användare2); 
+        
+        ronder.setLayout(new GridLayout(0,3));
+        ronder.add(totalaPoängAnvändare1);ronder.add(rondNummer); ronder.add(totalaPoängAnvändare2);
+        
+        geUppStarta.setLayout(new GridLayout(0,3, 10, 10));
+        geUppStarta.setBorder(new EmptyBorder(50,10,10,10));
+        geUppStarta.add(geUpp); geUppStarta.add(spela);
+        
+        geUpp.setBackground(Tema.getButtonRed()); 
+        geUpp.setFont(labelFont);
+        geUpp.setForeground(Tema.getText());
+        geUpp.setLayout(new GridLayout(1,1,100,100));
+                
+        spela.setBackground(Tema.getStartGameBG());
+        spela.setFont(headingFont);
+        spela.setForeground(Tema.getText());
+        spela.setLayout(new GridLayout(1,1,50,50));
+       
+        
+        spelMotståndare.add(namesAndPoints);
+        spelMotståndare.add(ronder);
+        spelMotståndare.add(geUppStarta);
+        spela.addActionListener(GUI);
+        geUpp.addActionListener(GUI);
+               
+         return spelMotståndare;
+	}
+	
 	public JButton getRegBtn() {
 		return regBtn;
 	}
@@ -669,11 +762,13 @@ public class ClientGuiPanels {
 		Color txFdBG = new Color(176,202,222); // ljusblå/grå
 		Color buttonBG = new Color(38, 134, 208); // klarblå
 		Color text = new Color(255,255,255); // Vitt
-		Color buttonChangeCategory1 = new Color(255, 128,0);
-		Color buttonChangeCategory2 = new Color(255, 0, 255);
-		Color buttonChangeCategory3 = new Color(0, 153, 153);
-		Color buttonBlack = new Color(32,32,32);
-		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, buttonChangeCategory1, buttonChangeCategory2,buttonChangeCategory3,buttonBlack, text));
+		Color buttonChangeCategory1 = new Color(255, 128,0); // orange
+		Color buttonChangeCategory2 = new Color(255, 0, 255);// lila
+		Color buttonChangeCategory3 = new Color(0, 153, 153); //gråblått
+		Color buttonBlack = new Color(32,32,32); // svarta
+		Color buttonRed = new Color(255,0,0); // röd
+		Color veryDarkBlue = new Color(0, 51, 102); //MycketMörkblå
+		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, buttonChangeCategory1, buttonChangeCategory2,buttonChangeCategory3,buttonBlack, buttonRed, veryDarkBlue, text));
 	}
 	public void setTema(int id)
 	{
