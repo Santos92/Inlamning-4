@@ -54,18 +54,18 @@ public class QuestionsDatabase {
 	    	Questions GeoQ;
 	    	String Kategori = "Geografi";
 	    	GeoQ = new Questions(Kategori, "Var ligger landet Djibouti?", "ÖstAfrika","Mellanöstern", "Sydost asien", "Brevid Salomonöarna" );
-	    	Teknik.add(GeoQ);
+	    	Geografi.add(GeoQ);
 	    	GeoQ = new Questions(Kategori, "Vad är omkretsen runt jorden längs ekvatorn?", "40075 km","400000km", "35000km", "25900km" );
-	    	Teknik.add(GeoQ);
+	    	Geografi.add(GeoQ);
 	    }
 	    public void fillHistoria()
 	    {
 	    	Questions HistoriaQ;
 	    	String Kategori = "Historia";
 	    	HistoriaQ = new Questions(Kategori, "När formades det Osmanska riket?", "1300 talet","1400 talet", "1500 talet", "1200 talet" );
-	    	Teknik.add(HistoriaQ);
+	    	Historia.add(HistoriaQ);
 	    	HistoriaQ = new Questions(Kategori, "Vad anses vara den Gustavianska tiden?", "1772–1809","1603-1771", "1890-1902", "1656-1772" );
-	    	Teknik.add(HistoriaQ);
+	    	Historia.add(HistoriaQ);
 	    }
 	    
 	  	    
