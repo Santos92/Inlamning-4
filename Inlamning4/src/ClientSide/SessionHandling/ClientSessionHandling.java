@@ -6,6 +6,7 @@ import ClientSide.Client;
 import ClientSide.GUI.ClientGUI;
 import Communication.Session;
 import Communication.Session.gameStates;
+import Communication.Questions.Match;
 
 public class ClientSessionHandling {
 
@@ -15,6 +16,7 @@ public class ClientSessionHandling {
 	private gameStates state;
 	private String Message;
 	private String UserName;
+	private Match match;
 	
 	public ClientSessionHandling(Client client, ClientGUI GUI, Object obj) {
 		this.client = client;
@@ -23,6 +25,7 @@ public class ClientSessionHandling {
 		state = Packet.getState();
 		Message = Packet.getMessage();
 		UserName = Packet.getUserName();
+		match = Packet.getPickedMatch();
 		handle();
 	}
 
@@ -52,6 +55,10 @@ public class ClientSessionHandling {
 		{
 			client.setMatcher(Packet.getMatcher());
 			GUI.swapWindow(GUI.getPanels().sidaLogedin());
+		}
+		else if(state == gameStates.startRound)
+		{
+			System.out.println(match.getRound1().getQ1().getQuestion());
 		}
 	} 
 	

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import Communication.Session;
 import Communication.Session.gameStates;
 import Communication.Questions.Match;
+import Communication.Questions.Round;
 import ServerSide.ClientThread;
 import ServerSide.Server;
 import ServerSide.Users.User;
@@ -12,14 +13,16 @@ import ServerSide.Users.UserDatabase;
 
 public class ServerSessionHandler {
 
+	private Server MainServer;
+	private ClientThread server;
 	private Session Packet;
+	private UserDatabase userDB;
 	private gameStates state;
 	private String Message;
-	private ClientThread server;
 	private String UserName;
 	private String UserPass;
-	private UserDatabase userDB;
-	private Server MainServer;
+	private Match match;
+	private User user;
 	private static LinkedList<User> MatchKö = new LinkedList<>();
 	
 	public ServerSessionHandler(Server MainServer, ClientThread server, Object obj) {
@@ -31,6 +34,8 @@ public class ServerSessionHandler {
 		Message = Packet.getMessage();
 		UserName = Packet.getUserName();
 		UserPass = Packet.getUserPass();
+		match = Packet.getPickedMatch();
+		user = userDB.getUser(UserName);
 		handle();
 	}
 
@@ -51,9 +56,29 @@ public class ServerSessionHandler {
 			sess.setMatcher(userDB.getUser(UserName).getMatcher());
 			server.send(sess);
 		}
+		else if(state == gameStates.startRound)
+		{
+			Round R = new Round("Mat");
+			User opponent = userDB.getUser(match.getOpponent());
+			Match oppMatch = null;
+			Match userMatch = null;
+			for(Match x : opponent.getMatcher())
+				if(x.getID() == match.getOpponentID())
+					oppMatch = x;
+			for(Match x : user.getMatcher())
+				if(x.getID() == match.getID())
+					userMatch = x;
+			
+			userMatch.setRound1(R);
+			oppMatch.setRound1(R);
+			
+			Session sess = new Session();
+			sess.setState(gameStates.startRound);
+			sess.setPickedMatch(userMatch);
+			server.send(sess);
+		}
 		else if(state == gameStates.RandomMatch)
 		{
-			User user = userDB.getUser(UserName);
 			MatchKö.add(user);
 			if(MatchKö.size() >= 2)
 			{
@@ -61,6 +86,12 @@ public class ServerSessionHandler {
 				User user1 = MatchKö.get(1);
 				Match match0 = new Match(user1.getNamn());
 				Match match1 = new Match(user0.getNamn());
+				match0.setActive(true);
+				match0.setTurn(false);
+				match1.setActive(true);
+				match1.setTurn(true);
+				match1.setOpponentID(match0.getID());
+				match0.setOpponentID(match1.getID());
 				user0.addMatch(match0);
 				user1.addMatch(match1);
 				MatchKö.removeFirst();

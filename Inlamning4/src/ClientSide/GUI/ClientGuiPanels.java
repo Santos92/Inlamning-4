@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -21,6 +23,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import ClientSide.Client;
+import ClientSide.GUI.MatchActions.MatchActions;
 
 public class ClientGuiPanels {
 
@@ -30,6 +33,7 @@ public class ClientGuiPanels {
 	private ClientGUI GUI;
 	private ClientGuiTopPanels topPanels;
 	private Client client;
+	private MatchActions matchListener;
 	
 	private Image imageLogo = null;
 	
@@ -75,6 +79,7 @@ public class ClientGuiPanels {
 	{
 		this.GUI = GUI;
 		this.client = client;
+		matchListener = new MatchActions(this.client, this.GUI);
 		setupThemes();
 		setTema(0);
 		topPanels = new ClientGuiTopPanels(Tema, this.GUI);
@@ -253,7 +258,7 @@ public class ClientGuiPanels {
 		
 		startaSpel.removeActionListener(GUI);	
 		topMenu = topPanels.Top();
-
+		
 		JPanel logedInPanel = new JPanel();
 		logedInPanel.setLayout(new GridLayout(0,1));
 		logedInPanel.setBackground(Tema.getBG());
@@ -281,19 +286,6 @@ public class ClientGuiPanels {
 		startaSpel.setBorderPainted(true);
 		startaSpel.setFont(headingFont);
 		startaSpel.setBackground(Tema.getStartGameBG());
-		
-		JButton dinTur = new JButton("Din tur mot User1");
-		dinTur.setBackground(Tema.getButtonBG());
-		dinTur.setForeground(Tema.getText());
-		dinTur.setFont(btnFont);
-		dinTur.setBorderPainted(false);
-		
-		JButton dinTur2 = new JButton("Din tur mot User2");
-		dinTur2.setBackground(Tema.getButtonBG());
-		dinTur2.setForeground(Tema.getText());
-		dinTur2.setFont(btnFont);
-		dinTur2.setBorderPainted(false);
-		dinTur2.setAlignmentX(40);
 
 		JLabel aktivaSpelLabel = new JLabel("Aktiva spel");
 		aktivaSpelLabel.setBorder(new CompoundBorder(labelBorder, labelMargin));
@@ -305,36 +297,59 @@ public class ClientGuiPanels {
 		avslutadeSpelLabel.setForeground(Tema.getTxFdBG());
 		avslutadeSpelLabel.setFont(smalFont);
 		
-		JButton avslutadSpel = new JButton("x förlorade mot User1");
-		avslutadSpel.setBackground(Tema.getButtonBG());
-		avslutadSpel.setForeground(Tema.getText());
-		avslutadSpel.setFont(btnFont);
-		avslutadSpel.setBorderPainted(false);
-
 		startaSpel.addActionListener(GUI);
 		
 		logedInPanel.add(topMenu);
 		logedInPanel.add(userLabel);
 		logedInPanel.add(username);
-		logedInPanel.add(startaSpel);
-		logedInPanel.add(dinTur);
-		logedInPanel.add(dinTur2);
-		logedInPanel.add(aktivaSpelLabel);
+		logedInPanel.add(startaSpel);		
 		if(client.getMatcher() != null)
 		{
-			JButton[] ActiveMatches = new JButton[client.getMatcher().size()];
-			for(int i = client.getMatcher().size()-1;i>=0;i--)
+			JButton[] Matches = new JButton[client.getMatcher().size()];
+			for(int x = 0; x<3; x++)
 			{
-				ActiveMatches[i] = new JButton(client.getMatcher().get(i).getOpponent());
-				ActiveMatches[i].setBackground(Tema.getButtonBG());
-				ActiveMatches[i].setForeground(Tema.getText());
-				ActiveMatches[i].setFont(btnFont);
-				ActiveMatches[i].setBorderPainted(false);
-				logedInPanel.add(ActiveMatches[i]);
+				for(int i = Matches.length-1;i>=0;i--)
+				{
+					if(i == Matches.length-1 && x == 1)
+						logedInPanel.add(aktivaSpelLabel);
+					if(i == Matches.length-1 && x == 2)
+						logedInPanel.add(avslutadeSpelLabel);
+					if(client.getMatcher().get(i).isActive() && client.getMatcher().get(i).isTurn() && x == 0)
+					{
+						Matches[i] = new JButton("Din tur mot " + client.getMatcher().get(i).getOpponent());
+						Matches[i].setBackground(Tema.getButtonBG());
+						Matches[i].setForeground(Tema.getText());
+						Matches[i].setFont(btnFont);
+						Matches[i].setBorderPainted(false);
+						Matches[i].putClientProperty("index", i);
+						Matches[i].addActionListener(matchListener);
+						logedInPanel.add(Matches[i]);
+					}
+					if(client.getMatcher().get(i).isActive() && !client.getMatcher().get(i).isTurn() && x == 1)
+					{
+						Matches[i] = new JButton(client.getMatcher().get(i).getOpponent());
+						Matches[i].setBackground(Tema.getButtonBG());
+						Matches[i].setForeground(Tema.getText());
+						Matches[i].setFont(btnFont);
+						Matches[i].setBorderPainted(false);
+						Matches[i].putClientProperty("index", i);
+						Matches[i].addActionListener(matchListener);
+						logedInPanel.add(Matches[i]);
+					}
+					if(!client.getMatcher().get(i).isActive() && x == 2)
+					{
+						Matches[i] = new JButton(client.getMatcher().get(i).getOpponent());
+						Matches[i].setBackground(Tema.getButtonBG());
+						Matches[i].setForeground(Tema.getText());
+						Matches[i].setFont(btnFont);
+						Matches[i].setBorderPainted(false);
+						Matches[i].putClientProperty("index", i);
+						Matches[i].addActionListener(matchListener);
+						logedInPanel.add(Matches[i]);
+					}
+				}
 			}
 		}
-		logedInPanel.add(avslutadeSpelLabel);
-		logedInPanel.add(avslutadSpel);
 		
 		return logedInPanel;
 	}
@@ -486,19 +501,19 @@ public class ClientGuiPanels {
 		btnFont = new Font("Arial", Font.BOLD, 17);
 		väljKat.setFont(headingFont);
 		
-		JLabel väljkategori = new JLabel("Välj kategori mot: ");
+		JLabel väljkategori = new JLabel("Välj kategori: ");
 		JLabel användarnamn = new JLabel("");
 		väljKat.setForeground(Tema.getText());
 		
-		JButton kategori1 = new JButton();
+		JButton kategori1 = new JButton("Mat");
 		kategori1.setBackground(Tema.getChangeCate1());// change these colors
 		kategori1.setForeground(Tema.getText());
 		
-		JButton kategori2 = new JButton();
+		JButton kategori2 = new JButton("Teknik");
 		kategori2.setBackground(Tema.getChangeCate2());
 		kategori2.setForeground(Tema.getText());
 		
-		JButton kategori3 = new JButton();
+		JButton kategori3 = new JButton("Film");
 		kategori3.setBackground(Tema.getChangeCate3());
 		kategori3.setForeground(Tema.getText());
 		
@@ -508,6 +523,9 @@ public class ClientGuiPanels {
 		väljKat.add(kategori2);
 		väljKat.add(kategori3);
 		
+		kategori1.removeActionListener(GUI);
+		kategori2.removeActionListener(GUI);
+		kategori3.removeActionListener(GUI);
 		kategori1.addActionListener(GUI);
 		kategori2.addActionListener(GUI);
 		kategori3.addActionListener(GUI);

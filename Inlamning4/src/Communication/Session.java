@@ -12,6 +12,7 @@ public class Session implements Serializable {
 	private String userPass;
 	private String Message;
 	private LinkedList<Match> Matcher;
+	private Match pickedMatch;
 	public enum gameStates
 	{
 		TryLogin,
@@ -21,6 +22,8 @@ public class Session implements Serializable {
 		OkReg,
 		getMatches,
 		RandomMatch,
+		GetCategories,
+		startRound,
 		AuthAccept;
 	}
 	public gameStates state;
@@ -58,6 +61,12 @@ public class Session implements Serializable {
 	}
 	public void setMatcher(LinkedList<Match> matcher) {
 		Matcher = matcher;
+	}
+	public Match getPickedMatch() {
+		return pickedMatch;
+	}
+	public void setPickedMatch(Match pickedMatch) {
+		this.pickedMatch = pickedMatch;
 	}
 	
 }

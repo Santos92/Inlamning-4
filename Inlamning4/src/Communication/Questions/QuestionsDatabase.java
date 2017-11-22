@@ -22,6 +22,10 @@ public class QuestionsDatabase implements Serializable{
     	String Kategori = "Mat";
     	MatQ = new Questions(Kategori, "What is an apple?", "A fruit", "A car", "An animal", "A toy");
     	Mat.add(MatQ);
+    	MatQ = new Questions(Kategori, "What is an apple?", "A fruit", "A car", "An animal", "A toy");
+    	Mat.add(MatQ);
+    	MatQ = new Questions(Kategori, "What is an apple?", "A fruit", "A car", "An animal", "A toy");
+    	Mat.add(MatQ);
     }
     public void fillFilm()
     {
