@@ -1,13 +1,12 @@
 package ClientSide.GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -24,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 import ClientSide.Client;
 import ClientSide.GUI.MatchActions.MatchActions;
+import Communication.Questions.Questions;
 
 public class ClientGuiPanels {
 
@@ -74,6 +74,12 @@ public class ClientGuiPanels {
 	
 	//Top panel
 	private JPanel topMenu;
+	
+	private JButton answer1 = new JButton("1");
+	private JButton answer2 = new JButton("2");
+	private JButton answer3 = new JButton("3");
+	private JButton answer4 = new JButton("4");
+	
 	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
@@ -531,6 +537,76 @@ public class ClientGuiPanels {
 		kategori3.addActionListener(GUI);
 		
 		return väljKat;
+	}
+	public JPanel sidaSvaraFråga(Questions Q) {
+		answer1.removeActionListener(GUI);
+        answer2.removeActionListener(GUI);
+        answer3.removeActionListener(GUI);
+        answer4.removeActionListener(GUI);
+        
+        JPanel svaraFrågan = new JPanel();
+	    JPanel question = new JPanel();
+	    JLabel questionCategory = new JLabel(Q.getCategory());
+	    JLabel actualQuestion = new JLabel(Q.getQuestion());
+	    JPanel answers = new JPanel();
+	    JPanel timeLimit = new JPanel();
+	    JTextField timeLimiter = new JTextField("Time limiter");
+	    
+	    answer1.setText(Q.getCorAnswer());
+	    answer2.setText(Q.getWroAns1());
+	    answer3.setText(Q.getWroAns2());
+	    answer4.setText(Q.getWroAns3());
+	    
+	    svaraFrågan.setLayout(new BorderLayout());
+	    svaraFrågan.setPreferredSize(new Dimension(500, 500));
+	    svaraFrågan.add(question, BorderLayout.NORTH);
+	    svaraFrågan.add(answers, BorderLayout.CENTER);
+	    svaraFrågan.add(timeLimit, BorderLayout.SOUTH);
+        svaraFrågan.setBackground(Tema.getBG());
+        
+        question.setLayout(new GridLayout(2,1, 10,10));
+        question.setBorder(new EmptyBorder(5,10,25,10));
+        questionCategory.setBackground(Color.orange);
+        actualQuestion.setBackground(Color.white);
+        question.add(questionCategory);
+        question.add(actualQuestion);
+                
+        answers.setLayout(new GridLayout(2,2,10,10));
+        answers.setBorder(new EmptyBorder(20,10,100,10));
+        answers.setBackground(Tema.getBG());
+        btnFont = new Font("Arial", Font.PLAIN, 12);
+        labelFont = new Font("Arial", Font.BOLD, 12);
+        answer1.setBackground(Tema.getButtonBG()); 
+        answer1.setFont(btnFont);
+        answer1.setLayout(new GridLayout(20,20,5,5));
+        answer1.setForeground(Tema.getText());
+        answer2.setBackground(Tema.getButtonBG());
+        answer2.setFont(btnFont);
+        answer2.setLayout(new GridLayout(20,20,5,5));
+        answer2.setForeground(Tema.getText());
+        answer3.setBackground(Tema.getButtonBG());
+        answer3.setFont(btnFont);
+        answer3.setLayout(new GridLayout(20,20,5,5));
+        answer3.setForeground(Tema.getText());
+        answer4.setBackground(Tema.getButtonBG());
+        answer4.setFont(btnFont);
+        answer4.setLayout(new GridLayout(20,20,5,5));
+        answer4.setForeground(Tema.getText());
+        answers.add(answer1); answers.add(answer2);
+        answers.add(answer3); answers.add(answer4);
+        timeLimit.setLayout(new GridLayout(0,1,10,10));
+        timeLimit.setBorder(new EmptyBorder(5,10,5,10));
+        timeLimit.add(timeLimiter);
+        // svaraFrågan.add(question);
+        svaraFrågan.add(answers);
+        //  svaraFrågan.add(timeLimit);
+             
+         answer1.addActionListener(GUI);
+         answer2.addActionListener(GUI);
+         answer3.addActionListener(GUI);
+         answer4.addActionListener(GUI);
+        
+         return svaraFrågan;
 	}
 	public JButton getRegBtn() {
 		return regBtn;
