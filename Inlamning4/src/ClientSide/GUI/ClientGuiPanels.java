@@ -1,5 +1,6 @@
 package ClientSide.GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -50,9 +51,9 @@ public class ClientGuiPanels {
 	private JButton saveBtn = new JButton("Spara användare");
 	
 	//VäljKategoriSidan
-	private JButton kategori1 = new JButton("");
-	private JButton kategori2 = new JButton("");
-	private JButton kategori3 = new JButton("");
+	private JButton kategori1 = new JButton("Category");
+	private JButton kategori2 = new JButton("Category 2");
+	private JButton kategori3 = new JButton("Category 3");
 	
 	//Settingssidan
 	private JButton userInfo = new JButton("Användaruppgifter");
@@ -70,6 +71,12 @@ public class ClientGuiPanels {
 	
 	//Top panel
 	private JPanel topMenu;
+	
+	//SpelSida
+	private JButton answer1 = new JButton("");
+	private JButton answer2 = new JButton("");
+	private JButton answer3 = new JButton("");
+	private JButton answer4 = new JButton("");
 	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
@@ -480,25 +487,36 @@ public class ClientGuiPanels {
 		return settings;
 	}
 	public JPanel sidaVäljKategori() {
+		kategori1.removeActionListener(GUI); 
+        kategori2.removeActionListener(GUI);
+        kategori3.removeActionListener(GUI);
+                
 		JPanel väljKat = new JPanel();
+		väljKat.setLayout(new GridLayout(5,0, 10,10));
+		väljKat.setPreferredSize(new Dimension(500, 500));
+		väljKat.setBorder(new EmptyBorder(5,10,25,10));
 		väljKat.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
-		btnFont = new Font("Arial", Font.BOLD, 17);
+		btnFont = new Font("Arial", Font.PLAIN, 12);
 		väljKat.setFont(headingFont);
 		
 		JLabel väljkategori = new JLabel("Välj kategori mot: ");
+		väljkategori.setFont(headingFont);
+		väljkategori.setForeground(Tema.getText());
 		JLabel användarnamn = new JLabel("");
+		användarnamn.setFont(headingFont);
+		användarnamn.setForeground(Tema.getText());
 		väljKat.setForeground(Tema.getText());
 		
-		JButton kategori1 = new JButton();
+		kategori1.setBorder(new EmptyBorder(20,10,30,10));
 		kategori1.setBackground(Tema.getChangeCate1());// change these colors
 		kategori1.setForeground(Tema.getText());
 		
-		JButton kategori2 = new JButton();
+		kategori2.setBorder(new EmptyBorder(20,10,30,10));
 		kategori2.setBackground(Tema.getChangeCate2());
 		kategori2.setForeground(Tema.getText());
-		
-		JButton kategori3 = new JButton();
+				
+		kategori3.setBorder(new EmptyBorder(20,10,30,10));
 		kategori3.setBackground(Tema.getChangeCate3());
 		kategori3.setForeground(Tema.getText());
 		
@@ -513,6 +531,72 @@ public class ClientGuiPanels {
 		kategori3.addActionListener(GUI);
 		
 		return väljKat;
+	}
+	
+	public JPanel sidaSvaraFråga() {
+		answer1.removeActionListener(GUI); 
+        answer2.removeActionListener(GUI);
+        answer3.removeActionListener(GUI);
+        answer4.removeActionListener(GUI);
+        
+        JPanel svaraFrågan = new JPanel();
+	    JPanel question = new JPanel();
+	    JLabel questionCategory = new JLabel("Category");
+	    JTextField actualQuestion = new JTextField("");// change this to JLabel whose question changes
+	    JPanel answers = new JPanel();
+	    JPanel timeLimit = new JPanel();
+	    JTextField timeLimiter = new JTextField("Time limiter");
+	    
+	    svaraFrågan.setLayout(new BorderLayout());
+	    svaraFrågan.setPreferredSize(new Dimension(500, 500));
+	    svaraFrågan.add(question, BorderLayout.NORTH);
+	    svaraFrågan.add(answers, BorderLayout.CENTER);
+	    svaraFrågan.add(timeLimit, BorderLayout.SOUTH);
+        svaraFrågan.setBackground(Tema.getBG());
+        
+        question.setLayout(new GridLayout(2,1, 10,10));
+        question.setBorder(new EmptyBorder(5,10,25,10));
+        questionCategory.setBackground(Color.orange);
+        actualQuestion.setBackground(Color.white);
+        question.add(questionCategory);
+        question.add(actualQuestion);
+                
+        answers.setLayout(new GridLayout(2,2,10,10));
+        answers.setBorder(new EmptyBorder(20,10,100,10));
+        answers.setBackground(Tema.getBG());
+        btnFont = new Font("Arial", Font.PLAIN, 12);
+        labelFont = new Font("Arial", Font.BOLD, 12);
+        answer1.setBackground(Tema.getButtonBlack()); 
+        answer1.setFont(btnFont);
+        answer1.setLayout(new GridLayout(20,20,5,5));
+        answer1.setForeground(Tema.getText());
+        answer2.setBackground(Tema.getButtonBlack());
+        answer2.setFont(btnFont);
+        answer2.setLayout(new GridLayout(20,20,5,5));
+        answer2.setForeground(Tema.getText());
+        answer3.setBackground(Tema.getButtonBlack());
+        answer3.setFont(btnFont);
+        answer3.setLayout(new GridLayout(20,20,5,5));
+        answer3.setForeground(Tema.getText());
+        answer4.setBackground(Tema.getButtonBlack());
+        answer4.setFont(btnFont);
+        answer4.setLayout(new GridLayout(20,20,5,5));
+        answer4.setForeground(Tema.getText());
+        answers.add(answer1); answers.add(answer2);
+        answers.add(answer3); answers.add(answer4);
+        timeLimit.setLayout(new GridLayout(0,1,10,10));
+        timeLimit.setBorder(new EmptyBorder(5,10,5,10));
+        timeLimit.add(timeLimiter);
+        // svaraFrågan.add(question);
+        svaraFrågan.add(answers);
+        //  svaraFrågan.add(timeLimit);
+             
+         answer1.addActionListener(GUI);
+         answer2.addActionListener(GUI);
+         answer3.addActionListener(GUI);
+         answer4.addActionListener(GUI);
+        
+         return svaraFrågan;
 	}
 	public JButton getRegBtn() {
 		return regBtn;
@@ -588,7 +672,8 @@ public class ClientGuiPanels {
 		Color buttonChangeCategory1 = new Color(255, 128,0);
 		Color buttonChangeCategory2 = new Color(255, 0, 255);
 		Color buttonChangeCategory3 = new Color(0, 153, 153);
-		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, buttonChangeCategory1, buttonChangeCategory2,buttonChangeCategory3, text));
+		Color buttonBlack = new Color(32,32,32);
+		Teman.add(new ColorThemes(startGameBG, topBG, BG, txFdBG, buttonBG, buttonChangeCategory1, buttonChangeCategory2,buttonChangeCategory3,buttonBlack, text));
 	}
 	public void setTema(int id)
 	{

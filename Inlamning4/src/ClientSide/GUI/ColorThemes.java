@@ -13,11 +13,12 @@ public class ColorThemes {
 	private Color buttonChangeCategory1;
 	private Color buttonChangeCategory2;
 	private Color buttonChangeCategory3;
+	private Color buttonBlack;
 	private Color text;
 	
 	public ColorThemes(Color startGameBG, Color topBG, Color BG, Color txFdBG, 
 			Color buttonBG,Color buttonChangeCategory1,Color buttonChangeCategory2,
-			Color buttonChangeCategory3, Color text){
+			Color buttonChangeCategory3,Color buttonBlack, Color text){
 		this.startGameBG = startGameBG;
 		this.topBG = topBG;
 		this.BG = BG;
@@ -26,6 +27,7 @@ public class ColorThemes {
 		this.buttonChangeCategory1 = buttonChangeCategory1;
 		this.buttonChangeCategory2 = buttonChangeCategory2;
 		this.buttonChangeCategory3 = buttonChangeCategory3;
+		this.buttonBlack = buttonBlack;
 		this.text = text;
 	}
 
@@ -60,7 +62,10 @@ public class ColorThemes {
 	public Color getChangeCate3() {
 		return buttonChangeCategory3;
 	}
-	
+	public Color getButtonBlack() {
+		return buttonBlack;
+		
+	}
 	public Color getText() {
 		return text;
 	}
