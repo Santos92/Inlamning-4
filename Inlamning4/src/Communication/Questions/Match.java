@@ -8,13 +8,14 @@ public class Match implements Serializable{
 	private boolean active;
 	private boolean turn;
 	
+	private int AmountOfRounds = 2;
+	
 	private static int id = 0;
 	private int ID = 0;
-	private Round round1;
-	private Round round2;
+	private Round[] round = new Round[AmountOfRounds];
+	private Round[] roundOpp = new Round[AmountOfRounds];
 	
-	private Round round1Opp;
-	private Round round2Opp;
+	private int CurrentRound;
 	
 	private String Opponent;
 	private int OpponentID;
@@ -22,6 +23,7 @@ public class Match implements Serializable{
 	public Match(String opp)
 	{
 		ID = id++;
+		setCurrentRound(0);
 		setOpponent(opp);
 	}
 	public String getOpponent() {
@@ -45,35 +47,33 @@ public class Match implements Serializable{
 	public int getID() {
 		return ID;
 	}
-	public Round getRound1() {
-		return round1;
-	}
-	public void setRound1(Round round1) {
-		this.round1 = round1;
-	}
-	public Round getRound2() {
-		return round2;
-	}
-	public void setRound2(Round round2) {
-		this.round2 = round2;
-	}
-	public Round getRound1Opp() {
-		return round1Opp;
-	}
-	public void setRound1Opp(Round round1Opp) {
-		this.round1Opp = round1Opp;
-	}
-	public Round getRound2Opp() {
-		return round2Opp;
-	}
-	public void setRound2Opp(Round round2Opp) {
-		this.round2Opp = round2Opp;
-	}
 	public int getOpponentID() {
 		return OpponentID;
 	}
 	public void setOpponentID(int opponentID) {
 		OpponentID = opponentID;
+	}
+	public int getCurrentRound() {
+		return CurrentRound;
+	}
+	public void setCurrentRound(int currentRound) {
+		CurrentRound = currentRound;
+	}
+	public Round getRound(int i)
+	{
+		return round[i];
+	}
+	public void setRound(Round round, int i)
+	{
+		this.round[i] = round;
+	}
+	public Round getRoundOpp(int i)
+	{
+		return roundOpp[i];
+	}
+	public void setRoundOpp(Round round, int i)
+	{
+		this.roundOpp[i] = round;
 	}
 	
 }

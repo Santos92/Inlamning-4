@@ -7,35 +7,62 @@ import java.util.LinkedList;
 public class Round implements Serializable{
 
 	private static final long serialVersionUID = 2059232265937406891L;
-	private Questions Q1;
-	private Questions Q2;
 	
+	private Questions[] Q = new Questions[2];
+	private int currentQuestion;
+	
+	private boolean hidden = true;
+	
+	private String category;
 	private QuestionsDatabase QDB = new QuestionsDatabase();
 	private LinkedList<Questions> ChosenCategory;
 	
 	public Round(String category)
 	{
+		setCurrentQuestion(0);
+		this.setCategory(category);
 		if(category.equals("Mat"))
 			ChosenCategory = QDB.getMat();
+		if(category.equals("Film"))
+			ChosenCategory = QDB.getFilm();
+		if(category.equals("Teknik"))
+			ChosenCategory = QDB.getTeknik();
 		
 		Collections.shuffle(ChosenCategory);
-		setQ1(ChosenCategory.get(0));
-		setQ2(ChosenCategory.get(1));
+		setQ(ChosenCategory.get(0), 0);
+		setQ(ChosenCategory.get(1), 1);
 	}
 
-	public Questions getQ2() {
-		return Q2;
+	public Questions getQ(int i)
+	{
+		return Q[i];
+	}
+	public void setQ(Questions q,int i)
+	{
+		Q[i] = q;
 	}
 
-	public void setQ2(Questions q2) {
-		Q2 = q2;
+	public String getCategory() {
+		return category;
 	}
 
-	public Questions getQ1() {
-		return Q1;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public void setQ1(Questions q1) {
-		Q1 = q1;
+	public int getCurrentQuestion() {
+		return currentQuestion;
+	}
+
+	public void setCurrentQuestion(int currentQuestion) {
+		this.currentQuestion = currentQuestion;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 }

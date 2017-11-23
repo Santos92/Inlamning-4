@@ -33,11 +33,19 @@ public class QuestionsDatabase implements Serializable{
     	String Kategori = "Film";
     	FilmQ = new Questions(Kategori, "Vem spelade huvudrollen i 'I am Legend' ?", "Will Smith", "Denzel Washington", "Jamie Fox", "Samuel Jackson");
     	Film.add(FilmQ);
+    	FilmQ = new Questions(Kategori, "Vem spelade huvudrollen i 'I am Legend' ?", "Will Smith", "Denzel Washington", "Jamie Fox", "Samuel Jackson");
+    	Film.add(FilmQ);
+    	FilmQ = new Questions(Kategori, "Vem spelade huvudrollen i 'I am Legend' ?", "Will Smith", "Denzel Washington", "Jamie Fox", "Samuel Jackson");
+    	Film.add(FilmQ);
     }
     public void fillTeknik()
     {
     	Questions TeknikQ;
     	String Kategori = "Teknik";
+    	TeknikQ = new Questions(Kategori, "Vad förknippas med märket Airfix?", "Flygplansmodeller","Bilmodeller", "Båtar", "Lastbilar" );
+    	Teknik.add(TeknikQ);
+    	TeknikQ = new Questions(Kategori, "Vad förknippas med märket Airfix?", "Flygplansmodeller","Bilmodeller", "Båtar", "Lastbilar" );
+    	Teknik.add(TeknikQ);
     	TeknikQ = new Questions(Kategori, "Vad förknippas med märket Airfix?", "Flygplansmodeller","Bilmodeller", "Båtar", "Lastbilar" );
     	Teknik.add(TeknikQ);
     }

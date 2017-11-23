@@ -28,14 +28,29 @@ public class MatchActions implements ActionListener {
 		{
 			int index = (int) ((JButton)e.getSource()).getClientProperty("index");
 			Match match = client.getMatcher().get(index);
-			System.out.println(match.getID());
-			System.out.println(match.getOpponentID());
-			System.out.println(index);
-			Session sess = new Session();
-			sess.setState(gameStates.startRound);
-			sess.setPickedMatch(match);
-			sess.setUserName(client.getUserName());
-			client.send(sess);
+			if(match.isTurn() && match.isActive())
+			{
+				if(match.getRound(match.getCurrentRound()) == null)
+					GUI.swapWindow(GUI.getPanels().sidaVäljKategori(match));
+				else
+					GUI.swapWindow(GUI.getPanels().sidaSvaraFråga(match, true));
+			}
+			else if(match.isActive() && !match.isTurn())
+			{
+				
+			}
+			else if(!match.isActive())
+			{
+				
+			}
+//			System.out.println(match.getID());
+//			System.out.println(match.getOpponentID());
+//			System.out.println(index);
+//			Session sess = new Session();
+//			sess.setState(gameStates.startRound);
+//			sess.setPickedMatch(match);
+//			sess.setUserName(client.getUserName());
+//			client.send(sess);
 		}
 	}
 

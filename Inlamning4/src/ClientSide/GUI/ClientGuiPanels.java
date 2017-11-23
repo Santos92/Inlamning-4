@@ -22,8 +22,10 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import ClientSide.Client;
+import ClientSide.GUI.MatchActions.GameActions;
 import ClientSide.GUI.MatchActions.MatchActions;
-import Communication.Questions.Questions;
+import Communication.Questions.Match;
+import Communication.Questions.Round;
 
 public class ClientGuiPanels {
 
@@ -34,6 +36,7 @@ public class ClientGuiPanels {
 	private ClientGuiTopPanels topPanels;
 	private Client client;
 	private MatchActions matchListener;
+	private GameActions gameListener;
 	
 	private Image imageLogo = null;
 	
@@ -86,6 +89,7 @@ public class ClientGuiPanels {
 		this.GUI = GUI;
 		this.client = client;
 		matchListener = new MatchActions(this.client, this.GUI);
+		gameListener = new GameActions(this.client, this.GUI);
 		setupThemes();
 		setTema(0);
 		topPanels = new ClientGuiTopPanels(Tema, this.GUI);
@@ -500,7 +504,10 @@ public class ClientGuiPanels {
 		
 		return settings;
 	}
-	public JPanel sidaVäljKategori() {
+	public JPanel sidaVäljKategori(Match m) {
+		
+		
+		
 		JPanel väljKat = new JPanel();
 		väljKat.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
@@ -529,16 +536,25 @@ public class ClientGuiPanels {
 		väljKat.add(kategori2);
 		väljKat.add(kategori3);
 		
-		kategori1.removeActionListener(GUI);
-		kategori2.removeActionListener(GUI);
-		kategori3.removeActionListener(GUI);
-		kategori1.addActionListener(GUI);
-		kategori2.addActionListener(GUI);
-		kategori3.addActionListener(GUI);
+		kategori1.putClientProperty("match", m);
+		kategori2.putClientProperty("match", m);
+		kategori3.putClientProperty("match", m);
+		
+		kategori1.removeActionListener(gameListener);
+		kategori2.removeActionListener(gameListener);
+		kategori3.removeActionListener(gameListener);
+		kategori1.addActionListener(gameListener);
+		kategori2.addActionListener(gameListener);
+		kategori3.addActionListener(gameListener);
+		
+		
 		
 		return väljKat;
 	}
-	public JPanel sidaSvaraFråga(Questions Q) {
+	public JPanel sidaSvaraFråga(Match m, boolean lastInRound) {
+		
+		Round r = m.getRound(m.getCurrentRound());
+		
 		answer1.removeActionListener(GUI);
         answer2.removeActionListener(GUI);
         answer3.removeActionListener(GUI);
@@ -546,16 +562,16 @@ public class ClientGuiPanels {
         
         JPanel svaraFrågan = new JPanel();
 	    JPanel question = new JPanel();
-	    JLabel questionCategory = new JLabel(Q.getCategory());
-	    JLabel actualQuestion = new JLabel(Q.getQuestion());
+	    JLabel questionCategory = new JLabel(r.getQ(r.getCurrentQuestion()).getCategory());
+	    JLabel actualQuestion = new JLabel(r.getQ(r.getCurrentQuestion()).getQuestion());
 	    JPanel answers = new JPanel();
 	    JPanel timeLimit = new JPanel();
 	    JTextField timeLimiter = new JTextField("Time limiter");
 	    
-	    answer1.setText(Q.getCorAnswer());
-	    answer2.setText(Q.getWroAns1());
-	    answer3.setText(Q.getWroAns2());
-	    answer4.setText(Q.getWroAns3());
+	    answer1.setText(r.getQ(r.getCurrentQuestion()).getCorAnswer());
+	    answer2.setText(r.getQ(r.getCurrentQuestion()).getWroAns1());
+	    answer3.setText(r.getQ(r.getCurrentQuestion()).getWroAns2());
+	    answer4.setText(r.getQ(r.getCurrentQuestion()).getWroAns3());
 	    
 	    svaraFrågan.setLayout(new BorderLayout());
 	    svaraFrågan.setPreferredSize(new Dimension(500, 500));
@@ -599,7 +615,7 @@ public class ClientGuiPanels {
         timeLimit.add(timeLimiter);
         // svaraFrågan.add(question);
         svaraFrågan.add(answers);
-        //  svaraFrågan.add(timeLimit);
+        // svaraFrågan.add(timeLimit);
              
          answer1.addActionListener(GUI);
          answer2.addActionListener(GUI);

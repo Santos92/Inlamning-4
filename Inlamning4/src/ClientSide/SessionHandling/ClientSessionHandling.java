@@ -58,7 +58,7 @@ public class ClientSessionHandling {
 		}
 		else if(state == gameStates.startRound)
 		{
-			GUI.swapWindow(GUI.getPanels().sidaSvaraFråga(match.getRound1().getQ1()));
+			GUI.swapWindow(GUI.getPanels().sidaSvaraFråga(match, false));
 		}
 	} 
 	

@@ -58,7 +58,7 @@ public class ServerSessionHandler {
 		}
 		else if(state == gameStates.startRound)
 		{
-			Round R = new Round("Mat");
+			Round R = new Round(Message);
 			User opponent = userDB.getUser(match.getOpponent());
 			Match oppMatch = null;
 			Match userMatch = null;
@@ -69,8 +69,9 @@ public class ServerSessionHandler {
 				if(x.getID() == match.getID())
 					userMatch = x;
 			
-			userMatch.setRound1(R);
-			oppMatch.setRound1(R);
+			userMatch.setRound(R, userMatch.getCurrentRound());
+			R.setHidden(false);
+			oppMatch.setRound(R, userMatch.getCurrentRound());
 			
 			Session sess = new Session();
 			sess.setState(gameStates.startRound);
