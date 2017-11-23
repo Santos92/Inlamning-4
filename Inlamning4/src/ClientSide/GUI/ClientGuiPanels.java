@@ -52,9 +52,10 @@ public class ClientGuiPanels {
 	private JButton saveBtn = new JButton("Spara användare");
 	
 	//VäljKategoriSidan
-	private JButton kategori1 = new JButton("Category");
-	private JButton kategori2 = new JButton("Category 2");
-	private JButton kategori3 = new JButton("Category 3");
+	private JButton kategori1 = new JButton("Kategori 1");
+	private JButton kategori2 = new JButton("Kategori 2");
+	private JButton kategori3 = new JButton("Kategori 3");
+	private JButton goBack = new JButton("Tillbaka");
 	
 	//Settingssidan
 	private JButton userInfo = new JButton("Användaruppgifter");
@@ -78,10 +79,12 @@ public class ClientGuiPanels {
 	private JButton answer2 = new JButton("");
 	private JButton answer3 = new JButton("");
 	private JButton answer4 = new JButton("");
+	private JButton backBack = new JButton("Tillbaka");
 	
 	//PoängMotståndareSida
 	private JButton spela = new JButton("Spela");
 	private JButton geUpp = new JButton("Ge Upp");
+	private JButton goReturn = new JButton("Tillbaka");
 	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
@@ -495,11 +498,12 @@ public class ClientGuiPanels {
 		kategori1.removeActionListener(GUI); 
         kategori2.removeActionListener(GUI);
         kategori3.removeActionListener(GUI);
-                
+        goBack.removeActionListener(GUI);   
+        
 		JPanel väljKat = new JPanel();
-		väljKat.setLayout(new GridLayout(5,0, 10,10));
+		väljKat.setLayout(new GridLayout(6,0, 10,10));
 		väljKat.setPreferredSize(new Dimension(500, 500));
-		väljKat.setBorder(new EmptyBorder(5,10,25,10));
+		väljKat.setBorder(new EmptyBorder(6,10,25,10));
 		väljKat.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
 		btnFont = new Font("Arial", Font.PLAIN, 12);
@@ -525,15 +529,21 @@ public class ClientGuiPanels {
 		kategori3.setBackground(Tema.getChangeCate3());
 		kategori3.setForeground(Tema.getText());
 		
+		goBack.setBorder(new EmptyBorder(20,10,30,10));
+		goBack.setBackground(Tema.getTopBG());
+		goBack.setForeground(Tema.getText());
+		
 		väljKat.add(väljkategori);
 		väljKat.add(användarnamn);
 		väljKat.add(kategori1);
 		väljKat.add(kategori2);
 		väljKat.add(kategori3);
+		väljKat.add(goBack);
 		
 		kategori1.addActionListener(GUI);
 		kategori2.addActionListener(GUI);
 		kategori3.addActionListener(GUI);
+		goBack.addActionListener(GUI); 
 		
 		return väljKat;
 	}
@@ -543,6 +553,7 @@ public class ClientGuiPanels {
         answer2.removeActionListener(GUI);
         answer3.removeActionListener(GUI);
         answer4.removeActionListener(GUI);
+        backBack.removeActionListener(GUI);
         
         JPanel svaraFrågan = new JPanel();
 	    JPanel question = new JPanel();
@@ -592,12 +603,18 @@ public class ClientGuiPanels {
         answer4.setLayout(new GridLayout(20,20,5,5));
         answer4.setForeground(Tema.getText());
         
+        backBack.setBackground(Tema.getTopBG());
+        backBack.setFont(btnFont);
+        backBack.setLayout(new GridLayout(20,20,5,5));
+        backBack.setForeground(Tema.getText());
+        
         answers.add(answer1); answers.add(answer2);
         answers.add(answer3); answers.add(answer4);
         
-        timeLimit.setLayout(new GridLayout(0,1,10,10));
+        
+        timeLimit.setLayout(new GridLayout(2,1,10,10));
         timeLimit.setBorder(new EmptyBorder(5,10,5,10));
-        timeLimit.add(timeLimiter);
+        timeLimit.add(backBack); timeLimit.add(timeLimiter);
         // svaraFrågan.add(question);
         svaraFrågan.add(answers);
         //  svaraFrågan.add(timeLimit);
@@ -606,13 +623,15 @@ public class ClientGuiPanels {
          answer2.addActionListener(GUI);
          answer3.addActionListener(GUI);
          answer4.addActionListener(GUI);
-        
+         backBack.addActionListener(GUI);
+         
          return svaraFrågan;
 	}
 	public JPanel sidaKampMotståndare() {
 		spela.removeActionListener(GUI); 
         geUpp.removeActionListener(GUI);
-                
+        goReturn.removeActionListener(GUI);
+        
         JPanel spelMotståndare = new JPanel();
         spelMotståndare.setLayout(new BorderLayout());
         spelMotståndare.setLayout(new GridLayout(3,0));
@@ -669,7 +688,7 @@ public class ClientGuiPanels {
         
         geUppStarta.setLayout(new GridLayout(0,3, 10, 10));
         geUppStarta.setBorder(new EmptyBorder(50,10,10,10));
-        geUppStarta.add(geUpp); geUppStarta.add(spela);
+        geUppStarta.add(geUpp); geUppStarta.add(spela); geUppStarta.add(goReturn);
         
         geUpp.setBackground(Tema.getButtonRed()); 
         geUpp.setFont(labelFont);
@@ -681,13 +700,19 @@ public class ClientGuiPanels {
         spela.setForeground(Tema.getText());
         spela.setLayout(new GridLayout(1,1,50,50));
        
+        goReturn.setBackground(Tema.getTopBG());
+        goReturn.setFont(labelFont);
+        goReturn.setForeground(Tema.getText());
+        goReturn.setLayout(new GridLayout(1,1,100,100));
         
         spelMotståndare.add(namesAndPoints);
         spelMotståndare.add(ronder);
         spelMotståndare.add(geUppStarta);
+        
         spela.addActionListener(GUI);
         geUpp.addActionListener(GUI);
-               
+        goReturn.addActionListener(GUI);
+        
          return spelMotståndare;
 	}
 	

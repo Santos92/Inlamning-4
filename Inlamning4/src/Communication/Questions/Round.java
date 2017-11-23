@@ -1,6 +1,7 @@
 package Communication.Questions;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -11,7 +12,7 @@ public class Round implements Serializable{
 	private Questions Q2;
 	
 	private QuestionsDatabase QDB = new QuestionsDatabase();
-	private LinkedList<Questions> ChosenCategory;
+	private ArrayList<Questions> ChosenCategory;
 	
 	public Round(String category)
 	{
