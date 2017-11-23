@@ -24,6 +24,7 @@ public class Session implements Serializable {
 		RandomMatch,
 		GetCategories,
 		startRound,
+		FinishedRound,
 		AuthAccept;
 	}
 	public gameStates state;

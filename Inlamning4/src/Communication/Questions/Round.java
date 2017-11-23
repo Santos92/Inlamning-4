@@ -8,7 +8,7 @@ public class Round implements Serializable{
 
 	private static final long serialVersionUID = 2059232265937406891L;
 	
-	private Questions[] Q = new Questions[2];
+	private Questions[] Q;
 	private int currentQuestion;
 	
 	private boolean hidden = true;
@@ -17,8 +17,9 @@ public class Round implements Serializable{
 	private QuestionsDatabase QDB = new QuestionsDatabase();
 	private LinkedList<Questions> ChosenCategory;
 	
-	public Round(String category)
+	public Round(String category, int AmountOfQuestions)
 	{
+		Q = new Questions[AmountOfQuestions];
 		setCurrentQuestion(0);
 		this.setCategory(category);
 		if(category.equals("Mat"))

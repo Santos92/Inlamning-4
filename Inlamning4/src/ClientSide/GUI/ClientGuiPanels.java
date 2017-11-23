@@ -7,8 +7,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
@@ -24,10 +27,12 @@ import javax.swing.border.EmptyBorder;
 import ClientSide.Client;
 import ClientSide.GUI.MatchActions.GameActions;
 import ClientSide.GUI.MatchActions.MatchActions;
+import Communication.Session;
+import Communication.Session.gameStates;
 import Communication.Questions.Match;
 import Communication.Questions.Round;
 
-public class ClientGuiPanels {
+public class ClientGuiPanels implements ActionListener {
 
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
 	private ColorThemes Tema;
@@ -37,6 +42,9 @@ public class ClientGuiPanels {
 	private Client client;
 	private MatchActions matchListener;
 	private GameActions gameListener;
+	
+	private Match match;
+	private boolean lastInRound;
 	
 	private Image imageLogo = null;
 	
@@ -82,6 +90,8 @@ public class ClientGuiPanels {
 	private JButton answer2 = new JButton("2");
 	private JButton answer3 = new JButton("3");
 	private JButton answer4 = new JButton("4");
+	
+	JPanel answers = new JPanel();
 	
 	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
@@ -552,19 +562,20 @@ public class ClientGuiPanels {
 		return väljKat;
 	}
 	public JPanel sidaSvaraFråga(Match m, boolean lastInRound) {
+		this.match = m;
+		this.lastInRound = lastInRound;
+		Round r = match.getRound(match.getCurrentRound());
 		
-		Round r = m.getRound(m.getCurrentRound());
-		
-		answer1.removeActionListener(GUI);
-        answer2.removeActionListener(GUI);
-        answer3.removeActionListener(GUI);
-        answer4.removeActionListener(GUI);
+		answer1.removeActionListener(this);
+        answer2.removeActionListener(this);
+        answer3.removeActionListener(this);
+        answer4.removeActionListener(this);
         
         JPanel svaraFrågan = new JPanel();
 	    JPanel question = new JPanel();
 	    JLabel questionCategory = new JLabel(r.getQ(r.getCurrentQuestion()).getCategory());
 	    JLabel actualQuestion = new JLabel(r.getQ(r.getCurrentQuestion()).getQuestion());
-	    JPanel answers = new JPanel();
+	    
 	    JPanel timeLimit = new JPanel();
 	    JTextField timeLimiter = new JTextField("Time limiter");
 	    
@@ -608,8 +619,20 @@ public class ClientGuiPanels {
         answer4.setFont(btnFont);
         answer4.setLayout(new GridLayout(20,20,5,5));
         answer4.setForeground(Tema.getText());
-        answers.add(answer1); answers.add(answer2);
-        answers.add(answer3); answers.add(answer4);
+        
+        LinkedList<JButton> AnswerButtons = new LinkedList<>();
+        AnswerButtons.add(answer1);
+        AnswerButtons.add(answer2);
+        AnswerButtons.add(answer3);
+        AnswerButtons.add(answer4);
+        
+        Collections.shuffle(AnswerButtons);
+        
+        answers.add(AnswerButtons.getFirst()); AnswerButtons.removeFirst();
+        answers.add(AnswerButtons.getFirst()); AnswerButtons.removeFirst();
+        answers.add(AnswerButtons.getFirst()); AnswerButtons.removeFirst();
+        answers.add(AnswerButtons.getFirst()); AnswerButtons.removeFirst();
+        
         timeLimit.setLayout(new GridLayout(0,1,10,10));
         timeLimit.setBorder(new EmptyBorder(5,10,5,10));
         timeLimit.add(timeLimiter);
@@ -617,10 +640,10 @@ public class ClientGuiPanels {
         svaraFrågan.add(answers);
         // svaraFrågan.add(timeLimit);
              
-         answer1.addActionListener(GUI);
-         answer2.addActionListener(GUI);
-         answer3.addActionListener(GUI);
-         answer4.addActionListener(GUI);
+         answer1.addActionListener(this);
+         answer2.addActionListener(this);
+         answer3.addActionListener(this);
+         answer4.addActionListener(this);
         
          return svaraFrågan;
 	}
@@ -703,5 +726,59 @@ public class ClientGuiPanels {
 	public void setTema(int id)
 	{
 		Tema = Teman.get(id);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		int score = 0;
+		Round r = match.getRound(match.getCurrentRound());
+		if(e.getSource() == answer1)
+		{
+			answer1.setBackground(Color.GREEN);
+			answers.revalidate();
+			answers.repaint();
+			r.getQ(r.getCurrentQuestion()).setChosenAnswear(answer1.getText());
+			score ++;
+		}
+		else
+		{
+			JButton Temp = (JButton) e.getSource();
+			Temp.setBackground(Color.RED);
+			Temp.revalidate();
+			Temp.repaint();
+			r.getQ(r.getCurrentQuestion()).setChosenAnswear(Temp.getText());
+		}
+		
+		if(r.getCurrentQuestion()+1 < match.getAmountOfQuestions())
+		{
+			r.setCurrentQuestion(r.getCurrentQuestion()+1);
+			GUI.swapWindow(GUI.getPanels().sidaSvaraFråga(match, lastInRound));
+		}
+		else
+		{
+			System.out.println(lastInRound);
+			if(lastInRound)
+			{
+				match.setTurn(true);
+				if(match.getCurrentRound()+1 < match.getAmountOfRounds())
+				{
+					System.out.println(match.getCurrentRound());
+					match.setCurrentRound(match.getCurrentRound()+1);
+				}
+				else
+				{
+					match.setActive(false);
+					match.setTurn(false);
+				}
+			}
+			else
+			{
+				match.setTurn(false);
+			}
+			Session sess = new Session();
+			sess.setState(gameStates.FinishedRound);
+			sess.setPickedMatch(match);
+			sess.setUserName(client.getUserName());
+			client.send(sess);
+		}
 	}
 }

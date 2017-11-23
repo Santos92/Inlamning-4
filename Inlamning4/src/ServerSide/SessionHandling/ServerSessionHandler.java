@@ -58,7 +58,6 @@ public class ServerSessionHandler {
 		}
 		else if(state == gameStates.startRound)
 		{
-			Round R = new Round(Message);
 			User opponent = userDB.getUser(match.getOpponent());
 			Match oppMatch = null;
 			Match userMatch = null;
@@ -69,6 +68,7 @@ public class ServerSessionHandler {
 				if(x.getID() == match.getID())
 					userMatch = x;
 			
+			Round R = new Round(Message, userMatch.getAmountOfQuestions());
 			userMatch.setRound(R, userMatch.getCurrentRound());
 			R.setHidden(false);
 			oppMatch.setRound(R, userMatch.getCurrentRound());
@@ -98,6 +98,34 @@ public class ServerSessionHandler {
 				MatchKö.removeFirst();
 				MatchKö.removeFirst();
 			}
+		}
+		else if(state == gameStates.FinishedRound)
+		{
+			User opponent = userDB.getUser(match.getOpponent());	
+			Match oppMatch = null;
+			Match userMatch = null;
+			int index = 0;
+			for(Match x : opponent.getMatcher())
+				if(x.getID() == match.getOpponentID())
+					oppMatch = x;
+			for(Match x : user.getMatcher())
+				if(x.getID() == match.getID())
+				{
+					userMatch = x;
+					index = user.getMatcher().indexOf(x);
+				}
+			
+			user.setMatch(match, index);
+			oppMatch.setRoundOpp(userMatch.getRound(userMatch.getCurrentRound()), userMatch.getCurrentRound());
+			oppMatch.setCurrentRound(match.getCurrentRound());
+			oppMatch.setActive(match.isActive());
+			oppMatch.setTurn(!match.isTurn());
+			
+			Session sess = new Session();
+			sess.setMatcher(user.getMatcher());
+			sess.setState(gameStates.FinishedRound);
+			server.send(sess);
+			
 		}
 	}
 }

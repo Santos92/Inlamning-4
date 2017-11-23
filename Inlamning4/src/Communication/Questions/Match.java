@@ -9,6 +9,7 @@ public class Match implements Serializable{
 	private boolean turn;
 	
 	private int AmountOfRounds = 2;
+	private int AmountOfQuestions = 2;
 	
 	private static int id = 0;
 	private int ID = 0;
@@ -25,6 +26,12 @@ public class Match implements Serializable{
 		ID = id++;
 		setCurrentRound(0);
 		setOpponent(opp);
+	}
+	public int getAmountOfRounds() {
+		return AmountOfRounds;
+	}
+	public void setAmountOfRounds(int amountOfRounds) {
+		AmountOfRounds = amountOfRounds;
 	}
 	public String getOpponent() {
 		return Opponent;
@@ -74,6 +81,12 @@ public class Match implements Serializable{
 	public void setRoundOpp(Round round, int i)
 	{
 		this.roundOpp[i] = round;
+	}
+	public int getAmountOfQuestions() {
+		return AmountOfQuestions;
+	}
+	public void setAmountOfQuestions(int amountOfQuestions) {
+		AmountOfQuestions = amountOfQuestions;
 	}
 	
 }

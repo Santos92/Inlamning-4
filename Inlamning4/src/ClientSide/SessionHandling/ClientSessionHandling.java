@@ -60,6 +60,11 @@ public class ClientSessionHandling {
 		{
 			GUI.swapWindow(GUI.getPanels().sidaSvaraFråga(match, false));
 		}
+		else if(state == gameStates.FinishedRound)
+		{
+			client.setMatcher(Packet.getMatcher());
+			GUI.swapWindow(GUI.getPanels().sidaLogedin());
+		}
 	} 
 	
 	

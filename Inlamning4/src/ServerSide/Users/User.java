@@ -20,6 +20,10 @@ public class User implements Serializable {
 	{
 		Matcher.add(m);
 	}
+	public void setMatch(Match m, int i)
+	{
+		Matcher.set(i, m);
+	}
 	public void setNamn(String namn) {
 		this.namn = namn;
 	}

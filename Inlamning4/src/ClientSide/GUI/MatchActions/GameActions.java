@@ -31,8 +31,6 @@ public class GameActions implements ActionListener {
 		sess.setPickedMatch(m);
 		sess.setUserName(client.getUserName());
 		client.send(sess);
-		System.out.println(e.getActionCommand());
-		
 	}
 
 }
