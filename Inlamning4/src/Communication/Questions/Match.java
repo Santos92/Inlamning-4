@@ -41,5 +41,5 @@ public class Match implements Serializable{
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+	// May need to transfer som of the loops from Round class to Match class
 }

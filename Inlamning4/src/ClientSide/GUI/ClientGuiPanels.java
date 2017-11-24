@@ -23,6 +23,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import ClientSide.Client;
+import Communication.Questions.Questions;
+import Communication.Questions.Round;
 
 public class ClientGuiPanels {
 
@@ -32,9 +34,9 @@ public class ClientGuiPanels {
 	private ClientGUI GUI;
 	private ClientGuiTopPanels topPanels;
 	private Client client;
-	
 	private Image imageLogo = null;
-	
+	private Round round; // skapade Round object
+	private Questions questions;
 	// Startsidan
 	private JButton regBtn = new JButton("Nytt konto");
 	private JButton loginBtn = new JButton("Logga in");
@@ -52,9 +54,9 @@ public class ClientGuiPanels {
 	private JButton saveBtn = new JButton("Spara användare");
 	
 	//VäljKategoriSidan
-	private JButton kategori1 = new JButton("Kategori 1");
-	private JButton kategori2 = new JButton("Kategori 2");
-	private JButton kategori3 = new JButton("Kategori 3");
+	private JButton kategori1 = new JButton("Mat");
+	private JButton kategori2 = new JButton("Teknik");
+	private JButton kategori3 = new JButton("Historia");
 	private JButton goBack = new JButton("Tillbaka");
 	
 	//Settingssidan
@@ -67,6 +69,9 @@ public class ClientGuiPanels {
 	
 	//LogedinSidan
 	private JButton startaSpel = new JButton("Starta nytt spel");
+	private JButton dinTur = new JButton("");
+	private JButton dinTur2 = new JButton("");
+	private JButton avslutadSpel = new JButton("x förlorade mot User1");
 	
 	//Nyttspel sidan
 	private JButton slumpadSpelare = new JButton("Slumpad spelare");
@@ -268,7 +273,8 @@ public class ClientGuiPanels {
 		
 		startaSpel.removeActionListener(GUI);	
 		topMenu = topPanels.Top();
-
+		dinTur.removeActionListener(GUI);
+		dinTur2.removeActionListener(GUI);
 		JPanel logedInPanel = new JPanel();
 		logedInPanel.setLayout(new GridLayout(0,1));
 		logedInPanel.setBackground(Tema.getBG());
@@ -297,19 +303,26 @@ public class ClientGuiPanels {
 		startaSpel.setFont(headingFont);
 		startaSpel.setBackground(Tema.getStartGameBG());
 		
-		JButton dinTur = new JButton("Din tur mot User1");
+		JLabel yourTurn = new JLabel("Din tur mot: ");
+		yourTurn.setBorder(new CompoundBorder(border, margin));
+		labelFont = new Font("Arial", Font.BOLD, 17);
+		yourTurn.setFont(labelFont);
+		yourTurn.setBackground(Tema.getBG());
+		yourTurn.setForeground(Tema.getText());
 		dinTur.setBackground(Tema.getButtonBG());
 		dinTur.setForeground(Tema.getText());
 		dinTur.setFont(btnFont);
 		dinTur.setBorderPainted(false);
 		
-		JButton dinTur2 = new JButton("Din tur mot User2");
+	
 		dinTur2.setBackground(Tema.getButtonBG());
 		dinTur2.setForeground(Tema.getText());
 		dinTur2.setFont(btnFont);
 		dinTur2.setBorderPainted(false);
 		dinTur2.setAlignmentX(40);
-
+		yourTurn.add(dinTur);
+		yourTurn.add(dinTur2);
+		
 		JLabel aktivaSpelLabel = new JLabel("Aktiva spel");
 		aktivaSpelLabel.setBorder(new CompoundBorder(labelBorder, labelMargin));
 		aktivaSpelLabel.setForeground(Tema.getTxFdBG());
@@ -320,18 +333,21 @@ public class ClientGuiPanels {
 		avslutadeSpelLabel.setForeground(Tema.getTxFdBG());
 		avslutadeSpelLabel.setFont(smalFont);
 		
-		JButton avslutadSpel = new JButton("x förlorade mot User1");
+		
 		avslutadSpel.setBackground(Tema.getButtonBG());
 		avslutadSpel.setForeground(Tema.getText());
 		avslutadSpel.setFont(btnFont);
 		avslutadSpel.setBorderPainted(false);
 
 		startaSpel.addActionListener(GUI);
+		dinTur.addActionListener(GUI);
+		dinTur2.addActionListener(GUI);
 		
 		logedInPanel.add(topMenu);
 		logedInPanel.add(userLabel);
 		logedInPanel.add(username);
 		logedInPanel.add(startaSpel);
+		logedInPanel.add(yourTurn);
 		logedInPanel.add(dinTur);
 		logedInPanel.add(dinTur2);
 		logedInPanel.add(aktivaSpelLabel);
@@ -715,13 +731,14 @@ public class ClientGuiPanels {
         
          return spelMotståndare;
 	}
-	
+	// SidaStart
 	public JButton getRegBtn() {
 		return regBtn;
 	}
 	public JButton getLoginBtn() {
 		return loginBtn;
 	}
+	//sidaLogin
 	public JTextField getPasswordTxFdLog() {
 		return passwordTxFdLog;
 	}
@@ -734,6 +751,7 @@ public class ClientGuiPanels {
 	public JButton getBack() {
 		return Back;
 	}
+	//sidaSkapa
 	public JTextField getUsernameTxFdReg() {
 		return usernameTxFdReg;
 	}
@@ -743,6 +761,7 @@ public class ClientGuiPanels {
 	public JButton getSaveBtn() {
 		return saveBtn;
 	}
+	//SidaSettings
 	public JButton getSettingsUserInfo() {
 		return userInfo;
 	}
@@ -761,9 +780,20 @@ public class ClientGuiPanels {
 	public JButton getSettingsBack() {
 		return back;
 	}
+	// SidaLoggedIn
 	public JButton getStartaSpel() {
 		return startaSpel;
 	}
+	public JButton getDinTur1() {
+		return dinTur;
+	}
+	public JButton getDinTur2() {
+		return dinTur2;
+	}
+	public JButton getAvslutadeSpel() {
+		return avslutadSpel;
+	}
+	// sidaVäljKategori
 	public JButton getKategori1() {
 		return kategori1;
 	}
@@ -773,9 +803,52 @@ public class ClientGuiPanels {
 	public JButton getKategori3() {
 		return kategori3;
 	}
+	public JButton getGoBack() {
+		return goBack;
+	}
+	// sidaNyttSpel
 	public JButton getSlumpadSpelare() {
 		return slumpadSpelare;
 	}
+	// sidaSvaraFrågan
+	public JButton getAnswer1() {
+		return answer1;
+	}
+	public String getAnswer1Text() {
+		return answer1.getText();
+	}
+	public JButton getAnswer2() {
+		return answer2;
+	}
+	public String getAnswer2Text() {
+		return answer2.getText();
+	}
+	public JButton getAnswer3() {
+		return answer3;
+	}
+	public String getAnswer3Text() {
+		return answer3.getText();
+	}
+	public JButton getAnswer4() {
+		return answer4;
+	}
+	public String getAnswer4Text() {
+		return answer4.getText();
+	}
+	public JButton getBackBack() {
+		return backBack;
+	}
+	// sidaKampMotståndare
+	public JButton getSpela() {
+		return spela;
+	}
+	public JButton getGeUpp() {
+		return geUpp;
+	}
+	public JButton getGoReturn() {
+		return goReturn;
+	}
+	
 	public ClientGuiTopPanels getTopPanels()
 	{
 		return topPanels;

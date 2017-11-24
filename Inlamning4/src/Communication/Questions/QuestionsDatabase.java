@@ -3,16 +3,18 @@ package Communication.Questions;
 import java.awt.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 
 public class QuestionsDatabase {
 
-	 //ArrayList<ArrayList<Questions>> categories = new ArrayList<ArrayList<Questions>>();
-	    private ArrayList<Questions> Mat = new ArrayList<>();
-		private ArrayList<Questions> Film = new ArrayList<>();
-		private ArrayList<Questions> Teknik = new ArrayList<>();
-		private ArrayList<Questions> Geografi = new ArrayList<>();
-		private ArrayList<Questions> Historia = new ArrayList<>();
+	 
+	    private LinkedList<Questions> Mat = new LinkedList<>();
+		private LinkedList<Questions> Film = new LinkedList<>();
+		private LinkedList<Questions> Teknik = new LinkedList<>();
+		private LinkedList<Questions> Geografi = new LinkedList<>();
+		private LinkedList<Questions> Historia = new LinkedList<>();
+		private LinkedList<Questions> QDBase = new LinkedList<>(); // Kanske onödigt
 		
 	
 		public QuestionsDatabase(){
@@ -69,28 +71,31 @@ public class QuestionsDatabase {
 	    }
 	    
 	  	    
-	    public void fillQuestionDatabase() {
-	    	
+	    public void fillQuestionDatabase() { //Kanske onödigt då Roundklassen har liknande 
+	    	QDBase.addAll(Film);
+	    	QDBase.addAll(Teknik);
+	    	QDBase.addAll(Geografi);
+	    	QDBase.addAll(Historia);
 	    }
-	    public ArrayList<Questions> getMat() {
+	    public LinkedList<Questions> getMat() {
 			return Mat;
 		}
-		public ArrayList<Questions> getFilm() {
+		public LinkedList<Questions> getFilm() {
 			return Film;
 		}
-		public ArrayList<Questions> getTeknik() {
+		public LinkedList<Questions> getTeknik() {
 			return Teknik;
 		}
-		public ArrayList<Questions> getGeografi() {
+		public LinkedList<Questions> getGeografi() {
 			return Geografi;
 		}
-		public ArrayList<Questions> getHistoria() {
+		public LinkedList<Questions> getHistoria() {
 			return Historia;
 		}
 		
 		
 
-		// Testing how to get elements in the arraylists from main
+	
 		
 
 }

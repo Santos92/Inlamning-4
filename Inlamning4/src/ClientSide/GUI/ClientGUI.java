@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import ClientSide.Client;
 import Communication.Session;
 import Communication.Session.gameStates;
+import Communication.Questions.Questions;
+import Communication.Questions.Round;
 import ServerSide.Users.User;
 import ServerSide.Users.UserDatabase;
 
@@ -19,7 +21,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private ClientGuiPanels GuiPanels;
 	private ClientGuiTopPanels GuiTopPanels;
 	private Client client;
-	
+	private Round Round1; // skapar ett object av klassen Round för att använda det i sidaSvaraFråga
+	private Round Round2;
+	private Questions Q1;
+	private Questions Q2;
 	private JPanel mainPanel;
 	private JPanel topPanel;
 	
@@ -27,9 +32,14 @@ public class ClientGUI extends JPanel implements ActionListener{
 		this.client = client;
 		GuiPanels = new ClientGuiPanels(this, this.client);
 		GuiTopPanels = GuiPanels.getTopPanels();
-		//mainPanel = GuiPanels.sidaStart();
+		mainPanel = GuiPanels.sidaStart();
+		//mainPanel = GuiPanels.sidaLogin();
+		//mainPanel = GuiPanels.sidaSkapa();
+		//mainPanel = GuiPanels.sidaLogedin();
+		//mainPanel = GuiPanels.sidaNyttSpel();
+		//mainPanel = GuiPanels.sidaSettings();
 		//mainPanel = GuiPanels.sidaKampMotståndare();
-		mainPanel = GuiPanels.sidaSvaraFråga();
+		//mainPanel = GuiPanels.sidaSvaraFråga();
 		//mainPanel = GuiPanels.sidaVäljKategori();
 		if(topPanel != null)
 		add(topPanel);
@@ -73,7 +83,75 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource().equals(GuiPanels.getStartaSpel()))
 			swapWindow(GuiPanels.sidaNyttSpel());
 		else if(e.getSource().equals(GuiTopPanels.getTopPanelinställningar()))
-			swapWindow(GuiPanels.sidaSettings());
+			swapWindow(GuiPanels.sidaSettings());  
+		else if(e.getSource().equals(GuiPanels.getDinTur1())) // här går vi vidare från sidaLogedin till sidaKampMotståndare
+			swapWindow(GuiPanels.sidaKampMotståndare());
+		else if(e.getSource().equals(GuiPanels.getDinTur2()))
+			swapWindow(GuiPanels.sidaKampMotståndare());  // här går vi vidare från sidaLogedin till sidaKampMotståndare
+		//else if(e.getSource().equals(GuiPanels.getAvslutadeSpel()))
+		// lägg till en swapWindow till en statistikGui	
+		else if(e.getSource().equals(GuiPanels.getGeUpp())) // i sidaKampMotståndare går vi tillbaka sidaLogedin. **Spelet ska raderas
+			swapWindow(GuiPanels.sidaLogedin());
+		else if(e.getSource().equals(GuiPanels.getSpela()))// från Spela knappen till sidaSvaraFråga där frågorna finns eller till sidaVäljkategori
+		{	// Slumpa först alla kategorier och knappar med svar
+			//if(Round1)
+			//swapWindow(GuiPanels.sidaSvaraFråga());
+			// Här behövs de slumpade läggas ut på frågan och svaren läggas ut på knapparna
+			//else if(Round2)
+			swapWindow(GuiPanels.sidaVäljKategori());
+			// Här behövs de slumpade läggas ut på kategorier . Kanske ska hanteras i ServerSession
+		}
+		else if(e.getSource().equals(GuiPanels.getGoReturn())) // Tillbaka till sidaLogedin
+			swapWindow(GuiPanels.sidaLogedin());
+		else if(e.getSource().equals(GuiPanels.getKategori1()))
+			{  if(GuiPanels.getKategori1().getText().equalsIgnoreCase("Mat") 
+				|| GuiPanels.getKategori1().getText().equalsIgnoreCase("Film")
+				|| GuiPanels.getKategori1().getText().equalsIgnoreCase("Teknik") 
+				|| GuiPanels.getKategori1().getText().equalsIgnoreCase("Geografi")
+				|| GuiPanels.getKategori1().getText().equalsIgnoreCase("Historia")) 
+			    {
+				swapWindow(GuiPanels.sidaSvaraFråga());
+				//Q1.getCategory(); // Det behövs en metod som slumpar och lägger ut frågan och svaren på snapparna på sidaSvaraFråga
+			  
+			    }
+			}
+		else if(e.getSource().equals(GuiPanels.getKategori2()))
+			{  if(GuiPanels.getKategori2().getText().equalsIgnoreCase("Mat") 
+				|| GuiPanels.getKategori2().getText().equalsIgnoreCase("Film")
+				|| GuiPanels.getKategori2().getText().equalsIgnoreCase("Teknik") 
+				|| GuiPanels.getKategori2().getText().equalsIgnoreCase("Geografi")
+				|| GuiPanels.getKategori2().getText().equalsIgnoreCase("Historia"))
+			  {
+				swapWindow(GuiPanels.sidaSvaraFråga());
+				//Q1.getCategory();
+				
+			  }
+			}
+		else if(e.getSource().equals(GuiPanels.getKategori3()))
+			{ if(GuiPanels.getKategori3().getText().equalsIgnoreCase("Mat") 
+				|| GuiPanels.getKategori3().getText().equalsIgnoreCase("Film")
+				|| GuiPanels.getKategori3().getText().equalsIgnoreCase("Teknik") 
+				|| GuiPanels.getKategori3().getText().equalsIgnoreCase("Geografi")
+				|| GuiPanels.getKategori3().getText().equalsIgnoreCase("Historia")) 
+			  {
+				swapWindow(GuiPanels.sidaSvaraFråga());
+				//Q1.getCategory();
+				
+			  }
+			}
+		else if(e.getSource().equals(GuiPanels.getGoBack()))
+			swapWindow(GuiPanels.sidaLogedin());
+		
+		
+		else if(e.getSource().equals(GuiPanels.getAnswer1()))
+		{	//Round round = new Round(String category); //Round object behöver importera sina egenskaper här
+			//if(GuiPanels.getAnswer1().getText().equalsIgnoreCase(Questions.getCorAnswer()))// ska få ut string text på knappen och jämföra med rätta svaret
+			//answer1.setBackground(GuiPanels.Tema.startGameBG()); //Tema behöver importera sina färger hit
+		// else 
+			// answer1.setBackground(Turn this red)
+		
+		}
+		
 		else if(e.getSource().equals(GuiPanels.getSettingsBack()))
 		{
 			Session sess = new Session();
@@ -87,8 +165,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 			sess.setState(gameStates.RandomMatch);
 			sess.setUserName(client.getUserName());
 			client.send(sess);
-		}
+			swapWindow(GuiPanels.sidaLogedin());// Borde inte denna GUI återvända till sidaLogedin dvs byta GUI till sidaLogedin
 			
+		}
+		
 	}
 	public ClientGuiPanels getPanels()
 	{
