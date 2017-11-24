@@ -10,6 +10,7 @@ public class Round implements Serializable{
 	
 	private Questions[] Q;
 	private int currentQuestion;
+	private int Score = 0;
 	
 	private boolean hidden = true;
 	
@@ -30,8 +31,8 @@ public class Round implements Serializable{
 			ChosenCategory = QDB.getTeknik();
 		
 		Collections.shuffle(ChosenCategory);
-		setQ(ChosenCategory.get(0), 0);
-		setQ(ChosenCategory.get(1), 1);
+		for(int i = 0; i<AmountOfQuestions; i++)
+			setQ(ChosenCategory.get(i), i);
 	}
 
 	public Questions getQ(int i)
@@ -65,5 +66,12 @@ public class Round implements Serializable{
 
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+	public int getScore() {
+		return Score;
+	}
+
+	public void setScore(int score) {
+		Score = score;
 	}
 }

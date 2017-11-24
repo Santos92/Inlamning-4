@@ -43,14 +43,6 @@ public class MatchActions implements ActionListener {
 			{
 				
 			}
-//			System.out.println(match.getID());
-//			System.out.println(match.getOpponentID());
-//			System.out.println(index);
-//			Session sess = new Session();
-//			sess.setState(gameStates.startRound);
-//			sess.setPickedMatch(match);
-//			sess.setUserName(client.getUserName());
-//			client.send(sess);
 		}
 	}
 

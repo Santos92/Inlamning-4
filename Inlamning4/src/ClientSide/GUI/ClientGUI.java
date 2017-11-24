@@ -85,6 +85,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 			sess.setUserName(client.getUserName());
 			client.send(sess);
 		}
+		else if(e.getSource().equals(GuiPanels.getTopPanels().getTopPanelRefresh()))
+		{
+			Session sess = new Session();
+			sess.setState(gameStates.getMatches);
+			sess.setUserName(client.getUserName());
+			client.send(sess);
+		}
 			
 	}
 	public ClientGuiPanels getPanels()

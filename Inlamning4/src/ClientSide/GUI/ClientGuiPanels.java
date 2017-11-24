@@ -347,7 +347,10 @@ public class ClientGuiPanels implements ActionListener {
 					}
 					if(client.getMatcher().get(i).isActive() && !client.getMatcher().get(i).isTurn() && x == 1)
 					{
-						Matches[i] = new JButton(client.getMatcher().get(i).getOpponent());
+
+						int poäng = client.getMatcher().get(i).getPoints();
+						int poängOpp = client.getMatcher().get(i).getPointsOpp();
+						Matches[i] = new JButton(client.getMatcher().get(i).getOpponent() + " poäng: " + poäng + " - " + poängOpp);
 						Matches[i].setBackground(Tema.getButtonBG());
 						Matches[i].setForeground(Tema.getText());
 						Matches[i].setFont(btnFont);
@@ -358,7 +361,9 @@ public class ClientGuiPanels implements ActionListener {
 					}
 					if(!client.getMatcher().get(i).isActive() && x == 2)
 					{
-						Matches[i] = new JButton(client.getMatcher().get(i).getOpponent());
+						int poäng = client.getMatcher().get(i).getPoints();
+						int poängOpp = client.getMatcher().get(i).getPointsOpp();
+						Matches[i] = new JButton(client.getMatcher().get(i).getOpponent() + " poäng: " + poäng + " - " + poängOpp);
 						Matches[i].setBackground(Tema.getButtonBG());
 						Matches[i].setForeground(Tema.getText());
 						Matches[i].setFont(btnFont);
@@ -729,7 +734,6 @@ public class ClientGuiPanels implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int score = 0;
 		Round r = match.getRound(match.getCurrentRound());
 		if(e.getSource() == answer1)
 		{
@@ -737,7 +741,8 @@ public class ClientGuiPanels implements ActionListener {
 			answers.revalidate();
 			answers.repaint();
 			r.getQ(r.getCurrentQuestion()).setChosenAnswear(answer1.getText());
-			score ++;
+			r.setScore(r.getScore()+1);
+			match.setPoints(match.getPoints()+1);
 		}
 		else
 		{

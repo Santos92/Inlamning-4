@@ -117,6 +117,7 @@ public class ServerSessionHandler {
 			
 			user.setMatch(match, index);
 			oppMatch.setRoundOpp(userMatch.getRound(userMatch.getCurrentRound()), userMatch.getCurrentRound());
+			oppMatch.setPointsOpp(match.getPoints());
 			oppMatch.setCurrentRound(match.getCurrentRound());
 			oppMatch.setActive(match.isActive());
 			oppMatch.setTurn(!match.isTurn());

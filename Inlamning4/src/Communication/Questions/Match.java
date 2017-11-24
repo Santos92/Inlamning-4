@@ -1,6 +1,9 @@
 package Communication.Questions;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class Match implements Serializable{
 
@@ -8,13 +11,16 @@ public class Match implements Serializable{
 	private boolean active;
 	private boolean turn;
 	
-	private int AmountOfRounds = 2;
-	private int AmountOfQuestions = 2;
+	private int points;
+	private int pointsOpp;
+	
+	private int AmountOfRounds;
+	private int AmountOfQuestions;
 	
 	private static int id = 0;
 	private int ID = 0;
-	private Round[] round = new Round[AmountOfRounds];
-	private Round[] roundOpp = new Round[AmountOfRounds];
+	private Round[] round;
+	private Round[] roundOpp;
 	
 	private int CurrentRound;
 	
@@ -23,6 +29,29 @@ public class Match implements Serializable{
 	
 	public Match(String opp)
 	{
+		Scanner scan;
+		try {
+			scan = new Scanner(new File("Inlamning4/res/Properties.conf"));
+			while (scan.hasNextLine())
+			{
+				String firstLine = scan.nextLine();
+				String secondLine = scan.nextLine();
+				String[] temp;
+				temp = firstLine.split(":");
+				temp[1] = temp[1].trim();
+				AmountOfQuestions = Integer.parseInt(temp[1]);
+				temp = secondLine.split(":");
+				temp[1] = temp[1].trim();
+				AmountOfRounds = Integer.parseInt(temp[1]);
+				System.out.println(AmountOfQuestions);
+				System.out.println(AmountOfRounds);
+			}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			round = new Round[AmountOfRounds];
+			roundOpp = new Round[AmountOfRounds];	
+			
 		ID = id++;
 		setCurrentRound(0);
 		setOpponent(opp);
@@ -87,6 +116,18 @@ public class Match implements Serializable{
 	}
 	public void setAmountOfQuestions(int amountOfQuestions) {
 		AmountOfQuestions = amountOfQuestions;
+	}
+	public int getPoints() {
+		return points;
+	}
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	public int getPointsOpp() {
+		return pointsOpp;
+	}
+	public void setPointsOpp(int pointsOpp) {
+		this.pointsOpp = pointsOpp;
 	}
 	
 }
