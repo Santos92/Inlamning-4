@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ClientSide.Client;
@@ -25,17 +25,20 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private Round Round2;
 	private Questions Q1;
 	private Questions Q2;
+	private ColorThemes Color;
 	private JPanel mainPanel;
 	private JPanel topPanel;
+	private JButton changedButton;
+
 	
 	public ClientGUI(Client client){
 		this.client = client;
 		GuiPanels = new ClientGuiPanels(this, this.client);
 		GuiTopPanels = GuiPanels.getTopPanels();
-		mainPanel = GuiPanels.sidaStart();
+		//mainPanel = GuiPanels.sidaStart();
 		//mainPanel = GuiPanels.sidaLogin();
 		//mainPanel = GuiPanels.sidaSkapa();
-		//mainPanel = GuiPanels.sidaLogedin();
+		mainPanel = GuiPanels.sidaLogedin();
 		//mainPanel = GuiPanels.sidaNyttSpel();
 		//mainPanel = GuiPanels.sidaSettings();
 		//mainPanel = GuiPanels.sidaKampMotståndare();
@@ -135,7 +138,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 				|| GuiPanels.getKategori3().getText().equalsIgnoreCase("Historia")) 
 			  {
 				swapWindow(GuiPanels.sidaSvaraFråga());
-				//Q1.getCategory();
+				//Q1.getCategory(); // Här behöver vi lägga på svart färg på answer knapparna. Den färgen byts ut när den tryckts
 				
 			  }
 			}
@@ -146,12 +149,29 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource().equals(GuiPanels.getAnswer1()))
 		{	//Round round = new Round(String category); //Round object behöver importera sina egenskaper här
 			//if(GuiPanels.getAnswer1().getText().equalsIgnoreCase(Questions.getCorAnswer()))// ska få ut string text på knappen och jämföra med rätta svaret
-			//answer1.setBackground(GuiPanels.Tema.startGameBG()); //Tema behöver importera sina färger hit
+			//changedButton.setBackground(Color.getStartGameBG()); //Tema behöver importera sina färger hit
 		// else 
-			// answer1.setBackground(Turn this red)
-		
+			//GuiPanels.getAnswer1().makeEmpty(); // make the button empty then repaint it
+			//GuiPanels.getAnswer1().setBackground(Color.getButtonRed());
+			//GuiPanels.getAnswer1().repaint();
+			//JPanel sidaSvaraFråga = new JPanel();
+			//sidaSvaraFråga.repaint();
+			//sidaSvaraFråga.revalidate();
 		}
-		
+		else if (e.getSource().equals(GuiPanels.getAnswer2()))
+		{
+			
+		}
+		else if(e.getSource().equals(GuiPanels.getAnswer3()))
+		{
+			
+		}
+		else if(e.getSource().equals(GuiPanels.getAnswer4()))
+		{
+			
+		}
+		else if(e.getSource().equals(GuiPanels.getBackBack()))
+			swapWindow(GuiPanels.sidaLogedin());
 		else if(e.getSource().equals(GuiPanels.getSettingsBack()))
 		{
 			Session sess = new Session();
