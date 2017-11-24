@@ -37,7 +37,7 @@ public class MatchActions implements ActionListener {
 			}
 			else if(match.isActive() && !match.isTurn())
 			{
-				
+				GUI.swapWindow(GUI.getPanels().sidaKampMotståndare());
 			}
 			else if(!match.isActive())
 			{
