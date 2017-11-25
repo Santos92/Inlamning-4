@@ -22,23 +22,14 @@ public class Round implements Serializable{
 	private LinkedList<Questions> ChosenCategory;
 	
 	
-	public Round(String category) // här kommer actionPerformed knappen in när användaren trycker på Mat
+	public Round(String category) 
 	{
 		if(category.equals("Mat")) {
-			ChosenCategory = QDB.getMat(); // ger en lista av alla Mat frågor
+			ChosenCategory = QDB.getMat(); 
 		
 		Collections.shuffle(ChosenCategory);
-		Q1 = ChosenCategory.get(0); // Ger första set med frågan och svaren i Matkategorin
-		// Få ut frågan från ChosenCategory
-		category = Q1.getCategory();
-		question = Q1.getQuestion();  // Kanske behöver dessa delar flyttas till Match
-		for(int i =2; i<ChosenCategory.size()-1; i++) // Shufflar alla answers som ska läggas ut på knappar
-		   Collections.shuffle(ChosenCategory);
-		rightAns = Q1.getCorAnswer();
-		Q2 = ChosenCategory.get(1); // Ger andra set med frågan och svaren i Matkategorin
-		question = Q2.getQuestion();
-		for(int i =2; i<ChosenCategory.size()-1; i++) // Shufflar alla answers som ska läggas ut på knappar
-			   Collections.shuffle(ChosenCategory);
+		Q1 = ChosenCategory.get(0); 
+		Q2 = ChosenCategory.get(1); 
 		}
 		
 		else if(category.equals("Film")) {
@@ -69,8 +60,5 @@ public class Round implements Serializable{
 	
 	}
 	
-	// Skapa en metod som ger frågan från kategorin
-	// skapa en metod som ger alla svaren från kategorin
-	// skapa en metod som ger grön färg på knapp om rätt svar valts eller röd färg om fel svar valts
-	
+		
 }

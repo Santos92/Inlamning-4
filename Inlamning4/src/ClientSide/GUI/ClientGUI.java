@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import ClientSide.Client;
 import Communication.Session;
 import Communication.Session.gameStates;
+import Communication.Questions.Match;
 import Communication.Questions.Questions;
 import Communication.Questions.Round;
 import ServerSide.Users.User;
@@ -21,8 +22,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private ClientGuiPanels GuiPanels;
 	private ClientGuiTopPanels GuiTopPanels;
 	private Client client;
-	private Round Round1; // skapar ett object av klassen Round för att använda det i sidaSvaraFråga
-	private Round Round2;
+	private Round Round; 
+	private Match match;
 	private Questions Q1;
 	private Questions Q2;
 	private ColorThemes Color;
@@ -36,14 +37,16 @@ public class ClientGUI extends JPanel implements ActionListener{
 		GuiPanels = new ClientGuiPanels(this, this.client);
 		GuiTopPanels = GuiPanels.getTopPanels();
 		//mainPanel = GuiPanels.sidaStart();
-		//mainPanel = GuiPanels.sidaLogin();
+		mainPanel = GuiPanels.sidaLogin();
 		//mainPanel = GuiPanels.sidaSkapa();
-		mainPanel = GuiPanels.sidaLogedin();
+		//mainPanel = GuiPanels.sidaLogedin();
 		//mainPanel = GuiPanels.sidaNyttSpel();
 		//mainPanel = GuiPanels.sidaSettings();
 		//mainPanel = GuiPanels.sidaKampMotståndare();
 		//mainPanel = GuiPanels.sidaSvaraFråga();
 		//mainPanel = GuiPanels.sidaVäljKategori();
+		//mainPanel = GuiPanels.sidaStatistik();
+		
 		if(topPanel != null)
 		add(topPanel);
 		add(mainPanel);		
@@ -87,24 +90,41 @@ public class ClientGUI extends JPanel implements ActionListener{
 			swapWindow(GuiPanels.sidaNyttSpel());
 		else if(e.getSource().equals(GuiTopPanels.getTopPanelinställningar()))
 			swapWindow(GuiPanels.sidaSettings());  
-		else if(e.getSource().equals(GuiPanels.getDinTur1())) // här går vi vidare från sidaLogedin till sidaKampMotståndare
+		else if(e.getSource().equals(GuiPanels.getSettingsBack())) // Tar oss inte tillbaka till samma sidaLogedin
+		{
+			Session sess = new Session();
+			sess.setState(gameStates.getMatches);
+			sess.setUserName(client.getUserName());
+			client.send(sess);
+			
+		}
+		else if(e.getSource().equals(GuiPanels.getSlumpadSpelare()))
+		{
+			Session sess = new Session();
+			sess.setState(gameStates.RandomMatch);
+			sess.setUserName(client.getUserName());
+			client.send(sess);
+			swapWindow(GuiPanels.sidaLogedin());
+			
+		}
+		else if(e.getSource().equals(GuiPanels.getDinTur1())) 
 			swapWindow(GuiPanels.sidaKampMotståndare());
 		else if(e.getSource().equals(GuiPanels.getDinTur2()))
-			swapWindow(GuiPanels.sidaKampMotståndare());  // här går vi vidare från sidaLogedin till sidaKampMotståndare
-		//else if(e.getSource().equals(GuiPanels.getAvslutadeSpel()))
-		// lägg till en swapWindow till en statistikGui	
-		else if(e.getSource().equals(GuiPanels.getGeUpp())) // i sidaKampMotståndare går vi tillbaka sidaLogedin. **Spelet ska raderas
+			swapWindow(GuiPanels.sidaKampMotståndare());  
+		else if(e.getSource().equals(GuiPanels.getAvslutadeSpel()))
+		 swapWindow(GuiPanels.sidaStatistik());
+		else if(e.getSource().equals(GuiPanels.getGeUpp())) 
 			swapWindow(GuiPanels.sidaLogedin());
-		else if(e.getSource().equals(GuiPanels.getSpela()))// från Spela knappen till sidaSvaraFråga där frågorna finns eller till sidaVäljkategori
+		else if(e.getSource().equals(GuiPanels.getSpela()))
 		{	// Slumpa först alla kategorier och knappar med svar
 			//if(Round1)
 			//swapWindow(GuiPanels.sidaSvaraFråga());
 			// Här behövs de slumpade läggas ut på frågan och svaren läggas ut på knapparna
 			//else if(Round2)
 			swapWindow(GuiPanels.sidaVäljKategori());
-			// Här behövs de slumpade läggas ut på kategorier . Kanske ska hanteras i ServerSession
+			
 		}
-		else if(e.getSource().equals(GuiPanels.getGoReturn())) // Tillbaka till sidaLogedin
+		else if(e.getSource().equals(GuiPanels.getGoReturn())) 
 			swapWindow(GuiPanels.sidaLogedin());
 		else if(e.getSource().equals(GuiPanels.getKategori1()))
 			{  if(GuiPanels.getKategori1().getText().equalsIgnoreCase("Mat") 
@@ -114,8 +134,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 				|| GuiPanels.getKategori1().getText().equalsIgnoreCase("Historia")) 
 			    {
 				swapWindow(GuiPanels.sidaSvaraFråga());
-				//Q1.getCategory(); // Det behövs en metod som slumpar och lägger ut frågan och svaren på snapparna på sidaSvaraFråga
-			  
+							  
 			    }
 			}
 		else if(e.getSource().equals(GuiPanels.getKategori2()))
@@ -126,8 +145,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 				|| GuiPanels.getKategori2().getText().equalsIgnoreCase("Historia"))
 			  {
 				swapWindow(GuiPanels.sidaSvaraFråga());
-				//Q1.getCategory();
-				
+								
 			  }
 			}
 		else if(e.getSource().equals(GuiPanels.getKategori3()))
@@ -138,29 +156,32 @@ public class ClientGUI extends JPanel implements ActionListener{
 				|| GuiPanels.getKategori3().getText().equalsIgnoreCase("Historia")) 
 			  {
 				swapWindow(GuiPanels.sidaSvaraFråga());
-				//Q1.getCategory(); // Här behöver vi lägga på svart färg på answer knapparna. Den färgen byts ut när den tryckts
-				
+								
 			  }
 			}
 		else if(e.getSource().equals(GuiPanels.getGoBack()))
 			swapWindow(GuiPanels.sidaLogedin());
 		
-		
 		else if(e.getSource().equals(GuiPanels.getAnswer1()))
-		{	//Round round = new Round(String category); //Round object behöver importera sina egenskaper här
-			//if(GuiPanels.getAnswer1().getText().equalsIgnoreCase(Questions.getCorAnswer()))// ska få ut string text på knappen och jämföra med rätta svaret
-			//changedButton.setBackground(Color.getStartGameBG()); //Tema behöver importera sina färger hit
-		// else 
-			//GuiPanels.getAnswer1().makeEmpty(); // make the button empty then repaint it
-			//GuiPanels.getAnswer1().setBackground(Color.getButtonRed());
-			//GuiPanels.getAnswer1().repaint();
-			//JPanel sidaSvaraFråga = new JPanel();
-			//sidaSvaraFråga.repaint();
-			//sidaSvaraFråga.revalidate();
+		{	// Round 1
+			
+			if(GuiPanels.getAnswer1().getText().equalsIgnoreCase(Q1.getWroAns1())
+			||GuiPanels.getAnswer1().getText().equalsIgnoreCase(Q1.getWroAns2())
+			|| GuiPanels.getAnswer1().getText().equalsIgnoreCase(Q1.getWroAns3()))
+			{
+				GuiPanels.getAnswer1().setBackground(Color.getButtonRed()); // Funkar ej
+				GuiPanels.getAnswer1().setVisible(true);
+			}
+			else if(GuiPanels.getAnswer1().getText().equalsIgnoreCase(Q1.getCorAnswer()))
+			{
+				GuiPanels.getAnswer1().setBackground(Color.getStartGameBG());
+				GuiPanels.getAnswer1().setVisible(true); 
+			}
+			
 		}
 		else if (e.getSource().equals(GuiPanels.getAnswer2()))
 		{
-			
+
 		}
 		else if(e.getSource().equals(GuiPanels.getAnswer3()))
 		{
@@ -172,22 +193,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 		}
 		else if(e.getSource().equals(GuiPanels.getBackBack()))
 			swapWindow(GuiPanels.sidaLogedin());
-		else if(e.getSource().equals(GuiPanels.getSettingsBack()))
-		{
-			Session sess = new Session();
-			sess.setState(gameStates.getMatches);
-			sess.setUserName(client.getUserName());
-			client.send(sess);
-		}
-		else if(e.getSource().equals(GuiPanels.getSlumpadSpelare()))
-		{
-			Session sess = new Session();
-			sess.setState(gameStates.RandomMatch);
-			sess.setUserName(client.getUserName());
-			client.send(sess);
-			swapWindow(GuiPanels.sidaLogedin());// Borde inte denna GUI återvända till sidaLogedin dvs byta GUI till sidaLogedin
+		
+		else if(e.getSource().equals(GuiPanels.getStatBack()))
+			swapWindow(GuiPanels.sidaLogedin());
 			
-		}
 		
 	}
 	public ClientGuiPanels getPanels()

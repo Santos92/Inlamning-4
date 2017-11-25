@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import Communication.Session;
 import Communication.Session.gameStates;
 import Communication.Questions.Match;
+import Communication.Questions.Round;
 import ServerSide.ClientThread;
 import ServerSide.Server;
 import ServerSide.Users.User;
@@ -21,6 +22,8 @@ public class ServerSessionHandler {
 	private UserDatabase userDB;
 	private Server MainServer;
 	private static LinkedList<User> MatchKö = new LinkedList<>();
+	private Round round;
+	private Match match;
 	
 	public ServerSessionHandler(Server MainServer, ClientThread server, Object obj) {
 		this.server = server;
@@ -67,6 +70,6 @@ public class ServerSessionHandler {
 				MatchKö.removeFirst();
 			}
 		}
-		
+				
 	}
 }

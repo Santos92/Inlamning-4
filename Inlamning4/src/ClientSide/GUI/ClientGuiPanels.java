@@ -91,6 +91,11 @@ public class ClientGuiPanels {
 	private JButton geUpp = new JButton("Ge Upp");
 	private JButton goReturn = new JButton("Tillbaka");
 	
+	// DinStatistikSida
+	private JButton dinStatistik = new JButton("Din Statistik");
+	private JButton omspel = new JButton("Omspel");
+	private JButton statback = new JButton("Tillbaka");
+	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
 		this.GUI = GUI;
@@ -275,6 +280,8 @@ public class ClientGuiPanels {
 		topMenu = topPanels.Top();
 		dinTur.removeActionListener(GUI);
 		dinTur2.removeActionListener(GUI);
+		avslutadSpel.removeActionListener(GUI);
+		
 		JPanel logedInPanel = new JPanel();
 		logedInPanel.setLayout(new GridLayout(0,1));
 		logedInPanel.setBackground(Tema.getBG());
@@ -338,10 +345,12 @@ public class ClientGuiPanels {
 		avslutadSpel.setForeground(Tema.getText());
 		avslutadSpel.setFont(btnFont);
 		avslutadSpel.setBorderPainted(false);
-
+		avslutadeSpelLabel.add(avslutadSpel);
+		
 		startaSpel.addActionListener(GUI);
 		dinTur.addActionListener(GUI);
 		dinTur2.addActionListener(GUI);
+		avslutadSpel.addActionListener(GUI);
 		
 		logedInPanel.add(topMenu);
 		logedInPanel.add(userLabel);
@@ -351,6 +360,7 @@ public class ClientGuiPanels {
 		logedInPanel.add(dinTur);
 		logedInPanel.add(dinTur2);
 		logedInPanel.add(aktivaSpelLabel);
+		logedInPanel.add(avslutadeSpelLabel);
 		if(client.getMatcher() != null)
 		{
 			JButton[] ActiveMatches = new JButton[client.getMatcher().size()];
@@ -657,30 +667,36 @@ public class ClientGuiPanels {
         JPanel geUppStarta = new JPanel();
         JPanel ronder = new JPanel();
         JLabel användare1 = new JLabel("Användare1"); // Här ska riktiga användarnamnet stå
+        användare1.setHorizontalAlignment(JLabel.CENTER);
         labelFont = new Font("Arial", Font.BOLD, 15);
         headingFont = new Font("Arial", Font.BOLD, 22);
         användare1.setForeground(Tema.getText());
         användare1.setFont(labelFont);
         
         JLabel användare2 = new JLabel("Användare2");
+        användare2.setHorizontalAlignment(JLabel.CENTER);
         användare2.setForeground(Tema.getText());
         användare2.setFont(labelFont);
         
         JLabel poäng = new JLabel("Poäng");
+        poäng.setHorizontalAlignment(JLabel.CENTER);
         poäng.setForeground(Tema.getText());
         poäng.setFont(headingFont);
         
         JLabel totalaPoängAnvändare1 = new JLabel("0/2");// I stället för knappar kan vi ha en JLabel som ändrar värde e.g. 1/2
+        totalaPoängAnvändare1.setHorizontalAlignment(JLabel.CENTER);
         totalaPoängAnvändare1.setBackground(Tema.getVeryDarkBlue());
         totalaPoängAnvändare1.setFont(labelFont);
         totalaPoängAnvändare1.setForeground(Tema.getText());
         
         JLabel totalaPoängAnvändare2 = new JLabel("2/2");
+        totalaPoängAnvändare2.setHorizontalAlignment(JLabel.CENTER);
         totalaPoängAnvändare2.setBackground(Tema.getVeryDarkBlue());
         totalaPoängAnvändare2.setFont(labelFont);
         totalaPoängAnvändare2.setForeground(Tema.getText());
         
         JLabel rondNummer = new JLabel("Rond 1"); 
+        rondNummer.setHorizontalAlignment(JLabel.CENTER);
         rondNummer.setLayout(new GridLayout(0,1, 10, 10));
         rondNummer.setBorder(new EmptyBorder(5,10,10,5));
         rondNummer.setFont(labelFont);
@@ -731,6 +747,68 @@ public class ClientGuiPanels {
         
          return spelMotståndare;
 	}
+	public JPanel sidaStatistik() {
+		dinStatistik.removeActionListener(GUI);
+		omspel.removeActionListener(GUI);
+		
+		JPanel stats = new JPanel();
+		stats.setLayout(new GridLayout(6,0, 10,10));
+		stats.setPreferredSize(new Dimension(350, 400));
+		stats.setBorder(new EmptyBorder(6,10,25,10));
+		stats.setBackground(Color.white);
+		headingFont = new Font("Arial", Font.BOLD, 22);
+		btnFont = new Font("Arial", Font.PLAIN, 12);
+		stats.setFont(headingFont);
+		
+		JPanel matchAvslutad = new JPanel();
+		matchAvslutad.setBackground(Tema.getBG());
+		JLabel mAvsl = new JLabel("Match Avslutad");
+		Border border = mAvsl.getBorder();
+		Border margin = new EmptyBorder(20,30,30,20);
+		mAvsl.setBorder(new CompoundBorder(border, margin));
+		mAvsl.setFont(headingFont);
+		mAvsl.setForeground(Tema.getText());
+		matchAvslutad.add(mAvsl);
+		
+		JPanel poäng = new JPanel();
+		poäng.setLayout(new GridLayout(0,3));
+		JLabel user1 = new JLabel("User1");
+		user1.setHorizontalAlignment(JLabel.CENTER);
+		JLabel user2 = new JLabel("User2");
+		user2.setHorizontalAlignment(JLabel.CENTER);
+		JLabel points = new JLabel("3-6");
+		points.setHorizontalAlignment(JLabel.CENTER);
+		points.setFont(headingFont);
+		poäng.add(user1);poäng.add(points);poäng.add(user2);
+		
+		JPanel duGavUpp = new JPanel();
+		JLabel gaveup = new JLabel("Du gav upp");
+		duGavUpp.add(gaveup);
+		
+		dinStatistik.setBackground(Tema.getBG());
+		dinStatistik.setForeground(Tema.getText());
+		//dinStatistik.setText("Din Statistik");
+		dinStatistik.setFont(headingFont);
+		
+		omspel.setBackground(Tema.getStartGameBG());
+		//omspel.setText("Omspel");
+		omspel.setFont(headingFont);
+		
+		statback.setBackground(Tema.getButtonBG());
+		statback.setFont(labelFont);
+		
+		stats.add(matchAvslutad);
+		stats.add(poäng);
+		stats.add(duGavUpp);
+		stats.add(dinStatistik);
+		stats.add(omspel);
+		stats.add(statback);
+		
+		dinStatistik.addActionListener(GUI);
+		omspel.addActionListener(GUI);
+		return stats;
+	}
+	
 	// SidaStart
 	public JButton getRegBtn() {
 		return regBtn;
@@ -848,6 +926,12 @@ public class ClientGuiPanels {
 	public JButton getGoReturn() {
 		return goReturn;
 	}
+	// sidaStatistik
+	public JButton getStatBack() {
+		return statback;
+	}
+	
+	
 	
 	public ClientGuiTopPanels getTopPanels()
 	{
