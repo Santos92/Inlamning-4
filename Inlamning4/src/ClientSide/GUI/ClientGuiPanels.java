@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -32,7 +33,7 @@ import Communication.Session.gameStates;
 import Communication.Questions.Match;
 import Communication.Questions.Round;
 
-public class ClientGuiPanels implements ActionListener {
+public class ClientGuiPanels implements ActionListener, Runnable{
 
 	private LinkedList<ColorThemes> Teman = new LinkedList<>();
 	private ColorThemes Tema;
@@ -86,16 +87,21 @@ public class ClientGuiPanels implements ActionListener {
 	//Top panel
 	private JPanel topMenu;
 	
+	// fråge sidan
 	private JButton answer1 = new JButton("1");
 	private JButton answer2 = new JButton("2");
 	private JButton answer3 = new JButton("3");
 	private JButton answer4 = new JButton("4");
-	
+	private int seconds = 10;
+    private JLabel timeLimiter;
+
 	private JPanel answers = new JPanel();
 	
+	// matchÖversikt sida
     private JButton geUpp = new JButton("Ge upp");
     private JButton spela = new JButton("Spela");
-	
+    
+    private Thread timer;	
 	
 	public ClientGuiPanels(ClientGUI GUI, Client client)
 	{
@@ -667,8 +673,7 @@ public class ClientGuiPanels implements ActionListener {
 	    JLabel actualQuestion = new JLabel(r.getQ(r.getCurrentQuestion()).getQuestion());
 	    
 	    JPanel timeLimit = new JPanel();
-	    JTextField timeLimiter = new JTextField("Time limiter");
-	    
+
 	    answer1.setText(r.getQ(r.getCurrentQuestion()).getCorAnswer());
 	    answer2.setText(r.getQ(r.getCurrentQuestion()).getWroAns1());
 	    answer3.setText(r.getQ(r.getCurrentQuestion()).getWroAns2());
@@ -710,6 +715,9 @@ public class ClientGuiPanels implements ActionListener {
         answer4.setLayout(new GridLayout(20,20,5,5));
         answer4.setForeground(Tema.getText());
         
+        seconds = 10;
+        timeLimiter = new JLabel(seconds + "");
+        
         LinkedList<JButton> AnswerButtons = new LinkedList<>();
         AnswerButtons.add(answer1);
         AnswerButtons.add(answer2);
@@ -735,6 +743,9 @@ public class ClientGuiPanels implements ActionListener {
          answer3.addActionListener(this);
          answer4.addActionListener(this);
         
+
+         timerStart();
+         
          return svaraFrågan;
 	}
 	public JButton getRegBtn() {
@@ -837,7 +848,12 @@ public class ClientGuiPanels implements ActionListener {
 			Temp.repaint();
 			r.getQ(r.getCurrentQuestion()).setChosenAnswear(Temp.getText());
 		}
-		
+		if(seconds > 3)
+			seconds = 3;
+	}
+	private void timerOut()
+	{
+		Round r = match.getRound(match.getCurrentRound());		
 		if(r.getCurrentQuestion()+1 < match.getAmountOfQuestions())
 		{
 			r.setCurrentQuestion(r.getCurrentQuestion()+1);
@@ -870,5 +886,42 @@ public class ClientGuiPanels implements ActionListener {
 			sess.setUserName(client.getUserName());
 			client.send(sess);
 		}
+	}
+	private synchronized void timerStart()
+	{
+		if(timer == null)
+		{
+			timer = new Thread(this);
+			timer.start();
+		}
+	}
+	private synchronized void timerStop()
+	{
+		if(timer != null)
+		{
+			timer.interrupt();
+			timer = null;
+			timerOut();
+		}
+		else
+			return;
+	}
+	@Override
+	public void run() {
+		
+		while(seconds > 0)
+		{
+			try {
+				timer.sleep(1000);
+				seconds--;
+				timeLimiter.setText(seconds + "");
+				answers.revalidate();
+				answers.repaint();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		timerStop();
 	}
 }

@@ -29,6 +29,10 @@ public class Round implements Serializable{
 			ChosenCategory = QDB.getFilm();
 		if(category.equals("Teknik"))
 			ChosenCategory = QDB.getTeknik();
+		if(category.equals("Historia"))
+			ChosenCategory = QDB.getHistoria();
+		if(category.equals("Geografi"))
+			ChosenCategory = QDB.getGeografi();
 		
 		Collections.shuffle(ChosenCategory);
 		for(int i = 0; i<AmountOfQuestions; i++)
