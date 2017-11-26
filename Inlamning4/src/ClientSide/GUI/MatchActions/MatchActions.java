@@ -30,18 +30,15 @@ public class MatchActions implements ActionListener {
 			Match match = client.getMatcher().get(index);
 			if(match.isTurn() && match.isActive())
 			{
-				if(match.getRound(match.getCurrentRound()) == null)
-					GUI.swapWindow(GUI.getPanels().sidaVäljKategori(match));
-				else
-					GUI.swapWindow(GUI.getPanels().sidaSvaraFråga(match, true));
+					GUI.swapWindow(GUI.getPanels().sidaKampMotståndare(match, false));
 			}
 			else if(match.isActive() && !match.isTurn())
 			{
-				GUI.swapWindow(GUI.getPanels().sidaKampMotståndare());
+				GUI.swapWindow(GUI.getPanels().sidaKampMotståndare(match, false));
 			}
 			else if(!match.isActive())
 			{
-				
+				GUI.swapWindow(GUI.getPanels().sidaKampMotståndare(match, true));
 			}
 		}
 	}

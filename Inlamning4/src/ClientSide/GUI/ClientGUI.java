@@ -2,16 +2,14 @@ package ClientSide.GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ClientSide.Client;
 import Communication.Session;
 import Communication.Session.gameStates;
-import ServerSide.Users.User;
-import ServerSide.Users.UserDatabase;
+import Communication.Questions.Match;
 
 public class ClientGUI extends JPanel implements ActionListener{
 	
@@ -92,7 +90,21 @@ public class ClientGUI extends JPanel implements ActionListener{
 			sess.setUserName(client.getUserName());
 			client.send(sess);
 		}
-			
+		else if(e.getSource().equals(GuiPanels.getGoReturn()))
+		{
+			Session sess = new Session();
+			sess.setState(gameStates.getMatches);
+			sess.setUserName(client.getUserName());
+			client.send(sess);
+		}
+		else if(e.getSource().equals(GuiPanels.getSpela()))
+		{
+			Match match = (Match) ((JButton)e.getSource()).getClientProperty("match");
+			if(match.getRound(match.getCurrentRound()) == null)
+				swapWindow(GuiPanels.sidaVäljKategori(match));
+			else
+				swapWindow(GuiPanels.sidaSvaraFråga(match, true));
+		}
 	}
 	public ClientGuiPanels getPanels()
 	{

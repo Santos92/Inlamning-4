@@ -101,6 +101,7 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 	// matchÖversikt sida
     private JButton geUpp = new JButton("Ge upp");
     private JButton spela = new JButton("Spela");
+    private JButton goReturn = new JButton("Tillbaka");
     
     private Thread timer;	
 	
@@ -529,10 +530,11 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		
 		return settings;
 	}
-	public JPanel sidaKampMotståndare() {
+	public JPanel sidaKampMotståndare(Match m, boolean matchEnded) {
 		spela.removeActionListener(GUI); 
         geUpp.removeActionListener(GUI);
-                
+        goReturn.removeActionListener(GUI);
+        
         JPanel spelMotståndare = new JPanel();
         spelMotståndare.setLayout(new BorderLayout());
         spelMotståndare.setLayout(new GridLayout(3,0));
@@ -541,31 +543,38 @@ public class ClientGuiPanels implements ActionListener, Runnable{
         JPanel namesAndPoints = new JPanel(); 
         JPanel geUppStarta = new JPanel();
         JPanel ronder = new JPanel();
-        JLabel användare1 = new JLabel("Användare1"); // Här ska riktiga användarnamnet stå
+        
+        JLabel användare1 = new JLabel(client.getUserName()); // Här ska riktiga användarnamnet stå
+        användare1.setHorizontalAlignment(JLabel.CENTER);
         labelFont = new Font("Arial", Font.BOLD, 15);
         headingFont = new Font("Arial", Font.BOLD, 22);
         användare1.setForeground(Tema.getText());
         användare1.setFont(labelFont);
         
-        JLabel användare2 = new JLabel("Användare2");
+        JLabel användare2 = new JLabel(m.getOpponent());
+        användare2.setHorizontalAlignment(JLabel.CENTER);
         användare2.setForeground(Tema.getText());
         användare2.setFont(labelFont);
         
-        JLabel poäng = new JLabel("Poäng");
+        JLabel poäng = new JLabel(m.getPoints() + " - " + m.getPointsOpp());
+        poäng.setHorizontalAlignment(JLabel.CENTER);
         poäng.setForeground(Tema.getText());
         poäng.setFont(headingFont);
         
-        JLabel totalaPoängAnvändare1 = new JLabel("0/2");// I stället för knappar kan vi ha en JLabel som ändrar värde e.g. 1/2
-        totalaPoängAnvändare1.setBackground(Tema.getBG());
-        totalaPoängAnvändare1.setFont(labelFont);
-        totalaPoängAnvändare1.setForeground(Tema.getText());
-        
-        JLabel totalaPoängAnvändare2 = new JLabel("2/2");
-        totalaPoängAnvändare2.setBackground(Tema.getBG());
-        totalaPoängAnvändare2.setFont(labelFont);
-        totalaPoängAnvändare2.setForeground(Tema.getText());
+//        JLabel totalaPoängAnvändare1 = new JLabel("0/2");// I stället för knappar kan vi ha en JLabel som ändrar värde e.g. 1/2
+//        totalaPoängAnvändare1.setHorizontalAlignment(JLabel.CENTER);
+//        totalaPoängAnvändare1.setBackground(Tema.getBG());
+//        totalaPoängAnvändare1.setFont(labelFont);
+//        totalaPoängAnvändare1.setForeground(Tema.getText());
+//        
+//        JLabel totalaPoängAnvändare2 = new JLabel("2/2");
+//        totalaPoängAnvändare2.setHorizontalAlignment(JLabel.CENTER);
+//        totalaPoängAnvändare2.setBackground(Tema.getBG());
+//        totalaPoängAnvändare2.setFont(labelFont);
+//        totalaPoängAnvändare2.setForeground(Tema.getText());
         
         JLabel rondNummer = new JLabel("Rond 1"); 
+        rondNummer.setHorizontalAlignment(JLabel.CENTER);
         rondNummer.setLayout(new GridLayout(0,1, 10, 10));
         rondNummer.setBorder(new EmptyBorder(5,10,10,5));
         rondNummer.setFont(labelFont);
@@ -585,14 +594,20 @@ public class ClientGuiPanels implements ActionListener, Runnable{
         namesAndPoints.add(användare1); namesAndPoints.add(poäng); namesAndPoints.add(användare2); 
         
         ronder.setLayout(new GridLayout(0,3));
-        ronder.add(totalaPoängAnvändare1);ronder.add(rondNummer); ronder.add(totalaPoängAnvändare2);
+//        ronder.add(totalaPoängAnvändare1);ronder.add(rondNummer); ronder.add(totalaPoängAnvändare2);
         
         geUppStarta.setLayout(new GridLayout(0,3, 10, 10));
         geUppStarta.setBorder(new EmptyBorder(50,10,10,10));
-        geUppStarta.add(geUpp); geUppStarta.add(spela);
+        if(!matchEnded && m.isTurn()){
+        	geUppStarta.add(spela);
+	        geUppStarta.add(geUpp);     
+        }
+        if(!matchEnded && !m.isTurn())
+        	geUppStarta.add(geUpp);     
         
-
-        geUpp.setBackground(new Color(255,0,0)); 
+        geUppStarta.add(goReturn);
+        
+        geUpp.setBackground(Color.red); 
         geUpp.setFont(labelFont);
         geUpp.setForeground(Tema.getText());
         geUpp.setLayout(new GridLayout(1,1,100,100));
@@ -601,14 +616,21 @@ public class ClientGuiPanels implements ActionListener, Runnable{
         spela.setFont(headingFont);
         spela.setForeground(Tema.getText());
         spela.setLayout(new GridLayout(1,1,50,50));
+        spela.putClientProperty("match", m);
        
+        goReturn.setBackground(Tema.getTopBG());
+        goReturn.setFont(labelFont);
+        goReturn.setForeground(Tema.getText());
+        goReturn.setLayout(new GridLayout(1,1,100,100));
         
         spelMotståndare.add(namesAndPoints);
         spelMotståndare.add(ronder);
         spelMotståndare.add(geUppStarta);
+        
         spela.addActionListener(GUI);
         geUpp.addActionListener(GUI);
-               
+        goReturn.addActionListener(GUI);
+        
          return spelMotståndare;
 	}
 	public JPanel sidaVäljKategori(Match m) {
@@ -698,7 +720,7 @@ public class ClientGuiPanels implements ActionListener, Runnable{
         answers.setLayout(new GridLayout(2,2,10,10));
         answers.setBorder(new EmptyBorder(20,10,100,10));
         answers.setBackground(Tema.getBG());
-        btnFont = new Font("Arial", Font.PLAIN, 12);
+        btnFont = new Font("Arial", Font.BOLD, 14);
         labelFont = new Font("Arial", Font.BOLD, 12);
         answer1.setBackground(Tema.getButtonBG()); 
         answer1.setFont(btnFont);
@@ -810,6 +832,15 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 	}
 	public JButton getSlumpadSpelare() {
 		return slumpadSpelare;
+	}
+	public JButton getGeUpp() {
+		return geUpp;
+	}
+	public JButton getSpela() {
+		return spela;
+	}
+	public JButton getGoReturn() {
+		return goReturn;
 	}
 	public ClientGuiTopPanels getTopPanels()
 	{
