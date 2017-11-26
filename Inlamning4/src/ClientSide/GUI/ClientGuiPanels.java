@@ -94,6 +94,7 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 	private JButton answer4 = new JButton("4");
 	private int seconds = 10;
     private JLabel timeLimiter;
+    private boolean pressedAnswer;
 
 	private JPanel answers = new JPanel();
 	
@@ -615,6 +616,9 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		
 		
 		JPanel väljKat = new JPanel();
+		väljKat.setLayout(new GridLayout(5,0, 10,10));
+		väljKat.setPreferredSize(new Dimension(500, 500));
+		väljKat.setBorder(new EmptyBorder(5,10,25,10));
 		väljKat.setBackground(Tema.getBG());
 		headingFont = new Font("Arial", Font.BOLD, 22);
 		btnFont = new Font("Arial", Font.BOLD, 17);
@@ -652,8 +656,6 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		kategori1.addActionListener(gameListener);
 		kategori2.addActionListener(gameListener);
 		kategori3.addActionListener(gameListener);
-		
-		
 		
 		return väljKat;
 	}
@@ -738,10 +740,11 @@ public class ClientGuiPanels implements ActionListener, Runnable{
         svaraFrågan.add(answers);
         // svaraFrågan.add(timeLimit);
              
-         answer1.addActionListener(this);
-         answer2.addActionListener(this);
-         answer3.addActionListener(this);
-         answer4.addActionListener(this);
+        pressedAnswer = false;
+        answer1.addActionListener(this);
+        answer2.addActionListener(this);
+        answer3.addActionListener(this);
+        answer4.addActionListener(this);
         
 
          timerStart();
@@ -831,60 +834,78 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Round r = match.getRound(match.getCurrentRound());
-		if(e.getSource() == answer1)
+		if(!pressedAnswer)
 		{
-			answer1.setBackground(Color.GREEN);
-			answers.revalidate();
-			answers.repaint();
-			r.getQ(r.getCurrentQuestion()).setChosenAnswear(answer1.getText());
-			r.setScore(r.getScore()+1);
-			match.setPoints(match.getPoints()+1);
+			if(e.getSource() == answer1)
+			{
+				answer1.setBackground(Color.GREEN);
+				answers.revalidate();
+				answers.repaint();
+				r.getQ(r.getCurrentQuestion()).setChosenAnswear(answer1.getText());
+				r.setScore(r.getScore()+1);
+				match.setPoints(match.getPoints()+1);
+			}
+			else
+			{
+				JButton Temp = (JButton) e.getSource();
+				Temp.setBackground(Color.RED);
+				answer1.setBackground(Color.GREEN);
+				Temp.revalidate();
+				Temp.repaint();
+				r.getQ(r.getCurrentQuestion()).setChosenAnswear(Temp.getText());
+			}
+			if(seconds > 2)
+				seconds = 2;
+			pressedAnswer = true;
 		}
-		else
-		{
-			JButton Temp = (JButton) e.getSource();
-			Temp.setBackground(Color.RED);
-			Temp.revalidate();
-			Temp.repaint();
-			r.getQ(r.getCurrentQuestion()).setChosenAnswear(Temp.getText());
-		}
-		if(seconds > 3)
-			seconds = 3;
 	}
 	private void timerOut()
 	{
 		Round r = match.getRound(match.getCurrentRound());		
-		if(r.getCurrentQuestion()+1 < match.getAmountOfQuestions())
+		if(r.getQ(r.getCurrentQuestion()).getChosenAnswear() == null)
 		{
-			r.setCurrentQuestion(r.getCurrentQuestion()+1);
-			GUI.swapWindow(GUI.getPanels().sidaSvaraFråga(match, lastInRound));
+			r.getQ(r.getCurrentQuestion()).setChosenAnswear("Failed");
+			seconds = 2;
+			answer1.setBackground(Color.GREEN);
+			answer2.setBackground(Color.RED);
+			answer3.setBackground(Color.RED);
+			answer4.setBackground(Color.RED);
+			timerStart();
 		}
 		else
 		{
-			System.out.println(lastInRound);
-			if(lastInRound)
+			if(r.getCurrentQuestion()+1 < match.getAmountOfQuestions())
 			{
-				match.setTurn(true);
-				if(match.getCurrentRound()+1 < match.getAmountOfRounds())
-				{
-					System.out.println(match.getCurrentRound());
-					match.setCurrentRound(match.getCurrentRound()+1);
-				}
-				else
-				{
-					match.setActive(false);
-					match.setTurn(false);
-				}
+				r.setCurrentQuestion(r.getCurrentQuestion()+1);
+				GUI.swapWindow(GUI.getPanels().sidaSvaraFråga(match, lastInRound));
 			}
 			else
 			{
-				match.setTurn(false);
+				System.out.println(lastInRound);
+				if(lastInRound)
+				{
+					match.setTurn(true);
+					if(match.getCurrentRound()+1 < match.getAmountOfRounds())
+					{
+						System.out.println(match.getCurrentRound());
+						match.setCurrentRound(match.getCurrentRound()+1);
+					}
+					else
+					{
+						match.setActive(false);
+						match.setTurn(false);
+					}
+				}
+				else
+				{
+					match.setTurn(false);
+				}
+				Session sess = new Session();
+				sess.setState(gameStates.FinishedRound);
+				sess.setPickedMatch(match);
+				sess.setUserName(client.getUserName());
+				client.send(sess);
 			}
-			Session sess = new Session();
-			sess.setState(gameStates.FinishedRound);
-			sess.setPickedMatch(match);
-			sess.setUserName(client.getUserName());
-			client.send(sess);
 		}
 	}
 	private synchronized void timerStart()
