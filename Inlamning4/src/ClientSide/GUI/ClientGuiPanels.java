@@ -959,18 +959,16 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 			}
 			else
 			{
-				System.out.println(lastInRound);
 				if(lastInRound)
 				{
 					match.setTurn(true);
-					if(match.getCurrentRound()+1 < match.getAmountOfRounds())
+					if(match.getCurrentRound()+1 <= match.getAmountOfRounds())
 					{
 						match.setCurrentRound(match.getCurrentRound()+1);
-					}
-					else
-					{
-						match.setActive(false);
-						match.setTurn(false);
+						if(match.getCurrentRound() == match.getAmountOfRounds()){
+							match.setActive(false);
+							match.setTurn(false);
+						}
 					}
 				}
 				else

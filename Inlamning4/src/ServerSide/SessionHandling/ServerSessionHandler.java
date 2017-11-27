@@ -37,7 +37,7 @@ public class ServerSessionHandler {
 		match = Packet.getPickedMatch();
 		user = userDB.getUser(UserName);
 		handle();
-	}
+	} 
 
 	public void handle()
 	{
@@ -121,13 +121,17 @@ public class ServerSessionHandler {
 					userMatch = x;
 				}
 			int currRound = match.getCurrentRound();
-			if(Message.equalsIgnoreCase("true") && match.getAmountOfRounds() >= currRound)
+			if(Message.equalsIgnoreCase("true"))
+			{				
 				currRound--;
+			}
+			System.out.println(user.getNamn());
 			System.out.println(match.getCurrentRound());
 			System.out.println(currRound);
 			oppMatch.setRoundOpp(match.getRound(currRound), currRound);
 			oppMatch.setPointsOpp(match.getPoints());
-			oppMatch.setCurrentRound(match.getCurrentRound());
+			if(match.getCurrentRound() != match.getAmountOfRounds())
+				oppMatch.setCurrentRound(match.getCurrentRound());
 			oppMatch.setActive(match.isActive());
 			oppMatch.setTurn(!match.isTurn());			
 			

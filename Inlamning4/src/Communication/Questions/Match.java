@@ -31,7 +31,7 @@ public class Match implements Serializable{
 	{
 		Scanner scan;
 		try {
-			scan = new Scanner(new File("C:\\Users\\Amanda\\git\\Inlamning-4\\Inlamning4\\res\\Properties.conf"));
+			scan = new Scanner(new File("Inlamning4\\res\\Properties.conf"));
 			while (scan.hasNextLine())
 			{
 				String firstLine = scan.nextLine();
@@ -47,7 +47,9 @@ public class Match implements Serializable{
 				System.out.println(AmountOfRounds);
 			}
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				System.out.println("kunde inte läsa fil");
+				AmountOfQuestions = 2;
+				AmountOfRounds = 2;
 			}
 			round = new Round[AmountOfRounds];
 			roundOpp = new Round[AmountOfRounds];	
