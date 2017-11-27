@@ -987,8 +987,8 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		{
 			try {
 				timer.sleep(1000);
-				seconds--;
 				timeLimiter.setText(seconds + "");
+				seconds--;
 				answers.revalidate();
 				answers.repaint();
 			} catch (InterruptedException e) {
