@@ -21,8 +21,8 @@ public class UserDatabase {
 	{
 		
 		UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
-//		if(!UserDatabase.exists())
-//			UserDatabase = new File("src\\ServerSide\\Users\\AllUsers.txt");
+		if(!UserDatabase.exists())
+			UserDatabase = new File("src\\ServerSide\\Users\\AllUsers.txt");
 	}
 	
 	public User getUser(String name)

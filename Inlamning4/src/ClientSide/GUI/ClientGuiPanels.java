@@ -638,7 +638,7 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		
 		
 		JPanel väljKat = new JPanel();
-		väljKat.setLayout(new GridLayout(5,0, 10,10));
+		väljKat.setLayout(new GridLayout(0,1, 10,10));
 		väljKat.setPreferredSize(new Dimension(500, 500));
 		väljKat.setBorder(new EmptyBorder(5,10,25,10));
 		väljKat.setBackground(Tema.getBG());
@@ -653,31 +653,52 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		JButton kategori1 = new JButton("Mat");
 		kategori1.setBackground(Tema.getChangeCate1());// change these colors
 		kategori1.setForeground(Tema.getText());
+		kategori1.setFont(btnFont);
 		
 		JButton kategori2 = new JButton("Teknik");
 		kategori2.setBackground(Tema.getChangeCate2());
 		kategori2.setForeground(Tema.getText());
+		kategori2.setFont(btnFont);
 		
 		JButton kategori3 = new JButton("Film");
 		kategori3.setBackground(Tema.getChangeCate3());
 		kategori3.setForeground(Tema.getText());
+		kategori3.setFont(btnFont);
+		
+		JButton kategori4 = new JButton("Geografi");
+		kategori4.setBackground(new Color(0,0,0));
+		kategori4.setForeground(Tema.getText());
+		kategori4.setFont(btnFont);
+		
+		JButton kategori5 = new JButton("Historia");
+		kategori5.setBackground(new Color(255,255,255));
+		kategori5.setForeground(new Color(0,0,0));
+		kategori5.setFont(btnFont);
 		
 		väljKat.add(väljkategori);
 		väljKat.add(användarnamn);
 		väljKat.add(kategori1);
 		väljKat.add(kategori2);
 		väljKat.add(kategori3);
+		väljKat.add(kategori4);
+		väljKat.add(kategori5);
 		
 		kategori1.putClientProperty("match", m);
 		kategori2.putClientProperty("match", m);
 		kategori3.putClientProperty("match", m);
+		kategori4.putClientProperty("match", m);
+		kategori5.putClientProperty("match", m);
 		
 		kategori1.removeActionListener(gameListener);
 		kategori2.removeActionListener(gameListener);
 		kategori3.removeActionListener(gameListener);
+		kategori4.removeActionListener(gameListener);
+		kategori5.removeActionListener(gameListener);
 		kategori1.addActionListener(gameListener);
 		kategori2.addActionListener(gameListener);
 		kategori3.addActionListener(gameListener);
+		kategori4.addActionListener(gameListener);
+		kategori5.addActionListener(gameListener);
 		
 		return väljKat;
 	}
@@ -685,6 +706,7 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		this.match = m;
 		this.lastInRound = lastInRound;
 		Round r = match.getRound(match.getCurrentRound());
+		btnFont = new Font("Arial", Font.BOLD, 18);
 		
 		answer1.removeActionListener(this);
         answer2.removeActionListener(this);

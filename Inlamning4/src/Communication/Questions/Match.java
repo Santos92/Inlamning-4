@@ -31,7 +31,7 @@ public class Match implements Serializable{
 	{
 		Scanner scan;
 		try {
-			scan = new Scanner(new File("Inlamning4/res/Properties.conf"));
+			scan = new Scanner(new File("res\\Properties.conf"));
 			while (scan.hasNextLine())
 			{
 				String firstLine = scan.nextLine();
