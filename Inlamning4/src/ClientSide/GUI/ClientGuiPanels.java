@@ -531,107 +531,131 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		return settings;
 	}
 	public JPanel sidaKampMotståndare(Match m, boolean matchEnded) {
-		spela.removeActionListener(GUI); 
-        geUpp.removeActionListener(GUI);
-        goReturn.removeActionListener(GUI);
-        
-        JPanel spelMotståndare = new JPanel();
-        spelMotståndare.setLayout(new BorderLayout());
-        spelMotståndare.setLayout(new GridLayout(3,0));
-        spelMotståndare.setBackground(Tema.getBG());
-        
-        JPanel namesAndPoints = new JPanel(); 
-        JPanel geUppStarta = new JPanel();
-        JPanel ronder = new JPanel();
-        
-        JLabel användare1 = new JLabel(client.getUserName()); // Här ska riktiga användarnamnet stå
-        användare1.setHorizontalAlignment(JLabel.CENTER);
-        labelFont = new Font("Arial", Font.BOLD, 15);
-        headingFont = new Font("Arial", Font.BOLD, 22);
-        användare1.setForeground(Tema.getText());
-        användare1.setFont(labelFont);
-        
-        JLabel användare2 = new JLabel(m.getOpponent());
-        användare2.setHorizontalAlignment(JLabel.CENTER);
-        användare2.setForeground(Tema.getText());
-        användare2.setFont(labelFont);
-        
-        JLabel poäng = new JLabel(m.getPoints() + " - " + m.getPointsOpp());
-        poäng.setHorizontalAlignment(JLabel.CENTER);
-        poäng.setForeground(Tema.getText());
-        poäng.setFont(headingFont);
-        
-//        JLabel totalaPoängAnvändare1 = new JLabel("0/2");// I stället för knappar kan vi ha en JLabel som ändrar värde e.g. 1/2
-//        totalaPoängAnvändare1.setHorizontalAlignment(JLabel.CENTER);
-//        totalaPoängAnvändare1.setBackground(Tema.getBG());
-//        totalaPoängAnvändare1.setFont(labelFont);
-//        totalaPoängAnvändare1.setForeground(Tema.getText());
-//        
-//        JLabel totalaPoängAnvändare2 = new JLabel("2/2");
-//        totalaPoängAnvändare2.setHorizontalAlignment(JLabel.CENTER);
-//        totalaPoängAnvändare2.setBackground(Tema.getBG());
-//        totalaPoängAnvändare2.setFont(labelFont);
-//        totalaPoängAnvändare2.setForeground(Tema.getText());
-        
-        JLabel rondNummer = new JLabel("Rond 1"); 
-        rondNummer.setHorizontalAlignment(JLabel.CENTER);
-        rondNummer.setLayout(new GridLayout(0,1, 10, 10));
-        rondNummer.setBorder(new EmptyBorder(5,10,10,5));
-        rondNummer.setFont(labelFont);
-        rondNummer.setBackground(Tema.getBG());
-        rondNummer.setForeground(Tema.getText());
-        
-        
-        spelMotståndare.setPreferredSize(new Dimension(500, 500));
-        spelMotståndare.add(namesAndPoints, BorderLayout.NORTH);
-        spelMotståndare.add(ronder, BorderLayout.CENTER);
-        spelMotståndare.add(geUppStarta, BorderLayout.SOUTH);
-        namesAndPoints.setBackground(Tema.getBG());
-        geUppStarta.setBackground(Tema.getBG());
-        ronder.setBackground(Tema.getBG());
-        
-        namesAndPoints.setLayout(new GridLayout(0,3));
-        namesAndPoints.add(användare1); namesAndPoints.add(poäng); namesAndPoints.add(användare2); 
-        
-        ronder.setLayout(new GridLayout(0,3));
-//        ronder.add(totalaPoängAnvändare1);ronder.add(rondNummer); ronder.add(totalaPoängAnvändare2);
-        
-        geUppStarta.setLayout(new GridLayout(0,3, 10, 10));
-        geUppStarta.setBorder(new EmptyBorder(50,10,10,10));
-        if(!matchEnded && m.isTurn()){
-        	geUppStarta.add(spela);
-	        geUppStarta.add(geUpp);     
-        }
-        if(!matchEnded && !m.isTurn())
-        	geUppStarta.add(geUpp);     
-        
-        geUppStarta.add(goReturn);
-        
-        geUpp.setBackground(Color.red); 
-        geUpp.setFont(labelFont);
-        geUpp.setForeground(Tema.getText());
-        geUpp.setLayout(new GridLayout(1,1,100,100));
-                
-        spela.setBackground(Tema.getStartGameBG());
-        spela.setFont(headingFont);
-        spela.setForeground(Tema.getText());
-        spela.setLayout(new GridLayout(1,1,50,50));
-        spela.putClientProperty("match", m);
-       
-        goReturn.setBackground(Tema.getTopBG());
-        goReturn.setFont(labelFont);
-        goReturn.setForeground(Tema.getText());
-        goReturn.setLayout(new GridLayout(1,1,100,100));
-        
-        spelMotståndare.add(namesAndPoints);
-        spelMotståndare.add(ronder);
-        spelMotståndare.add(geUppStarta);
-        
-        spela.addActionListener(GUI);
-        geUpp.addActionListener(GUI);
-        goReturn.addActionListener(GUI);
-        
-         return spelMotståndare;
+		spela.removeActionListener(GUI);
+		geUpp.removeActionListener(GUI);
+		goReturn.removeActionListener(GUI);
+
+		JPanel spelMotståndare = new JPanel();
+		spelMotståndare.setLayout(new BorderLayout());
+		spelMotståndare.setLayout(new GridLayout(4, 0));
+		spelMotståndare.setBackground(Tema.getBG());
+
+		JPanel namesAndPoints = new JPanel();
+		JPanel geUppStarta = new JPanel();
+		JPanel ronder = new JPanel();
+
+		JLabel användare1 = new JLabel(client.getUserName()); // Här ska riktiga användarnamnet stå
+		användare1.setHorizontalAlignment(JLabel.CENTER);
+		labelFont = new Font("Arial", Font.BOLD, 15);
+		headingFont = new Font("Arial", Font.BOLD, 22);
+		användare1.setForeground(Tema.getText());
+		användare1.setFont(labelFont);
+
+		JLabel användare2 = new JLabel(m.getOpponent());
+		användare2.setHorizontalAlignment(JLabel.CENTER);
+		användare2.setForeground(Tema.getText());
+		användare2.setFont(labelFont);
+
+		JLabel poäng = new JLabel(m.getPoints() + " - " + m.getPointsOpp());
+		poäng.setHorizontalAlignment(JLabel.CENTER);
+		poäng.setForeground(Tema.getText());
+		poäng.setFont(headingFont);
+
+		// JLabel totalaPoängAnvändare1 = new JLabel("0/2");// I stället för knappar kan
+		// vi ha en JLabel som ändrar värde e.g. 1/2
+		// totalaPoängAnvändare1.setHorizontalAlignment(JLabel.CENTER);
+		// totalaPoängAnvändare1.setBackground(Tema.getBG());
+		// totalaPoängAnvändare1.setFont(labelFont);
+		// totalaPoängAnvändare1.setForeground(Tema.getText());
+		//
+		// JLabel totalaPoängAnvändare2 = new JLabel("2/2");
+		// totalaPoängAnvändare2.setHorizontalAlignment(JLabel.CENTER);
+		// totalaPoängAnvändare2.setBackground(Tema.getBG());
+		// totalaPoängAnvändare2.setFont(labelFont);
+		// totalaPoängAnvändare2.setForeground(Tema.getText());
+
+		JLabel rondNummer = new JLabel("Rond 1");
+		rondNummer.setHorizontalAlignment(JLabel.CENTER);
+		rondNummer.setLayout(new GridLayout(0, 1, 10, 10));
+		rondNummer.setBorder(new EmptyBorder(5, 10, 10, 5));
+		rondNummer.setFont(labelFont);
+		rondNummer.setBackground(Tema.getBG());
+		rondNummer.setForeground(Tema.getText());
+
+		spelMotståndare.setPreferredSize(new Dimension(500, 500));
+		spelMotståndare.add(namesAndPoints, BorderLayout.NORTH);
+		spelMotståndare.add(ronder, BorderLayout.CENTER);
+		spelMotståndare.add(geUppStarta, BorderLayout.SOUTH);
+		namesAndPoints.setBackground(Tema.getBG());
+		geUppStarta.setBackground(Tema.getBG());
+		ronder.setBackground(Tema.getBG());
+
+		namesAndPoints.setLayout(new GridLayout(0, 3));
+		namesAndPoints.add(användare1);
+		namesAndPoints.add(poäng);
+		namesAndPoints.add(användare2);
+
+		JPanel roundScoreHolder = new JPanel();
+		roundScoreHolder.setLayout(new GridLayout(0, 1));
+		roundScoreHolder.setBackground(Tema.getBG());
+
+		for (int i = 0; i < m.getAmountOfRounds(); i++) {
+			int scoreUser1 = 0;
+			int scoreUser2 = 0;
+			if (m.getCurrentRound() >= i && m.getRound(i) != null) {
+				scoreUser1 = m.getRound(i).getScore();
+				}
+				if (m.getCurrentRound() >= i && m.getRoundOpp(i) != null) {
+				scoreUser2 = m.getRoundOpp(i).getScore();
+				}
+				
+				JLabel scores = new JLabel(scoreUser1 + " - " + scoreUser2);
+				roundScoreHolder.add(scores);
+			}
+			
+		
+
+		ronder.setLayout(new GridLayout(0, 3));
+		// ronder.add(totalaPoängAnvändare1);ronder.add(rondNummer);
+		// ronder.add(totalaPoängAnvändare2);
+
+		geUppStarta.setLayout(new GridLayout(0, 3, 10, 10));
+		geUppStarta.setBorder(new EmptyBorder(50, 10, 10, 10));
+		if (!matchEnded && m.isTurn()) {
+			geUppStarta.add(spela);
+			geUppStarta.add(geUpp);
+		}
+		if (!matchEnded && !m.isTurn())
+			geUppStarta.add(geUpp);
+
+		geUppStarta.add(goReturn);
+
+		geUpp.setBackground(Color.red);
+		geUpp.setFont(labelFont);
+		geUpp.setForeground(Tema.getText());
+		geUpp.setLayout(new GridLayout(1, 1, 100, 100));
+
+		spela.setBackground(Tema.getStartGameBG());
+		spela.setFont(headingFont);
+		spela.setForeground(Tema.getText());
+		spela.setLayout(new GridLayout(1, 1, 50, 50));
+		spela.putClientProperty("match", m);
+
+		goReturn.setBackground(Tema.getTopBG());
+		goReturn.setFont(labelFont);
+		goReturn.setForeground(Tema.getText());
+		goReturn.setLayout(new GridLayout(1, 1, 100, 100));
+
+		spelMotståndare.add(namesAndPoints);
+		spelMotståndare.add(roundScoreHolder);
+		spelMotståndare.add(ronder);
+		spelMotståndare.add(geUppStarta);
+
+		spela.addActionListener(GUI);
+		geUpp.addActionListener(GUI);
+		goReturn.addActionListener(GUI);
+
+		return spelMotståndare;
 	}
 	public JPanel sidaVäljKategori(Match m) {
 		
@@ -914,6 +938,7 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 	}
 	private void timerOut()
 	{
+		
 		Round r = match.getRound(match.getCurrentRound());		
 		if(r.getQ(r.getCurrentQuestion()).getChosenAnswear() == null)
 		{
@@ -940,7 +965,6 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 					match.setTurn(true);
 					if(match.getCurrentRound()+1 < match.getAmountOfRounds())
 					{
-						System.out.println(match.getCurrentRound());
 						match.setCurrentRound(match.getCurrentRound()+1);
 					}
 					else
@@ -956,6 +980,7 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 				Session sess = new Session();
 				sess.setState(gameStates.FinishedRound);
 				sess.setPickedMatch(match);
+				sess.setMessage(lastInRound + "");
 				sess.setUserName(client.getUserName());
 				client.send(sess);
 			}

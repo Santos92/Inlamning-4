@@ -61,17 +61,22 @@ public class ServerSessionHandler {
 			User opponent = userDB.getUser(match.getOpponent());
 			Match oppMatch = null;
 			Match userMatch = null;
+			int oppIndex = 0;
 			for(Match x : opponent.getMatcher())
 				if(x.getID() == match.getOpponentID())
+				{
+					oppIndex = opponent.getMatcher().indexOf(x);
 					oppMatch = x;
+				}
 			for(Match x : user.getMatcher())
 				if(x.getID() == match.getID())
 					userMatch = x;
 			
 			Round R = new Round(Message, userMatch.getAmountOfQuestions());
-			userMatch.setRound(R, userMatch.getCurrentRound());
 			R.setHidden(false);
+			userMatch.setRound(R, userMatch.getCurrentRound());
 			oppMatch.setRound(R, userMatch.getCurrentRound());
+			opponent.setMatch(oppMatch, oppIndex);
 			
 			Session sess = new Session();
 			sess.setState(gameStates.startRound);
@@ -111,16 +116,20 @@ public class ServerSessionHandler {
 			for(Match x : user.getMatcher())
 				if(x.getID() == match.getID())
 				{
-					userMatch = x;
 					index = user.getMatcher().indexOf(x);
+					user.setMatch(match, index);
+					userMatch = x;
 				}
-			
-			user.setMatch(match, index);
-			oppMatch.setRoundOpp(userMatch.getRound(userMatch.getCurrentRound()), userMatch.getCurrentRound());
+			int currRound = match.getCurrentRound();
+			if(Message.equalsIgnoreCase("true") && match.getAmountOfRounds() >= currRound)
+				currRound--;
+			System.out.println(match.getCurrentRound());
+			System.out.println(currRound);
+			oppMatch.setRoundOpp(match.getRound(currRound), currRound);
 			oppMatch.setPointsOpp(match.getPoints());
 			oppMatch.setCurrentRound(match.getCurrentRound());
 			oppMatch.setActive(match.isActive());
-			oppMatch.setTurn(!match.isTurn());
+			oppMatch.setTurn(!match.isTurn());			
 			
 			Session sess = new Session();
 			sess.setMatcher(user.getMatcher());
