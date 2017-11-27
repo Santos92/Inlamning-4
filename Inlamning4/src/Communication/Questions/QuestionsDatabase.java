@@ -37,6 +37,8 @@ public class QuestionsDatabase implements Serializable{
     	Film.add(FilmQ);
     	FilmQ = new Questions(Kategori, "Vem spelade rollen som mamma till Phiona i filmen 'Queen of Katwe' ?", "Lupita Nyong'o", "Esteri Tebandeke", "Viola Davis", "Danai Gurira");
     	Film.add(FilmQ);
+    	FilmQ = new Questions(Kategori, "Vem spelar rolen som Michael Scofield eller Kaniel Outis i Filmen 'Prison Break'?", "Wentworth Miller", "Paul Adelstein", "Dominic Purcell", "Amaury Nolasco");
+    	Film.add(FilmQ);
     }
     public void fillTeknik()
     {
@@ -44,8 +46,10 @@ public class QuestionsDatabase implements Serializable{
     	String Kategori = "Teknik";
     	TeknikQ = new Questions(Kategori, "Vad förknippas med märket Airfix?", "Flygplansmodeller","Bilmodeller", "Båtar", "Lastbilar" );
     	Teknik.add(TeknikQ);
-    	TeknikQ = new Questions(Kategori, "Vem uppfann den populära leksaken Fidget Spinner?", "Catherine Hettinger","Joseph Fry", "Cai Lun", "Ray Tomlinson" );
+    	TeknikQ = new Questions(Kategori, "Vem uppfann den populära leksaken 'Fidget Spinner'?", "Catherine Hettinger","Joseph Fry", "Cai Lun", "Ray Tomlinson" );
     	Teknik.add(TeknikQ);
+    	TeknikQ = new Questions(Kategori, "Med vilken teknik är Yas Marina Hotelet i Abu Dhabi byggd?", "ABB-Teknik","Lappteknik", "AV-Teknik","IKT");
+    	
     }
     public void fillGeografi()
     {
@@ -54,6 +58,8 @@ public class QuestionsDatabase implements Serializable{
     	GeoQ = new Questions(Kategori, "Var ligger landet Djibouti?", "ÖstAfrika","Mellanöstern", "Sydost asien", "Brevid Salomonöarna" );
     	Geografi.add(GeoQ);
     	GeoQ = new Questions(Kategori, "Vad är omkretsen runt jorden längs ekvatorn?", "40075 km","400000km", "35000km", "25900km" );
+    	Geografi.add(GeoQ);
+    	GeoQ = new Questions(Kategori, "I vilket land ligger världens största lerbyggnad i form av en moske?", "Mali", "Tunisien", "Mongoliet", "Peru");
     	Geografi.add(GeoQ);
     }
     public void fillHistoria()
@@ -64,6 +70,9 @@ public class QuestionsDatabase implements Serializable{
     	Historia.add(HistoriaQ);
     	HistoriaQ = new Questions(Kategori, "Vad anses vara den Gustavianska tiden?", "1772–1809","1603-1771", "1890-1902", "1656-1772" );
     	Historia.add(HistoriaQ);
+    	HistoriaQ = new Questions(Kategori, "Var landsteg de allierade trupperna på 'Dagen-D' 6 juni 1944?","Normandie", "Guadalcanal", "Kursk", "Stalingrad");
+    	Historia.add(HistoriaQ);
+    	
     }
 	public LinkedList<Questions> getMat() {
 		return Mat;
