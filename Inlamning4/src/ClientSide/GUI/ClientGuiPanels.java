@@ -63,7 +63,7 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 	//RegSidan
 	private JTextField usernameTxFdReg = new JTextField();
 	private JTextField passwordTxFdReg = new JTextField();
-	private JButton saveBtn = new JButton("Spara användare");
+	private JButton saveBtn = new JButton("Spara");
 	
 	//VäljKategoriSidan
 	private JButton kategori1 = new JButton("");
@@ -413,12 +413,12 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		spelaMed.setForeground(Tema.getText());
 		
 		JButton sökSpelare = new JButton("Sök spelare");
-		sökSpelare.setBackground(Tema.getTopBG());
+		sökSpelare.setBackground(Tema.getButtonBG());
 		sökSpelare.setForeground(Tema.getText());
 		sökSpelare.setFont(btnFont);
 		sökSpelare.setBorderPainted(false);
 		
-		slumpadSpelare.setBackground(Tema.getTopBG());
+		slumpadSpelare.setBackground(Tema.getButtonBG());
 		slumpadSpelare.setForeground(Tema.getText());
 		slumpadSpelare.setFont(btnFont);
 		slumpadSpelare.setBorderPainted(false);
@@ -432,20 +432,20 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		vänner.setForeground(Tema.getText());
 
 		JButton bjudInVänner = new JButton("Bjud in vänner");
-		bjudInVänner.setBackground(Tema.getTopBG());
+		bjudInVänner.setBackground(Tema.getButtonBG());
 		bjudInVänner.setForeground(Tema.getText());
 		bjudInVänner.setFont(btnFont);
 		bjudInVänner.setBorderPainted(false);
 		
-		JButton user1 = new JButton("User1");
-		user1.setBackground(Tema.getTopBG());
+		JButton user1 = new JButton(client.getUserName());
+		user1.setBackground(Tema.getButtonBG());
 		user1.setForeground(Tema.getText());
 		user1.setFont(btnFont);
 		user1.setBorderPainted(false);
 		JLabel empty2 = new JLabel("");
 		
 		back = new JButton("Tillbaka");
-		back.setBackground(Tema.getTopBG());
+		back.setBackground(Tema.getButtonBG());
 		back.setForeground(Tema.getText());
 		back.setFont(btnFont);
 		back.setBorderPainted(false);
@@ -534,20 +534,20 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		spela.removeActionListener(GUI);
 		geUpp.removeActionListener(GUI);
 		goReturn.removeActionListener(GUI);
-
+	
 		JPanel spelMotståndare = new JPanel();
 		spelMotståndare.setLayout(new BorderLayout());
 		spelMotståndare.setLayout(new GridLayout(4, 0));
 		spelMotståndare.setBackground(Tema.getBG());
 
 		JPanel namesAndPoints = new JPanel();
+		JPanel roundScoreHolder = new JPanel();
 		JPanel geUppStarta = new JPanel();
-		JPanel ronder = new JPanel();
 
 		JLabel användare1 = new JLabel(client.getUserName()); // Här ska riktiga användarnamnet stå
 		användare1.setHorizontalAlignment(JLabel.CENTER);
-		labelFont = new Font("Arial", Font.BOLD, 15);
-		headingFont = new Font("Arial", Font.BOLD, 22);
+		labelFont = new Font("Arial", Font.BOLD, 25);
+		headingFont = new Font("Arial", Font.BOLD, 35);
 		användare1.setForeground(Tema.getText());
 		användare1.setFont(labelFont);
 
@@ -560,70 +560,52 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		poäng.setHorizontalAlignment(JLabel.CENTER);
 		poäng.setForeground(Tema.getText());
 		poäng.setFont(headingFont);
-
-		// JLabel totalaPoängAnvändare1 = new JLabel("0/2");// I stället för knappar kan
-		// vi ha en JLabel som ändrar värde e.g. 1/2
-		// totalaPoängAnvändare1.setHorizontalAlignment(JLabel.CENTER);
-		// totalaPoängAnvändare1.setBackground(Tema.getBG());
-		// totalaPoängAnvändare1.setFont(labelFont);
-		// totalaPoängAnvändare1.setForeground(Tema.getText());
-		//
-		// JLabel totalaPoängAnvändare2 = new JLabel("2/2");
-		// totalaPoängAnvändare2.setHorizontalAlignment(JLabel.CENTER);
-		// totalaPoängAnvändare2.setBackground(Tema.getBG());
-		// totalaPoängAnvändare2.setFont(labelFont);
-		// totalaPoängAnvändare2.setForeground(Tema.getText());
-
-		JLabel rondNummer = new JLabel("Rond 1");
-		rondNummer.setHorizontalAlignment(JLabel.CENTER);
-		rondNummer.setLayout(new GridLayout(0, 1, 10, 10));
-		rondNummer.setBorder(new EmptyBorder(5, 10, 10, 5));
-		rondNummer.setFont(labelFont);
-		rondNummer.setBackground(Tema.getBG());
-		rondNummer.setForeground(Tema.getText());
-
+		
 		spelMotståndare.setPreferredSize(new Dimension(500, 500));
 		spelMotståndare.add(namesAndPoints, BorderLayout.NORTH);
-		spelMotståndare.add(ronder, BorderLayout.CENTER);
+		spelMotståndare.add(roundScoreHolder, BorderLayout.CENTER);
 		spelMotståndare.add(geUppStarta, BorderLayout.SOUTH);
 		namesAndPoints.setBackground(Tema.getBG());
 		geUppStarta.setBackground(Tema.getBG());
-		ronder.setBackground(Tema.getBG());
 
 		namesAndPoints.setLayout(new GridLayout(0, 3));
 		namesAndPoints.add(användare1);
 		namesAndPoints.add(poäng);
 		namesAndPoints.add(användare2);
 
-		JPanel roundScoreHolder = new JPanel();
 		roundScoreHolder.setLayout(new GridLayout(0, 1));
-		roundScoreHolder.setBackground(Tema.getBG());
+		roundScoreHolder.setBackground(Tema.getButtonBG());
 
 		for (int i = 0; i < m.getAmountOfRounds(); i++) {
+			int roundNmr = i+1;
+			JLabel rounds = new JLabel("Rond " +roundNmr);
+			rounds.setForeground(Tema.getText());
+			rounds.setFont(btnFont);
+			rounds.setHorizontalAlignment(JLabel.CENTER);
 			int scoreUser1 = 0;
 			int scoreUser2 = 0;
 			if (m.getCurrentRound() >= i && m.getRound(i) != null) {
+				
 				scoreUser1 = m.getRound(i).getScore();
 				}
 				if (m.getCurrentRound() >= i && m.getRoundOpp(i) != null) {
 				scoreUser2 = m.getRoundOpp(i).getScore();
 				}
 				
-				JLabel scores = new JLabel(scoreUser1 + " - " + scoreUser2);
+				JLabel scores = new JLabel(scoreUser1 + "       -       " + scoreUser2);
+				scores.setForeground(Tema.getText());
+				scores.setFont(btnFont);
+				scores.setHorizontalAlignment(JLabel.CENTER);
+				
+				roundScoreHolder.add(rounds);
 				roundScoreHolder.add(scores);
 			}
-			
-		
-
-		ronder.setLayout(new GridLayout(0, 3));
-		// ronder.add(totalaPoängAnvändare1);ronder.add(rondNummer);
-		// ronder.add(totalaPoängAnvändare2);
 
 		geUppStarta.setLayout(new GridLayout(0, 3, 10, 10));
 		geUppStarta.setBorder(new EmptyBorder(50, 10, 10, 10));
 		if (!matchEnded && m.isTurn()) {
-			geUppStarta.add(spela);
 			geUppStarta.add(geUpp);
+			geUppStarta.add(spela);
 		}
 		if (!matchEnded && !m.isTurn())
 			geUppStarta.add(geUpp);
@@ -634,73 +616,82 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		geUpp.setFont(labelFont);
 		geUpp.setForeground(Tema.getText());
 		geUpp.setLayout(new GridLayout(1, 1, 100, 100));
+		geUpp.setBorderPainted(false);
 
 		spela.setBackground(Tema.getStartGameBG());
 		spela.setFont(headingFont);
 		spela.setForeground(Tema.getText());
 		spela.setLayout(new GridLayout(1, 1, 50, 50));
 		spela.putClientProperty("match", m);
-
+		spela.setBorderPainted(false);
+		
 		goReturn.setBackground(Tema.getTopBG());
 		goReturn.setFont(labelFont);
 		goReturn.setForeground(Tema.getText());
 		goReturn.setLayout(new GridLayout(1, 1, 100, 100));
-
+		goReturn.setBorderPainted(false);
+		
 		spelMotståndare.add(namesAndPoints);
 		spelMotståndare.add(roundScoreHolder);
-		spelMotståndare.add(ronder);
 		spelMotståndare.add(geUppStarta);
 
-		spela.addActionListener(GUI);
 		geUpp.addActionListener(GUI);
+		spela.addActionListener(GUI);
 		goReturn.addActionListener(GUI);
 
 		return spelMotståndare;
 	}
 	public JPanel sidaVäljKategori(Match m) {
 		
-		
-		
 		JPanel väljKat = new JPanel();
 		väljKat.setLayout(new GridLayout(0,1, 10,10));
 		väljKat.setPreferredSize(new Dimension(500, 500));
 		väljKat.setBorder(new EmptyBorder(5,10,25,10));
 		väljKat.setBackground(Tema.getBG());
-		headingFont = new Font("Arial", Font.BOLD, 22);
+		headingFont = new Font("Arial", Font.BOLD, 35);
 		btnFont = new Font("Arial", Font.BOLD, 17);
 		väljKat.setFont(headingFont);
 		
-		JLabel väljkategori = new JLabel("Välj kategori: ");
-		JLabel användarnamn = new JLabel("");
-		väljKat.setForeground(Tema.getText());
+		JPanel topicPanel = new JPanel();
+		topicPanel.setLayout(new GridLayout(1,0));
+		topicPanel.setBackground(Tema.getBG());
+		JLabel väljkategori = new JLabel("Välj kategori");
+		väljkategori.setForeground(Tema.getText());
+		väljkategori.setFont(headingFont);
+		väljkategori.setHorizontalAlignment(JLabel.CENTER);
+		topicPanel.add(väljkategori);
 		
 		JButton kategori1 = new JButton("Mat");
 		kategori1.setBackground(Tema.getChangeCate1());// change these colors
 		kategori1.setForeground(Tema.getText());
 		kategori1.setFont(btnFont);
+		kategori1.setBorderPainted(false);
 		
 		JButton kategori2 = new JButton("Teknik");
 		kategori2.setBackground(Tema.getChangeCate2());
 		kategori2.setForeground(Tema.getText());
 		kategori2.setFont(btnFont);
+		kategori2.setBorderPainted(false);
 		
 		JButton kategori3 = new JButton("Film");
 		kategori3.setBackground(Tema.getChangeCate3());
 		kategori3.setForeground(Tema.getText());
 		kategori3.setFont(btnFont);
+		kategori3.setBorderPainted(false);
 		
 		JButton kategori4 = new JButton("Geografi");
 		kategori4.setBackground(new Color(0,0,0));
 		kategori4.setForeground(Tema.getText());
 		kategori4.setFont(btnFont);
+		kategori4.setBorderPainted(false);
 		
 		JButton kategori5 = new JButton("Historia");
 		kategori5.setBackground(new Color(255,255,255));
 		kategori5.setForeground(new Color(0,0,0));
 		kategori5.setFont(btnFont);
+		kategori5.setBorderPainted(false);
 		
-		väljKat.add(väljkategori);
-		väljKat.add(användarnamn);
+		väljKat.add(topicPanel);
 		väljKat.add(kategori1);
 		väljKat.add(kategori2);
 		väljKat.add(kategori3);
@@ -731,6 +722,9 @@ public class ClientGuiPanels implements ActionListener, Runnable{
 		this.lastInRound = lastInRound;
 		Round r = match.getRound(match.getCurrentRound());
 		btnFont = new Font("Arial", Font.BOLD, 18);
+		headingFont = new Font("Arial", Font.BOLD, 30);
+		labelFont = new Font("Arial", Font.BOLD, 15);
+		Font timeFont = new Font("Arial", Font.BOLD, 55);
 		
 		answer1.removeActionListener(this);
         answer2.removeActionListener(this);
@@ -739,10 +733,18 @@ public class ClientGuiPanels implements ActionListener, Runnable{
         
         JPanel svaraFrågan = new JPanel();
 	    JPanel question = new JPanel();
+	    question.setBackground(Tema.getBG());
 	    JLabel questionCategory = new JLabel(r.getQ(r.getCurrentQuestion()).getCategory());
+	    questionCategory.setFont(headingFont);
+	    questionCategory.setForeground(Tema.getText());
+	    questionCategory.setHorizontalAlignment(JLabel.CENTER);
 	    JLabel actualQuestion = new JLabel(r.getQ(r.getCurrentQuestion()).getQuestion());
+	    actualQuestion.setFont(labelFont);
+	    actualQuestion.setForeground(Tema.getText());
+	    actualQuestion.setHorizontalAlignment(JLabel.CENTER);
 	    
 	    JPanel timeLimit = new JPanel();
+	    timeLimit.setBackground(Tema.getBG());
 
 	    answer1.setText(r.getQ(r.getCurrentQuestion()).getCorAnswer());
 	    answer2.setText(r.getQ(r.getCurrentQuestion()).getWroAns1());
@@ -772,21 +774,28 @@ public class ClientGuiPanels implements ActionListener, Runnable{
         answer1.setFont(btnFont);
         answer1.setLayout(new GridLayout(20,20,5,5));
         answer1.setForeground(Tema.getText());
+        answer1.setBorderPainted(false);
         answer2.setBackground(Tema.getButtonBG());
         answer2.setFont(btnFont);
         answer2.setLayout(new GridLayout(20,20,5,5));
         answer2.setForeground(Tema.getText());
+        answer2.setBorderPainted(false);
         answer3.setBackground(Tema.getButtonBG());
         answer3.setFont(btnFont);
         answer3.setLayout(new GridLayout(20,20,5,5));
         answer3.setForeground(Tema.getText());
+        answer3.setBorderPainted(false);
         answer4.setBackground(Tema.getButtonBG());
         answer4.setFont(btnFont);
         answer4.setLayout(new GridLayout(20,20,5,5));
         answer4.setForeground(Tema.getText());
+        answer4.setBorderPainted(false);
         
         seconds = 10;
         timeLimiter = new JLabel(seconds + "");
+        timeLimiter.setHorizontalAlignment(JLabel.CENTER);
+        timeLimiter.setFont(timeFont);
+        timeLimiter.setForeground(Tema.getText());
         
         LinkedList<JButton> AnswerButtons = new LinkedList<>();
         AnswerButtons.add(answer1);
@@ -803,18 +812,15 @@ public class ClientGuiPanels implements ActionListener, Runnable{
         
         timeLimit.setLayout(new GridLayout(0,1,10,10));
         timeLimit.setBorder(new EmptyBorder(5,10,5,10));
-        timeLimit.add(timeLimiter);
-        // svaraFrågan.add(question);
+        timeLimit.add(timeLimiter, JLabel.CENTER);
         svaraFrågan.add(answers);
-        // svaraFrågan.add(timeLimit);
-             
+   
         pressedAnswer = false;
         answer1.addActionListener(this);
         answer2.addActionListener(this);
         answer3.addActionListener(this);
         answer4.addActionListener(this);
-        
-
+       
          timerStart();
          
          return svaraFrågan;

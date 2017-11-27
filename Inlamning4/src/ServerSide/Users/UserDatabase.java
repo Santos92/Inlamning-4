@@ -15,14 +15,14 @@ import ServerSide.ClientThread;
 public class UserDatabase { 
 	
 	private static LinkedList<User> allUsers = new LinkedList<>();
-	private File UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
+	private File UserDatabase = new File("C:\\Users\\Amanda\\git\\Inlamning-4\\AllUsers.txt");
 	
 	public UserDatabase() 
 	{
 		
-		UserDatabase = new File("Inlamning4\\src\\ServerSide\\Users\\AllUsers.txt");
+		UserDatabase = new File("C:\\Users\\Amanda\\git\\Inlamning-4\\AllUsers.txt");
 		if(!UserDatabase.exists())
-			UserDatabase = new File("src\\ServerSide\\Users\\AllUsers.txt");
+			UserDatabase = new File("C:\\Users\\Amanda\\git\\Inlamning-4\\AllUsers.txt");
 	}
 	
 	public User getUser(String name)
